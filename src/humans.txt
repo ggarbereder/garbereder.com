@@ -1,0 +1,11 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Gerrit Garbereder -- Author
+
+# TECHNOLOGY COLOPHON
+
+    CSS3, HTML5
+    Docker, Tailwind, Parcel
