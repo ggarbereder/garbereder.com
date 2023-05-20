@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.opacity-0.animate {
+    transition: all 1s;
+    &.blur-sm {
+        filter: blur(0);
+    }
+}
+
+@media(prefers-reduced-motion) {
+    .opacity-0.animate {
+        transition: none;
+    }    
+}
+
+#cv li:nth-child(2) {
+    transition-delay: 100ms;
+}
+#cv li:nth-child(3) {
+    transition-delay: 200ms;
+}
+#cv li:nth-child(4) {
+    transition-delay: 300ms;
+}
+#cv li:nth-child(5) {
+    transition-delay: 400ms;
+}
