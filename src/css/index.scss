@@ -2,8 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+.nojs .opacity-0.animate {
+    @apply opacity-100
+}
+
 .opacity-0.animate {
     transition: all 1s;
+
     &.blur-sm {
         filter: blur(0);
     }
