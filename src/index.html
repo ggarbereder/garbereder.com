@@ -9,7 +9,7 @@
 
   <meta charset="utf-8">
   <title>Gerrit Garberder | Engineering Manager</title>
-  <meta name="description" content="">
+  <meta name="description" content="Gerrit Garberder's CV website">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <meta property="og:title" content="Gerrit Garberder | Engineering Manager">
@@ -20,6 +20,12 @@
   <link rel="manifest" href="site.webmanifest">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Quicksand" as="style" />
+  <link rel="preload" href="https://kit.fontawesome.com/6489e2c38d.js" as="script" />
+  <link rel="preload" href="js/index.js" as="script" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://ka-f.fontawesome.com">
 
   <link rel="stylesheet" href="css/index.scss">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand">
@@ -46,7 +52,8 @@
       <div class="flex flex-row justify-center sm:basis-1/4 mx-4 xl:mx-0">
         <img src="img/portrait.jpg?width=400" srcset="img/portrait.jpg?width=400 1x, img/portrait.jpg?width=800 2x"
           decoding="async"
-          class="rounded-full border-slate-300 border-8 w-64 lg:w-64 xl:w-80 2xl:w-96 h-64 lg:h-64 xl:h-80 2xl:h-96" />
+          class="rounded-full border-slate-300 border-8 w-64 lg:w-64 xl:w-80 2xl:w-96 h-64 lg:h-64 xl:h-80 2xl:h-96"
+          alt="Portrait of Gerrit Garberder" />
       </div>
     </div>
   </div>
@@ -142,11 +149,11 @@
           <div class="sm:basis-1/3 mt-4 lg:mt-0">
             <h3 class="font-bold">Social</h3>
             <a href="https://www.linkedin.com/in/gerrit-garbereder-a74b6a96/" target="_blank"
-              class="text-cyan-900 hover:text-cyan-600 text-xl">
+              class="text-cyan-900 hover:text-cyan-600 text-xl" aria-label="Follow me on LinkedIn">
               <i class="fa-brands fa-linkedin"></i>
             </a>
             <a href="https://github.com/ggarbereder/garbereder.com" target="_blank"
-              class="text-cyan-900 hover:text-cyan-600 text-xl">
+              class="text-cyan-900 hover:text-cyan-600 text-xl" aria-label="See my work at Github">
               <i class="fa-brands fa-github"></i>
             </a>
           </div>
@@ -157,6 +164,6 @@
 </body>
 
 <script defer src="js/index.js"></script>
-<script src="https://kit.fontawesome.com/6489e2c38d.js" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/6489e2c38d.js" rel="preload" crossorigin="anonymous"></script>
 
 </html>
