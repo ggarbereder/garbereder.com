@@ -21,7 +21,7 @@
     "cssnano": "^6.0.1",
     "cypress": "^12.14.0",
     "http-server": "^14.1.1",
-    "parcel": "^2.8.3",
+    "parcel": "^2.9.1",
     "postcss": "^8.4.23",
     "sharp": "^0.31.3",
     "tailwindcss": "^3.3.2"
