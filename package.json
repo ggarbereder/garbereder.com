@@ -16,7 +16,7 @@
     "@fullhuman/postcss-purgecss": "^5.0.0",
     "@parcel/packager-raw-url": "^2.8.3",
     "@parcel/transformer-sass": "^2.8.3",
-    "@parcel/transformer-webmanifest": "^2.8.3",
+    "@parcel/transformer-webmanifest": "^2.9.1",
     "autoprefixer": "^10.4.14",
     "cssnano": "^6.0.1",
     "cypress": "^12.14.0",
