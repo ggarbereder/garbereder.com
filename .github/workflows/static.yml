@@ -56,12 +56,23 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           config: baseUrl=http://localhost:8080
+      - uses: actions/upload-artifact@v3
+        with:
+          name: cypress-test-screenshots
+          path: cypress/screenshots
+          if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-test-videos
+          path: cypress/videos
+          if-no-files-found: ignore
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: test
     if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/download-artifact@v3
@@ -89,3 +100,14 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           config: baseUrl=http://garbereder.com
+      - uses: actions/upload-artifact@v3
+        with:
+          name: cypress-verify-screenshots
+          path: cypress/screenshots
+          if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-verify-videos
+          path: cypress/videos
+          if-no-files-found: ignore

@@ -1,6 +1,11 @@
 /// <reference types="cypress" />
 
 describe(`Landingpage`, () => {
+  before(() => {
+    cy.visit('/')
+    cy.screenshot()
+  })
+
   beforeEach(() => {
     cy.visit('/')
   })
