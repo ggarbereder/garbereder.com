@@ -58,14 +58,14 @@ jobs:
           config: baseUrl=http://localhost:8080
       - uses: actions/upload-artifact@v3
         with:
-          name: cypress-screenshots
-          path: cypress-test/screenshots
+          name: cypress-test-screenshots
+          path: cypress/screenshots
           if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
-          name: cypress-videos
-          path: cypress-test/videos
+          name: cypress-test-videos
+          path: cypress/videos
           if-no-files-found: ignore
   deploy:
     environment:
@@ -102,12 +102,12 @@ jobs:
           config: baseUrl=http://garbereder.com
       - uses: actions/upload-artifact@v3
         with:
-          name: cypress-screenshots
-          path: cypress-verify/screenshots
+          name: cypress-verify-screenshots
+          path: cypress/screenshots
           if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
-          name: cypress-videos
-          path: cypress-verify/videos
+          name: cypress-verify-videos
+          path: cypress/videos
           if-no-files-found: ignore
