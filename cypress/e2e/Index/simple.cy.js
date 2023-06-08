@@ -2,7 +2,7 @@
 
 describe(`Landingpage`, () => {
   beforeEach(() => {
-    cy.visit()
+    cy.visit('/')
   })
 
   it('Shows the portait', () => {
