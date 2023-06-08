@@ -1,9 +1,13 @@
 /// <reference types="cypress" />
 
 describe(`Landingpage`, () => {
-  beforeEach(() => {
+  before(() => {
     cy.visit('/')
     cy.screenshot()
+  })
+
+  beforeEach(() => {
+    cy.visit('/')
   })
 
   it('Shows the portait', () => {
