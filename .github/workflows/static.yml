@@ -54,6 +54,8 @@ jobs:
       - run: npm run serve&
       - name: Cypress run
         uses: cypress-io/github-action@v5
+        with:
+          config: baseUrl=http://localhost:8080
   deploy:
     environment:
       name: github-pages
