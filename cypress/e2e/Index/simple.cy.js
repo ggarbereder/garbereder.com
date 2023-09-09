@@ -35,7 +35,7 @@ describe(`Landingpage`, () => {
   })
 
   it('Shows the email', () => {
-    cy.get('a[href*="mailto:info@garbereder.com"]').should('exist')
+    cy.get('a[href*="mailto:gerrit@garbereder.com"]').should('exist')
   })
 
   it('Shows the phonenumber', () => {
