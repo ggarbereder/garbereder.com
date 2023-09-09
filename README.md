@@ -1,6 +1,5 @@
 # Garbereder.com
-
-[![Build and Deploy (main only) content to Pages](https://github.com/ggarbereder/garbereder.com/actions/workflows/static.yml/badge.svg)](https://github.com/ggarbereder/garbereder.com/actions/workflows/static.yml)
+[![Build and Deploy (main only) content to Pages](https://github.com/ggarbereder/garbereder.com/actions/workflows/static.yml/badge.svg?branch=main)](https://github.com/ggarbereder/garbereder.com/actions/workflows/static.yml)
 
 ## Build
 The compiled page is published into the `dist` directory using either of the build methods.
