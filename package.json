@@ -15,7 +15,7 @@
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^5.0.0",
     "@parcel/packager-raw-url": "^2.9.3",
-    "@parcel/transformer-sass": "^2.9.3",
+    "@parcel/transformer-sass": "^2.10.0",
     "@parcel/transformer-webmanifest": "^2.9.3",
     "autoprefixer": "^10.4.16",
     "cssnano": "^6.0.1",
