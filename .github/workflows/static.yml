@@ -36,7 +36,7 @@ jobs:
       - run: npm install
       - run: npx browserslist@latest --update-db
       - run: npm run build
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist/
@@ -47,7 +47,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - run: npm install
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist/
@@ -56,12 +56,12 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           config: baseUrl=http://localhost:8080
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: cypress-test-screenshots
           path: cypress/screenshots
           if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-test-videos
@@ -75,7 +75,7 @@ jobs:
     needs: test
     if: github.ref == 'refs/heads/main'
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist/
@@ -100,12 +100,12 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           config: baseUrl=http://garbereder.com
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: cypress-verify-screenshots
           path: cypress/screenshots
           if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-verify-videos
