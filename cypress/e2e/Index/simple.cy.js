@@ -25,7 +25,7 @@ describe(`Landingpage`, () => {
   })
 
   it('Shows the resume', () => {
-    cy.get('ol').find('li').should('have.length', 5)
+    cy.get('ol').find('li').should('have.length', 6)
     cy.get('ol').find('li').find('.job-date')
       .should('exist')
       .invoke('text')
