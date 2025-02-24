@@ -17,7 +17,7 @@
     "@parcel/packager-raw-url": "^2.12.0",
     "@parcel/transformer-sass": "^2.12.0",
     "@parcel/transformer-webmanifest": "^2.12.0",
-    "autoprefixer": "^10.4.16",
+    "autoprefixer": "^10.4.20",
     "cssnano": "^6.0.3",
     "cypress": "^13.15.1",
     "http-server": "^14.1.1",
