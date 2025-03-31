@@ -9,7 +9,8 @@
   "license": "cc-by-sa-4.0",
   "author": "Gerrit Garbereder",
   "scripts": {
-    "build": "PARCEL_WORKERS=1; parcel build src/index.html",
+    "build": "PARCEL_WORKER_BACKEND=process parcel build src/index.html",
+    "build-ci": "PARCEL_WORKER_BACKEND=process parcel build src/index.html --no-cache",
     "serve": "http-server ./dist"
   },
   "devDependencies": {
