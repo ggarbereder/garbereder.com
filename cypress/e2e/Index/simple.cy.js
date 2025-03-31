@@ -15,7 +15,7 @@ describe(`Landingpage`, () => {
   })
 
   it('Shows the name', () => {
-    cy.get('.text-orange-600').should('have.text', 'Gerrit Garbereder')
+    cy.get('.text-orange-500').should('have.text', 'Gerrit Garbereder')
   })
 
   it('Shows the resume link', () => {
