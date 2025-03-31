@@ -9,7 +9,8 @@
   "license": "cc-by-sa-4.0",
   "author": "Gerrit Garbereder",
   "scripts": {
-    "build": "parcel build src/index.html",
+    "build": "PARCEL_WORKER_BACKEND=process parcel build src/index.html",
+    "build-ci": "PARCEL_WORKER_BACKEND=process parcel build src/index.html --no-cache",
     "serve": "http-server ./dist"
   },
   "devDependencies": {
@@ -17,7 +18,7 @@
     "@parcel/packager-raw-url": "^2.14.4",
     "@parcel/transformer-sass": "^2.14.4",
     "@parcel/transformer-webmanifest": "^2.14.4",
-    "@tailwindcss/postcss": "^4.0.0",
+    "@tailwindcss/postcss": "^4.0.17",
     "autoprefixer": "^10.4.21",
     "cssnano": "^6.1.2",
     "cypress": "^14.2.1",
@@ -25,6 +26,6 @@
     "parcel": "^2.14.4",
     "postcss": "^8.5.3",
     "sharp": "^0.33.5",
-    "tailwindcss": "^4.0.0"
+    "tailwindcss": "^4.0.17"
   }
 }
