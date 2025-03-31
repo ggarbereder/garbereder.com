@@ -30,6 +30,8 @@ jobs:
   # Single deploy job since we're just deploying
   build:
     runs-on: ubuntu-latest
+    variables:
+      PARCEL_WORKERS: 0
     steps:
       - name: Checkout
         uses: actions/checkout@v3
