@@ -11,7 +11,8 @@
   "scripts": {
     "watch": "parcel watch src/index.html",
     "build": "parcel build src/index.html",
-    "build-ci": "PARCEL_WORKER_BACKEND=process parcel build src/index.html --no-cache",
+    "build-prod": "npm run build -- --no-cache --no-source-maps",
+    "build-ci": "PARCEL_WORKER_BACKEND=process npm run build-prod",
     "serve": "http-server ./dist",
     "start": "concurrently \"npm run watch\" \"npm run serve\""
   },
