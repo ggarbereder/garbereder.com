@@ -35,7 +35,7 @@ jobs:
       - run: npm install
       - run: npx browserslist@latest --update-db
       # work around for https://github.com/parcel-bundler/parcel/issues/5961#issuecomment-2724301882 in build-ci
-      - run: npm run build-ci
+      - run: npm run build
       - uses: actions/upload-artifact@v4
         with:
           name: dist
