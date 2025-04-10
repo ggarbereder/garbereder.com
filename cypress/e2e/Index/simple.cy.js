@@ -11,7 +11,7 @@ describe(`Landingpage`, () => {
   })
 
   it('Shows the portait', () => {
-    cy.get('img').should('have.attr', 'src').should('include', 'portrait')
+    cy.get('img#portrait').should('have.attr', 'src').should('not.be.empty')
   })
 
   it('Shows the name', () => {

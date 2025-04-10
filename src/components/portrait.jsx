@@ -8,6 +8,7 @@ export default function Portrait() {
       alt="Portrait of Gerrit Garberder"
       decoding="async"
       class="rounded-full border-slate-300 border-8 w-64 lg:w-64 xl:w-80 2xl:w-96 h-64 lg:h-64 xl:h-80 2xl:h-96"
+      id="portrait"
     />
   )
 }
