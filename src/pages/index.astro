@@ -1,7 +1,6 @@
 ---
 import Portrait from "../components/portrait.jsx";
 import "../styles/index.scss";
-import "../assets/index.ts";
 ---
 
 <!doctype html>
@@ -295,4 +294,8 @@ import "../assets/index.ts";
       </div>
     </div>
   </body>
+  <script>
+    import { OpacityObserver } from "../lib";
+    new OpacityObserver('opacity-100').observe('.opacity-0.animate')
+  </script>
 </html>
