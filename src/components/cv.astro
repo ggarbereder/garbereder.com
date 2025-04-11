@@ -1,0 +1,92 @@
+---
+import CV from "./cv-layout.astro";
+import Entry from "./cv-entry.astro";
+
+const { id } = Astro.props;
+---
+
+<CV id={id}>
+  <Entry
+    start="2025"
+    end="Present"
+    title="Senior Engineering Manager"
+    employer="Nord Security"
+  >
+    <p>
+      Continue leading the Security Tools squad while also taking on a broader
+      scope, overseeing core application development by supporting the Autofill
+      and Vault Experience squads alongside their Engineering Managers.
+    </p>
+    <p>
+      Leading agile teams through indivudual contributors and managers.
+      Practicing Extreme Ownership and the four laws of combat &mdash; Cover and
+      Move, Simple, Prioritize and Execute, Decentralized Command.
+    </p>
+  </Entry>
+  <Entry
+    start="2022"
+    end="2025"
+    title="Engineering Manager"
+    employer="Nord Security"
+  >
+    <p>
+      Proven track record of leading high-performing engineering teams to
+      deliver innovative products and services with the Security Tools Squad.
+    </p>
+    <p>
+      Skilled in project management, cross-functional collaboration, and
+      strategic planning. Managing stakeholder relationships and driving results
+      through effective communication and leadership.
+    </p>
+  </Entry>
+  <Entry
+    start="2021"
+    end="2022"
+    title="Software Development Manager"
+    employer="Bentley Systems"
+  >
+    <p>
+      Manager, Software Development for Analytics Tools with a passion for
+      delivering data-driven solutions.
+    </p>
+  </Entry>
+  <Entry
+    start="2017"
+    end="2021"
+    title="Senior Software Engineer"
+    employer="Bentley Systems"
+  >
+    <p>
+      Developer for Analytics Tools with a strong background in developing
+      data-driven solutions.
+    </p>
+    <p>
+      Skilled in designing and implementing complex analytics tools, data
+      pipelines, and data visualizations. Proficient in a variety of
+      technologies and programming languages such as Scala, SQL, and PowerBI.
+    </p>
+  </Entry>
+  <Entry
+    start="2015"
+    end="2017"
+    title="Project Manager"
+    employer="Grün Software GmbH"
+  >
+    <p>
+      Managing donor relationships, reporting, and compliance. Highly motivated
+      and committed to achieving positive outcomes that make a difference in
+      people's lives.
+    </p>
+    <p>
+      Seeking to leverage my skills and experience to lead the successful
+      execution of high-impact projects for NGOs.
+    </p>
+  </Entry>
+  <Entry start="2012" end="2015" title="Developer" employer="navabi GmbH">
+    <p>PHP Developer in E-commerce with expertise in Symfony framework.</p>
+    <p>
+      Skilled in designing and developing robust and scalable e-commerce
+      solutions, integrating with various payment gateways and third-party APIs.
+    </p>
+  </Entry>
+</CV>
