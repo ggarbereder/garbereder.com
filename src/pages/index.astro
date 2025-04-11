@@ -1,17 +1,12 @@
 ---
-import Head from "../components/head.astro"
+import Main from "../layouts/main.astro";
 import Header from "../components/header.astro"
 import CV from "../components/cv.astro"
 import Footer from "../components/footer.astro"
-import "../styles/index.scss";
 ---
 
-<!doctype html>
-<html class="scroll-smooth nojs" lang="en">
-  <Head />
-  <body>
-    <Header href="cv" />
-    <CV id="cv"/>
-    <Footer />
-  </body>
-</html>
+<Main>
+  <Header href="cv" />
+  <CV id="cv" />
+  <Footer />
+</Main>
