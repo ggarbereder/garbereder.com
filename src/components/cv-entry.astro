@@ -1,0 +1,14 @@
+---
+const { start, end, title, employer } = Astro.props;
+---
+
+<li class="job opacity-0 animate">
+  <div class="bullet"></div>
+  <time class="job-date">{start} &ndash; {end}</time>
+  <h3 class="job-title">
+    {title}, <span class="text-cyan-900">{employer}</span>
+  </h3>
+  <div class="job-description">
+    <slot />
+  </div>
+</li>
