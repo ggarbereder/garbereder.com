@@ -1,11 +1,11 @@
 ---
-import CV from "./cv-layout.astro";
-import Entry from "./cv-entry.astro";
+import Container from "./cv/container.astro";
+import Entry from "./cv/entry.astro";
 
 const { id } = Astro.props;
 ---
 
-<CV id={id}>
+<Container id={id}>
   <Entry
     start="2025"
     end="Present"
@@ -89,4 +89,4 @@ const { id } = Astro.props;
       solutions, integrating with various payment gateways and third-party APIs.
     </p>
   </Entry>
-</CV>
+</Container>
