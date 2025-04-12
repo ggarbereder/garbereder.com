@@ -3,7 +3,7 @@ const { id } = Astro.props;
 ---
 
 <div class="bg-slate-300 flex flex-row justify-center">
-  <section class="sm:basis-3/4 md:basis-1/2 bg-slate-50 shadow-xl" id={id}>
+  <section class="sm:basis-3/4 md:basis-1/2 bg-slate-50 shadow-xl" id={id} data-animate-section>
     <h2
       class="border-l border-cyan-900 text-4xl font-light ml-10 pt-10 pl-4 opacity-0 animate"
     >
@@ -13,8 +13,8 @@ const { id } = Astro.props;
       <slot />
     </ol>
   </section>
-  <script>
-    import { OpacityObserver } from "../../lib";
-    new OpacityObserver("opacity-100").observe(".opacity-0.animate");
-  </script>
 </div>
+
+<script>
+  import "../../lib/animate-sections";
+</script>

@@ -11,8 +11,8 @@ export class OpacityObserver {
         });
     }
 
-    observe(selector: string) {
-        document
+    observe(element: Element, selector: string) {
+        element
             .querySelectorAll(selector)
             .forEach(e => this.observer.observe(e))
     }
