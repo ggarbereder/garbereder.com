@@ -2,18 +2,18 @@
 const { id } = Astro.props;
 ---
 
-<div class="bg-slate-300 flex flex-row justify-center">
+<div class="bg-gradient-to-br from-slate-300 to-slate-200 flex flex-row justify-center py-20">
   <section
-    class="sm:basis-3/4 md:basis-1/2 bg-slate-50 shadow-xl"
+    class="sm:basis-3/4 md:basis-1/2 bg-slate-50/90 backdrop-blur-sm rounded-lg shadow-xl"
     id={id}
     data-animate-section
   >
     <h2
-      class="border-l border-cyan-900 text-4xl font-light ml-10 pt-10 pl-4 opacity-0 animate"
+      class="border-l border-cyan-900/50 text-4xl font-light ml-10 pt-10 pl-4 opacity-0 animate"
     >
       Experience
     </h2>
-    <ol class="relative border-l border-cyan-900 pt-14 pb-0 ml-10 mr-10">
+    <ol class="relative border-l border-cyan-900/50 pt-14 pb-0 ml-10 mr-10">
       <slot />
     </ol>
   </section>
