@@ -8,4 +8,4 @@ export default {
   variants: {},
   plugins: [],
   content: ['./src/**/*.{html,js}'],
-}
+};

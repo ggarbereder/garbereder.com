@@ -9,9 +9,6 @@ export default defineConfig({
   integrations: [preact()],
 
   vite: {
-    plugins: [
-      tailwindcss(),
-      imagetools()
-    ]
-  }
+    plugins: [tailwindcss(), imagetools()],
+  },
 });

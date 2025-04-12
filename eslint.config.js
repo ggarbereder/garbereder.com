@@ -1,7 +1,7 @@
 // eslint.config.js
-import { defineConfig, globalIgnores } from 'eslint/config'
-import importPlugin from 'eslint-plugin-import'
-import tseslint from 'typescript-eslint'
+import { defineConfig, globalIgnores } from 'eslint/config';
+import importPlugin from 'eslint-plugin-import';
+import tseslint from 'typescript-eslint';
 
 export default defineConfig([
   globalIgnores(['**/dist/**', '**/.astro/**']),
@@ -38,4 +38,4 @@ export default defineConfig([
       ],
     },
   },
-])
+]);
