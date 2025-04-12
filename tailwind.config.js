@@ -2,10 +2,10 @@ export default {
   theme: {
     extend: {},
     fontFamily: {
-      'sans': ['Quicksand', 'ui-sans-serif', 'system-ui']
-    }
+      sans: ['Quicksand', 'ui-sans-serif', 'system-ui'],
+    },
   },
   variants: {},
   plugins: [],
-  content: ["./src/**/*.{html,js}"]
+  content: ['./src/**/*.{html,js}'],
 }
