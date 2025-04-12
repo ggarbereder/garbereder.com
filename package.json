@@ -9,7 +9,8 @@
     "astro": "astro",
     "lint": "eslint",
     "format-check": "prettier --check .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "e2e": "cypress run --config baseUrl=http://localhost:4321"
   },
   "devDependencies": {
     "@astrojs/preact": "^4.0.8",
