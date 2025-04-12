@@ -7,10 +7,13 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "eslint",
-    "format-check": "prettier --check .",
-    "format": "prettier --write .",
-    "e2e": "cypress run --config baseUrl=http://localhost:4321"
+    "lint": "npm run lint:es && npm run lint:format",
+    "lint:es": "eslint",
+    "lint:format": "prettier --check .",
+    "lint:format:write": "prettier --write .",
+    "cy:run": "cypress run --config baseUrl=http://localhost:4321",
+    "test:e2e": "start-server-and-test dev http://localhost:4321 cy:run",
+    "test": "npm run lint && npm run test:e2e"
   },
   "devDependencies": {
     "@astrojs/preact": "^4.0.8",
@@ -33,6 +36,7 @@
     "sass": "^1.86.3",
     "tailwindcss": "^4.1.3",
     "typescript-eslint": "^8.29.1",
-    "vite-imagetools": "^7.0.5"
+    "vite-imagetools": "^7.0.5",
+    "start-server-and-test": "^2.0.11"
   }
 }
