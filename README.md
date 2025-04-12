@@ -2,23 +2,51 @@
 
 [![Build and Deploy (main only) content to Pages](https://github.com/ggarbereder/garbereder.com/actions/workflows/static.yml/badge.svg?branch=main)](https://github.com/ggarbereder/garbereder.com/actions/workflows/static.yml)
 
-## Build
+## Prerequisites
 
-The compiled page is published into the `dist` directory using either of the build methods.
+- Node.js (LTS version recommended)
+- VS Code (optional)
 
-### VS Code
+## Development
 
-`CTRL` + `SHIFT` + `B` to run build. Note: Docker must be running.
+### Local Development
 
-### Local
-
-```
+```bash
+# Install dependencies
 npm install
+
+# Update browserslist database
 npx browserslist@latest --update-db
+
+# Start development server
 npm run dev
 ```
 
-### Github Actions
+### Build
 
-Github Actions are executed on pull requests and for the `main` branch.
-The Cypress test suite is executed on a local instance before deployment and against the deployment target after deployment for verification.
+The compiled page is published into the `dist` directory:
+
+```bash
+npm run build
+```
+
+### Testing
+
+#### Run Unit Tests
+```bash
+npm run test
+```
+
+#### Run E2E Tests (Cypress)
+```bash
+# Run tests in headless mode
+npm run test:e2e
+```
+
+## CI/CD
+
+Github Actions handle continuous integration and deployment:
+- Runs on pull requests and main branch
+- Executes full test suite before deployment
+- Deploys to GitHub Pages on successful main branch builds
+- Runs post-deployment verification tests
