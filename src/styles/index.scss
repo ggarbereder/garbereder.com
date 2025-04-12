@@ -1,4 +1,4 @@
-@use "tailwindcss";
+@use 'tailwindcss';
 
 @config '../../tailwind.config.js';
 
@@ -21,49 +21,47 @@
 }
 
 .nojs .opacity-0.animate {
-    @apply opacity-100
+  @apply opacity-100;
 }
 
 .opacity-0.animate {
-    transition: all 1s;
+  transition: all 1s;
 
-    &.blur-sm {
-        filter: blur(0);
-    }
+  &.blur-sm {
+    filter: blur(0);
+  }
 }
 
-@media(prefers-reduced-motion) {
-    .opacity-0.animate {
-        transition: none;
-    }
+@media (prefers-reduced-motion) {
+  .opacity-0.animate {
+    transition: none;
+  }
 }
 
 #cv {
+  .job {
+    @apply pb-10 ml-4;
 
-    .job {
-        @apply pb-10 ml-4;
-
-        .bullet {
-            @apply absolute w-3 h-3 bg-cyan-900 rounded-full mt-1.5 -left-1.5 border border-slate-50
-        }
-    
-        .job-date {
-            @apply mb-1 text-xl font-normal leading-none text-orange-600
-        }
-    
-        .job-title {
-            @apply text-2xl font-semibold text-slate-900
-        }
-
-        .job-description {
-            @apply mb-4 text-xl font-normal text-slate-800
-        }
+    .bullet {
+      @apply absolute w-3 h-3 bg-cyan-900 rounded-full mt-1.5 -left-1.5 border border-slate-50;
     }
 
-    @for $i from 2 through 5 {
-        li:nth-child(#{$i}) {
-            transition-delay: $i * 100ms;
-        }
+    .job-date {
+      @apply mb-1 text-xl font-normal leading-none text-orange-600;
     }
 
+    .job-title {
+      @apply text-2xl font-semibold text-slate-900;
+    }
+
+    .job-description {
+      @apply mb-4 text-xl font-normal text-slate-800;
+    }
+  }
+
+  @for $i from 2 through 5 {
+    li:nth-child(#{$i}) {
+      transition-delay: $i * 100ms;
+    }
+  }
 }

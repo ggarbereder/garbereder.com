@@ -18,7 +18,8 @@ describe('Landing Page', () => {
       cy.get('.text-orange-500').should('contain.text', 'Gerrit Garbereder')
 
       // Description
-      cy.get('header p').should('exist')
+      cy.get('header p')
+        .should('exist')
         .and('contain.text', 'Senior Engineering Manager')
 
       // Resume link
@@ -37,16 +38,12 @@ describe('Landing Page', () => {
     it('validates job entry structure', () => {
       cy.get('#cv ol li').each(($li) => {
         // Check entry structure
-        cy.wrap($li)
-          .find('.bullet').should('exist')
+        cy.wrap($li).find('.bullet').should('exist')
         cy.wrap($li)
           .find('.job-date')
           .invoke('text')
-          .should('match', /^(20[0-9]{2}\s[–]\s(Present|20[0-9]{2}))$/)  // Updated regex to handle both - and –
-        cy.wrap($li)
-          .find('.job-title')
-          .invoke('text')
-          .should('not.be.empty')
+          .should('match', /^(20[0-9]{2}\s[–]\s(Present|20[0-9]{2}))$/) // Updated regex to handle both - and –
+        cy.wrap($li).find('.job-title').invoke('text').should('not.be.empty')
         cy.wrap($li)
           .find('.job-description p')
           .should('have.length.at.least', 1)
@@ -55,12 +52,14 @@ describe('Landing Page', () => {
 
     it('verifies chronological order', () => {
       const dates = []
-      cy.get('#cv ol li .job-date').each(($date) => {
-        dates.push($date.text().split(' -')[0])
-      }).then(() => {
-        const sortedDates = [...dates].sort((a, b) => b - a)
-        expect(dates).to.deep.equal(sortedDates)
-      })
+      cy.get('#cv ol li .job-date')
+        .each(($date) => {
+          dates.push($date.text().split(' -')[0])
+        })
+        .then(() => {
+          const sortedDates = [...dates].sort((a, b) => b - a)
+          expect(dates).to.deep.equal(sortedDates)
+        })
     })
   })
 
@@ -81,14 +80,24 @@ describe('Landing Page', () => {
       // LinkedIn
       cy.get('a[href*="linkedin.com"]')
         .should('be.visible')
-        .and('have.attr', 'href', 'https://www.linkedin.com/in/gerrit-garbereder-a74b6a96/')
-        .find('svg').should('exist')
+        .and(
+          'have.attr',
+          'href',
+          'https://www.linkedin.com/in/gerrit-garbereder-a74b6a96/'
+        )
+        .find('svg')
+        .should('exist')
 
       // GitHub
       cy.get('a[href*="github.com/ggarbereder"]')
         .should('be.visible')
-        .and('have.attr', 'href', 'https://github.com/ggarbereder/garbereder.com')
-        .find('svg').should('exist')
+        .and(
+          'have.attr',
+          'href',
+          'https://github.com/ggarbereder/garbereder.com'
+        )
+        .find('svg')
+        .should('exist')
     })
 
     it('displays attribution links correctly', () => {
@@ -98,7 +107,6 @@ describe('Landing Page', () => {
       cy.get('a[href*="icons8.com/icon/20675/github"]').should('exist')
       cy.get('a[href="//icons8.com"]').should('exist')
     })
-
   })
 
   describe('Accessibility and SEO', () => {
