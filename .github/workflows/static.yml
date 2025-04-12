@@ -35,6 +35,7 @@ jobs:
       - run: npm install
       - run: npx browserslist@latest --update-db
       - run: npm run lint
+      - run: npm run format-check
       # work around for https://github.com/parcel-bundler/parcel/issues/5961#issuecomment-2724301882 in build-ci
       - run: npm run build
       - uses: actions/upload-artifact@v4
