@@ -7,5 +7,5 @@ export default {
   },
   variants: {},
   plugins: [],
-  content: ['./src/**/*.{html,js}'],
+  content: ['./src/**/*.{astro,html,js,jsx,ts,tsx}'],
 };
