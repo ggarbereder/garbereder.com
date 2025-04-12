@@ -29,7 +29,8 @@ describe('Landing Page', () => {
       cy.get('header nav a')
         .should('have.text', 'Resume')
         .and('have.attr', 'href', '#cv')
-        .and('have.class', 'bg-orange-500');
+        .and('have.class', 'from-orange-500')
+        .and('have.class', 'to-orange-400');
     });
   });
 
