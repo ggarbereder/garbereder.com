@@ -39,6 +39,6 @@
     "typescript-eslint": "^8.29.1",
     "vite-imagetools": "^7.0.5",
     "start-server-and-test": "^2.0.11",
-    "husky": "^8.0.3"
+    "husky": "^9.1.7"
   }
 }
