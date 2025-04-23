@@ -77,9 +77,7 @@ jobs:
         with:
           config: baseUrl=http://localhost:4321
           parallel: true
-          record: true
           group: 'UI Tests'
-          retries: 2
       # Upload test screenshots regardless of test outcome
       - uses: actions/upload-artifact@v4
         with:
@@ -135,9 +133,7 @@ jobs:
         with:
           config: baseUrl=http://garbereder.com
           parallel: true
-          record: true
           group: 'Verification Tests'
-          retries: 2
       # Upload verification screenshots regardless of test outcome
       - uses: actions/upload-artifact@v4
         with:
