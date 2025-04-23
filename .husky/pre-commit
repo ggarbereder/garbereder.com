@@ -1,4 +1,4 @@
 npx husky run .husky/pre-commit
 
-npm run lint:format:write
+npm run lint:prettier:write
 git update-index --again
