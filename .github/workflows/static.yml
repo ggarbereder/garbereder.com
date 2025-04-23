@@ -30,6 +30,7 @@ concurrency:
 # Environment variables for the workflow
 env:
   HUSKY: 0 # Disable Husky git hooks during CI/CD
+  NODE_ENV: production
 
 jobs:
   # Build job: Compiles the website and creates the distribution files
@@ -37,8 +38,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - run: npm install
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
       - run: npx browserslist@latest --update-db # Update browser compatibility database
       - run: npm run lint # Run linting checks
       # work around for https://github.com/parcel-bundler/parcel/issues/5961#issuecomment-2724301882 in build-ci
@@ -54,9 +60,14 @@ jobs:
     needs: build # Requires build job to complete first
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - run: npm install
-      - uses: actions/download-artifact@v4
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - uses: actions/download-artifact@v4.1.4
         with:
           name: dist
           path: dist/
@@ -65,6 +76,10 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           config: baseUrl=http://localhost:4321
+          parallel: true
+          record: true
+          group: 'UI Tests'
+          retries: 2
       # Upload test screenshots regardless of test outcome
       - uses: actions/upload-artifact@v4
         with:
@@ -108,12 +123,21 @@ jobs:
     needs: deploy # Requires deploy job to complete first
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - run: npm install
-      - name: Cypress run
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - name: Run Cypress verification
         uses: cypress-io/github-action@v5
         with:
           config: baseUrl=http://garbereder.com
+          parallel: true
+          record: true
+          group: 'Verification Tests'
+          retries: 2
       # Upload verification screenshots regardless of test outcome
       - uses: actions/upload-artifact@v4
         with:
