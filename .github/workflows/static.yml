@@ -30,7 +30,7 @@ concurrency:
 # Environment variables for the workflow
 env:
   HUSKY: 0 # Disable Husky git hooks during CI/CD
-  NODE_ENV: production
+  NODE_ENV: development
 
 jobs:
   # Build job: Compiles the website and creates the distribution files
