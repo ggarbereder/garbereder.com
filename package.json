@@ -17,7 +17,7 @@
     "prepare": "npx husky install"
   },
   "devDependencies": {
-    "@astrojs/preact": "^4.0.9",
+    "@astrojs/preact": "^4.0.10",
     "@eslint/js": "^9.25.1",
     "@tailwindcss/postcss": "^4.1.4",
     "@tailwindcss/vite": "^4.1.4",
