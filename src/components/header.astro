@@ -6,6 +6,7 @@ const { href } = Astro.props;
 
 <header
   class="min-h-screen bg-gradient-to-br from-cyan-900 to-cyan-800 text-slate-300 flex flex-col justify-center pt-6 pb-6 lg:pb-0"
+  role="banner"
 >
   <h1 class="sr-only">
     Gerrit Garbereder - Senior Engineering Manager | Leadership, Innovation, and
@@ -24,11 +25,11 @@ const { href } = Astro.props;
           within budget, while fostering a culture of innovation, collaboration,
           and continuous improvement.
         </p>
-        <nav class="mt-8">
+        <nav class="mt-8" aria-label="Main navigation">
           <a
             href={`#${href}`}
             class="rounded-full bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 transition-colors duration-300 px-6 py-2 text-slate-900"
-            >Resume</a
+            aria-label="View my resume">Resume</a
           >
         </nav>
       </div>
