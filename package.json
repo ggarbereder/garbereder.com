@@ -28,7 +28,7 @@
     "cypress": "^14.4.0",
     "eslint": "^9.29.0",
     "eslint-config-prettier": "^10.1.5",
-    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.37.5",
     "postcss": "^8.5.4",
     "preact": "^10.26.9",
