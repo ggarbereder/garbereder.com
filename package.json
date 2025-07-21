@@ -36,7 +36,7 @@
     "prettier-plugin-astro": "^0.14.1",
     "sass": "^1.89.2",
     "tailwindcss": "^4.1.8",
-    "typescript-eslint": "^8.36.0",
+    "typescript-eslint": "^8.37.0",
     "vite-imagetools": "^7.1.0",
     "start-server-and-test": "^2.0.12",
     "husky": "^9.1.7"
