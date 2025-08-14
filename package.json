@@ -24,7 +24,7 @@
     "@typescript-eslint/eslint-plugin": "^8.37.0",
     "@typescript-eslint/parser": "^8.36.0",
     "astro": "^5.7.10",
-    "cssnano": "^7.0.7",
+    "cssnano": "^7.1.0",
     "cypress": "^14.5.0",
     "eslint": "^9.29.0",
     "eslint-config-prettier": "^10.1.8",
