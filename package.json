@@ -22,7 +22,7 @@
     "@tailwindcss/postcss": "^4.1.12",
     "@tailwindcss/vite": "^4.1.12",
     "@typescript-eslint/eslint-plugin": "^8.37.0",
-    "@typescript-eslint/parser": "^8.36.0",
+    "@typescript-eslint/parser": "^8.40.0",
     "astro": "^5.13.2",
     "cssnano": "^7.1.0",
     "cypress": "^14.5.4",
