@@ -18,7 +18,9 @@ describe('Landing Page', () => {
         'contain.text',
         'Gerrit Garbereder - Senior Engineering Manager'
       );
-      cy.get('h2 .text-orange-500').should('contain.text', 'Gerrit Garbereder');
+      cy.get('h2 .text-orange-500')
+        .invoke('text')
+        .should('match', /Gerrit\s+Garbereder/);
 
       // Description
       cy.get('header p')
@@ -106,10 +108,13 @@ describe('Landing Page', () => {
 
     it('displays attribution links correctly', () => {
       // Icons8 links
-      cy.get('footer div.text-xs a').should('have.length', 3);
+      cy.get('footer div.text-xs a').should('have.length', 4);
       cy.get('a[href*="icons8.com/icon/84888/linkedin"]').should('exist');
       cy.get('a[href*="icons8.com/icon/20675/github"]').should('exist');
       cy.get('a[href="//icons8.com"]').should('exist');
+      cy.get(
+        'a[href="//www.pexels.com/video/wood-light-nature-sunny-4102353/"]'
+      ).should('exist');
     });
   });
 
