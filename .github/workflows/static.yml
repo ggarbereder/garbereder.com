@@ -129,7 +129,7 @@ jobs:
       - name: Run Cypress verification
         uses: cypress-io/github-action@v6
         with:
-          config: baseUrl=http://garbereder.com
+          config: baseUrl=http://www.garbereder.com
       # Upload verification screenshots regardless of test outcome
       - uses: actions/upload-artifact@v4
         with:
