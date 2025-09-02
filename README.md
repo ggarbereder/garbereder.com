@@ -2,6 +2,10 @@
 
 [![Build and Deploy (main only) content to Pages](https://github.com/ggarbereder/garbereder.com/actions/workflows/static.yml/badge.svg?branch=main)](https://github.com/ggarbereder/garbereder.com/actions/workflows/static.yml)
 
+## Architecture
+
+![Architecture Diagram](./architecture.svg)
+
 ## Prerequisites
 
 - Node.js (LTS version recommended)
