@@ -1,8 +1,10 @@
 <p><a target="_blank" href="https://app.eraser.io/workspace/13CWfCo0qAe1BLFjrEXT" id="edit-in-eraser-github-link"><img alt="Edit in Eraser" src="https://firebasestorage.googleapis.com/v0/b/second-petal-295822.appspot.com/o/images%2Fgithub%2FOpen%20in%20Eraser.svg?alt=media&amp;token=968381c8-a7e7-472a-8ed6-4a6626da5501"></a></p>
 
 # Garbereder.com
-## Architecture
+﻿ 
 
+## Architecture
+[﻿Static Website Architecture with GitHub, Cloudflare, and BetterStack](https://app.eraser.io/workspace/13CWfCo0qAe1BLFjrEXT?elements=dQD37yHeMbXsazUZNuAUfQ) 
 
 ## Prerequisites
 - Node.js (LTS version recommended)
