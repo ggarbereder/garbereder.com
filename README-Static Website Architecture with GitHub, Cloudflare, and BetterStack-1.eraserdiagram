@@ -1,0 +1,35 @@
+cloud-architecture-diagram
+
+title Static Website Architecture with GitHub, Cloudflare, and BetterStack
+
+GitHub Repository [icon: github] {
+  Source Code [icon: file-text]
+  Content [icon: file]
+  GitHub Actions [icon: githubactions]
+}
+
+GitHub Pages [icon: github]
+
+United Domains [icon: globe]
+
+Cloudflare [icon: cloudflare, color: orange, colorMode: bold]
+
+BetterStack [icon: activity-square]
+
+User [icon: user]
+Admin [icon: user-check]
+
+// Connections
+Source Code > GitHub Actions
+Content > GitHub Actions
+GitHub Actions > GitHub Pages: publish site
+
+United Domains > Cloudflare: domain delegation
+Cloudflare > GitHub Pages: DNS points to site
+
+BetterStack --> GitHub Pages: monitor uptime
+
+User > Cloudflare: requests website
+
+BetterStack > Admin: alerts
+
