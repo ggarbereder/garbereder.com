@@ -1,10 +1,16 @@
-<p><a target="_blank" href="https://app.eraser.io/workspace/13CWfCo0qAe1BLFjrEXT" id="edit-in-eraser-github-link"><img alt="Edit in Eraser" src="https://firebasestorage.googleapis.com/v0/b/second-petal-295822.appspot.com/o/images%2Fgithub%2FOpen%20in%20Eraser.svg?alt=media&amp;token=968381c8-a7e7-472a-8ed6-4a6626da5501"></a></p>
+[![Build and Deploy (main only) content to Pages](https://github.com/ggarbereder/garbereder.com/actions/workflows/static.yml/badge.svg?branch=main)](https://github.com/ggarbereder/garbereder.com/actions/workflows/static.yml)
+[![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/24fip.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
 
 # Garbereder.com
-﻿ 
 
 ## Architecture
-[﻿Static Website Architecture with GitHub, Cloudflare, and BetterStack](https://app.eraser.io/workspace/13CWfCo0qAe1BLFjrEXT?elements=dQD37yHeMbXsazUZNuAUfQ) 
+<!-- eraser-additional-content -->
+## Diagrams
+<!-- eraser-additional-files -->
+<a href="/README-Static Website Architecture with GitHub, Cloudflare, and BetterStack-1.eraserdiagram" data-element-id="iCwAF-Hf-3PkRkqWnDDsh"><img src="/.eraser/13CWfCo0qAe1BLFjrEXT___zyEvvzgyoedHnT9WaAfDjOScVsT2___---diagram----23f49d818a1d847e98286ae21c4ea9c6-Static-Website-Architecture-with-GitHub--Cloudflare--and-BetterStack.png" alt="" data-element-id="iCwAF-Hf-3PkRkqWnDDsh" /></a>
+<!-- end-eraser-additional-files -->
+<!-- end-eraser-additional-content -->
+<!--- Eraser file: https://app.eraser.io/workspace/13CWfCo0qAe1BLFjrEXT --->
 
 ## Prerequisites
 - Node.js (LTS version recommended)
@@ -44,13 +50,3 @@ Github Actions handle continuous integration and deployment:
 - Executes full test suite before deployment
 - Deploys to GitHub Pages on successful main branch builds
 - Runs post-deployment verification tests
-
-
-
-<!-- eraser-additional-content -->
-## Diagrams
-<!-- eraser-additional-files -->
-<a href="/README-Static Website Architecture with GitHub, Cloudflare, and BetterStack-1.eraserdiagram" data-element-id="iCwAF-Hf-3PkRkqWnDDsh"><img src="/.eraser/13CWfCo0qAe1BLFjrEXT___zyEvvzgyoedHnT9WaAfDjOScVsT2___---diagram----23f49d818a1d847e98286ae21c4ea9c6-Static-Website-Architecture-with-GitHub--Cloudflare--and-BetterStack.png" alt="" data-element-id="iCwAF-Hf-3PkRkqWnDDsh" /></a>
-<!-- end-eraser-additional-files -->
-<!-- end-eraser-additional-content -->
-<!--- Eraser file: https://app.eraser.io/workspace/13CWfCo0qAe1BLFjrEXT --->
