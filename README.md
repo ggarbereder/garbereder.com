@@ -1,11 +1,9 @@
+# Garbereder.com
 [![Build and Deploy (main only) content to Pages](https://github.com/ggarbereder/garbereder.com/actions/workflows/static.yml/badge.svg?branch=main)](https://github.com/ggarbereder/garbereder.com/actions/workflows/static.yml)
 [![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/24fip.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
 
-# Garbereder.com
-
-## Architecture
 <!-- eraser-additional-content -->
-## Diagrams
+## Architecture
 <!-- eraser-additional-files -->
 <a href="/README-Static Website Architecture with GitHub, Cloudflare, and BetterStack-1.eraserdiagram" data-element-id="iCwAF-Hf-3PkRkqWnDDsh"><img src="/.eraser/13CWfCo0qAe1BLFjrEXT___zyEvvzgyoedHnT9WaAfDjOScVsT2___---diagram----23f49d818a1d847e98286ae21c4ea9c6-Static-Website-Architecture-with-GitHub--Cloudflare--and-BetterStack.png" alt="" data-element-id="iCwAF-Hf-3PkRkqWnDDsh" /></a>
 <!-- end-eraser-additional-files -->
