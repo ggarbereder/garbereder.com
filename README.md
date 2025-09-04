@@ -5,7 +5,7 @@
 <!-- eraser-additional-content -->
 ## Architecture
 <!-- eraser-additional-files -->
-<a href="/README-Static Website Architecture with GitHub, Cloudflare, and BetterStack-1.eraserdiagram" data-element-id="iCwAF-Hf-3PkRkqWnDDsh"><img src="/.eraser/13CWfCo0qAe1BLFjrEXT___zyEvvzgyoedHnT9WaAfDjOScVsT2___---diagram----23f49d818a1d847e98286ae21c4ea9c6-Static-Website-Architecture-with-GitHub--Cloudflare--and-BetterStack.png" alt="" data-element-id="iCwAF-Hf-3PkRkqWnDDsh" /></a>
+<a href="/architecture.eraserdiagram" data-element-id="iCwAF-Hf-3PkRkqWnDDsh"><img src="/.eraser/13CWfCo0qAe1BLFjrEXT___zyEvvzgyoedHnT9WaAfDjOScVsT2___---diagram----23f49d818a1d847e98286ae21c4ea9c6-Static-Website-Architecture-with-GitHub--Cloudflare--and-BetterStack.png" alt="" data-element-id="iCwAF-Hf-3PkRkqWnDDsh" /></a>
 <!-- end-eraser-additional-files -->
 <!-- end-eraser-additional-content -->
 <!--- Eraser file: https://app.eraser.io/workspace/13CWfCo0qAe1BLFjrEXT --->
