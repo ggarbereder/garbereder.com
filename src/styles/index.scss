@@ -18,6 +18,25 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
+
+  /* Focus indicators for better accessibility */
+  *:focus-visible {
+    outline: 2px solid #f97316; /* orange-500 */
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Remove default focus outline for mouse users */
+  *:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* Enhanced focus for interactive elements */
+  a:focus-visible,
+  button:focus-visible {
+    outline: 3px solid #f97316;
+    outline-offset: 3px;
+  }
 }
 
 .nojs .opacity-0.animate {
