@@ -3,3 +3,9 @@
 # Allow crawling of all content
 User-agent: *
 Disallow:
+
+# Sitemap
+Sitemap: https://www.garbereder.com/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
