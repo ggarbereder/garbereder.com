@@ -29,7 +29,7 @@ describe('Landing Page', () => {
 
       // Resume link
       cy.get('header nav a')
-        .should('have.text', 'Resume')
+        .should('have.text', 'Resumé')
         .and('have.attr', 'href', '#cv')
         .and('have.class', 'from-orange-500')
         .and('have.class', 'to-orange-400');
