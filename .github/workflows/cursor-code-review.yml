@@ -36,7 +36,6 @@ jobs:
           CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
           MODEL: gpt-5
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BLOCKING_REVIEW: ${{ vars.BLOCKING_REVIEW || 'false' }}
         run: |
           cursor-agent --force --model "$MODEL" --output-format=text --print 'You are operating in a GitHub Actions runner performing automated code review. The gh CLI is available and authenticated via GH_TOKEN. You may comment on pull requests.
 
@@ -45,13 +44,12 @@ jobs:
           - PR Number: ${{ github.event.pull_request.number }}
           - PR Head SHA: ${{ github.event.pull_request.head.sha }}
           - PR Base SHA: ${{ github.event.pull_request.base.sha }}
-          - Blocking Review: ${{ env.BLOCKING_REVIEW }}
 
           Objectives:
           1) Re-check existing review comments and reply resolved when addressed.
           2) Review the current PR diff and flag only clear, high-severity issues.
           3) Leave very short inline comments (1-2 sentences) on changed lines only and a brief summary at the end.
-          
+
           Procedure:
             - Get existing comments: gh pr view --json comments
             - Get diff: gh pr diff
@@ -68,15 +66,3 @@ jobs:
             - Submit one review containing inline comments plus a concise summary
             - Use only: gh pr review --comment
             - Do not use: gh pr review --approve or --request-changes"'
-      - name: Check blocking review results
-        if: env.BLOCKING_REVIEW == 'true'
-        run: |
-          echo "Checking for critical issues..."
-          echo "CRITICAL_ISSUES_FOUND: ${CRITICAL_ISSUES_FOUND:-unset}"
-
-          if [ "${CRITICAL_ISSUES_FOUND:-false}" = "true" ]; then
-            echo "❌ Critical issues found and blocking review is enabled. Failing the workflow."
-            exit 1
-          else
-            echo "✅ No blocking issues found."
-          fi
