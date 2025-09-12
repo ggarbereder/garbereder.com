@@ -65,4 +65,7 @@ jobs:
             Submission:
             - Submit one review containing inline comments plus a concise summary
             - Use only: gh pr review --comment
-            - Do not use: gh pr review --approve or --request-changes"'
+            - Do not use: gh pr review --approve or --request-changes"
+
+          End:
+            - terminate the curosor-agent when done'
