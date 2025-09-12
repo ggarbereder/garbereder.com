@@ -32,12 +32,13 @@ jobs:
           git config user.email "cursoragent@cursor.com"
 
       - name: Perform automated code review
+        timeout-minutes: 5
         env:
           CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
           MODEL: gpt-5
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          cursor-agent --force --model "$MODEL" --output-format=text --print 'You are operating in a GitHub Actions runner performing automated code review. The gh CLI is available and authenticated via GH_TOKEN. You may comment on pull requests.
+          timeout 300 cursor-agent --force --model "$MODEL" --output-format=text --print 'You are operating in a GitHub Actions runner performing automated code review. The gh CLI is available and authenticated via GH_TOKEN. You may comment on pull requests.
 
           Context:
           - Repo: ${{ github.repository }}
@@ -65,7 +66,7 @@ jobs:
             Submission:
             - Submit one review containing inline comments plus a concise summary
             - Use only: gh pr review --comment
-            - Do not use: gh pr review --approve or --request-changes"
+            - Do not use: gh pr review --approve or --request-changes
 
           End:
-            - terminate the curosor-agent when done'
+            - terminate the cursor-agent when done'
