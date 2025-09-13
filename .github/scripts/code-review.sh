@@ -12,7 +12,73 @@ PR_HEAD_SHA="$3"
 PR_BASE_SHA="$4"
 MODEL="$5"
 
+# Validate all required parameters and prevent injection attacks
+if [ -z "$REPO" ]; then
+    echo "Error: Repository name is required"
+    exit 1
+fi
+
+# Validate repository format: owner/repo (alphanumeric, hyphens, underscores, dots only)
+if ! [[ "$REPO" =~ ^[a-zA-Z0-9._-]+/[a-zA-Z0-9._-]+$ ]]; then
+    echo "Error: Repository must be in format 'owner/repo' (alphanumeric, hyphens, underscores, dots only)"
+    exit 1
+fi
+
+# Validate PR number: must be numeric only
+if [ -z "$PR_NUMBER" ] || ! [[ "$PR_NUMBER" =~ ^[0-9]+$ ]]; then
+    echo "Error: Valid PR number is required (numeric only)"
+    exit 1
+fi
+
+# Validate PR number range (reasonable bounds)
+if [ "$PR_NUMBER" -lt 1 ] || [ "$PR_NUMBER" -gt 999999 ]; then
+    echo "Error: PR number must be between 1 and 999999"
+    exit 1
+fi
+
+# Validate SHA format: alphanumeric only, 7-40 characters
+if [ -z "$PR_HEAD_SHA" ] || ! [[ "$PR_HEAD_SHA" =~ ^[a-f0-9]{7,40}$ ]]; then
+    echo "Error: Valid PR head SHA is required (7-40 hex characters)"
+    exit 1
+fi
+
+if [ -z "$PR_BASE_SHA" ] || ! [[ "$PR_BASE_SHA" =~ ^[a-f0-9]{7,40}$ ]]; then
+    echo "Error: Valid PR base SHA is required (7-40 hex characters)"
+    exit 1
+fi
+
+# Validate model name: alphanumeric, hyphens, underscores, dots only
+if [ -z "$MODEL" ]; then
+    echo "Error: Model name is required"
+    exit 1
+fi
+
+if ! [[ "$MODEL" =~ ^[a-zA-Z0-9._-]+$ ]]; then
+    echo "Error: Model name contains invalid characters (alphanumeric, hyphens, underscores, dots only)"
+    exit 1
+fi
+
+# Additional security: check for common injection patterns
+if [[ "$REPO" =~ [;&|`$] ]] || [[ "$PR_NUMBER" =~ [;&|`$] ]] || [[ "$PR_HEAD_SHA" =~ [;&|`$] ]] || [[ "$PR_BASE_SHA" =~ [;&|`$] ]] || [[ "$MODEL" =~ [;&|`$] ]]; then
+    echo "Error: Parameters contain potentially dangerous characters"
+    exit 1
+fi
+
+# Validate environment variables
+if [ -z "$CURSOR_API_KEY" ]; then
+    echo "Error: CURSOR_API_KEY environment variable is required"
+    exit 1
+fi
+
+if [ -z "$GH_TOKEN" ]; then
+    echo "Error: GH_TOKEN environment variable is required"
+    exit 1
+fi
+
 echo "Starting code review for PR #${PR_NUMBER} in ${REPO}"
+echo "Using model: ${MODEL}"
+echo "Head SHA: ${PR_HEAD_SHA}"
+echo "Base SHA: ${PR_BASE_SHA}"
 
 # Function to cleanup and force exit
 # This is necessary due to cursor-agent hanging issue mentioned above
