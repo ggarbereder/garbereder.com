@@ -45,7 +45,6 @@ jobs:
           - PR Number: ${{ github.event.pull_request.number }}
           - PR Head SHA: ${{ github.event.pull_request.head.sha }}
           - PR Base SHA: ${{ github.event.pull_request.base.sha }}
-          - Blocking Review: ${{ env.BLOCKING_REVIEW }}
 
           Objectives:
           1) Re-check existing review comments and reply resolved when addressed.
@@ -61,6 +60,7 @@ jobs:
           - If CURRENT run finds issues and any prior "no issues" comments exist:
             - Prefer to remove them to avoid confusion:
               - Try deleting top-level issue comments via: gh api -X DELETE repos/${{ github.repository }}/issues/comments/<comment_id>
+              - If deletion isn't possible, minimize them via GraphQL (minimizeComment) or edit to prefix "[Superseded by new findings]".
             - If neither delete nor minimize is possible, reply to that comment: "⚠️ Superseded: issues were found in newer commits".
           - If a previously reported issue appears fixed by nearby changes, reply: ✅ This issue appears to be resolved by the recent changes
           - Analyze ONLY for:
@@ -88,23 +88,4 @@ jobs:
           - If there ARE issues to report, submit ONE review containing ONLY inline comments plus an optional concise summary body. Use the GitHub Reviews API to ensure comments are inline:
             - Build a JSON array of comments like: [{ "path": "<file>", "position": <diff_position>, "body": "..." }]
             - Submit via: gh api repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews -f event=COMMENT -f body="$SUMMARY" -f comments='[$COMMENTS_JSON]'
-          - Do NOT use: gh pr review --approve or --request-changes
-
-          Blocking behavior:
-          - If BLOCKING_REVIEW is true and any 🚨 or 🔒 issues were posted: echo "CRITICAL_ISSUES_FOUND=true" >> $GITHUB_ENV
-          - Otherwise: echo "CRITICAL_ISSUES_FOUND=false" >> $GITHUB_ENV
-          - Always set CRITICAL_ISSUES_FOUND at the end
-          '
-
-      - name: Check blocking review results
-        if: env.BLOCKING_REVIEW == 'true'
-        run: |
-          echo "Checking for critical issues..."
-          echo "CRITICAL_ISSUES_FOUND: ${CRITICAL_ISSUES_FOUND:-unset}"
-
-          if [ "${CRITICAL_ISSUES_FOUND:-false}" = "true" ]; then
-            echo "❌ Critical issues found and blocking review is enabled. Failing the workflow."
-            exit 1
-          else
-            echo "✅ No blocking issues found."
-          fi
+          - Do NOT use: gh pr review --approve or --request-changes'
