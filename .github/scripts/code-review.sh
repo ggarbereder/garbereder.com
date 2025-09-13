@@ -59,7 +59,7 @@ if ! [[ "$MODEL" =~ ^[a-zA-Z0-9._-]+$ ]]; then
 fi
 
 # Additional security: check for common injection patterns
-if [[ "$REPO" =~ [;&|`$] ]] || [[ "$PR_NUMBER" =~ [;&|`$] ]] || [[ "$PR_HEAD_SHA" =~ [;&|`$] ]] || [[ "$PR_BASE_SHA" =~ [;&|`$] ]] || [[ "$MODEL" =~ [;&|`$] ]]; then
+if [[ "$REPO" =~ [;\&\|\`\$] ]] || [[ "$PR_NUMBER" =~ [;\&\|\`\$] ]] || [[ "$PR_HEAD_SHA" =~ [;\&\|\`\$] ]] || [[ "$PR_BASE_SHA" =~ [;\&\|\`\$] ]] || [[ "$MODEL" =~ [;\&\|\`\$] ]]; then
     echo "Error: Parameters contain potentially dangerous characters"
     exit 1
 fi
