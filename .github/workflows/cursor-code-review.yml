@@ -32,6 +32,7 @@ jobs:
           git config user.email "cursoragent@cursor.com"
 
       - name: Perform automated code review
+        timeout-minutes: 5
         env:
           CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
           MODEL: claude-4-sonnet
