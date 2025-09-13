@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+# WORKAROUND: cursor-agent hangs in non-interactive mode and doesn't exit properly
+# See: https://forum.cursor.com/t/cursor-agent-p-non-interactive-not-exiting-at-the-end/133109/3
+# This script implements multiple timeout layers and aggressive process cleanup to work around the issue
+
 # Parse command line arguments
 REPO="$1"
 PR_NUMBER="$2"
@@ -10,7 +14,21 @@ MODEL="$5"
 
 echo "Starting code review for PR #${PR_NUMBER} in ${REPO}"
 
-cursor-agent --force --model "$MODEL" --output-format=text --print "You are operating in a GitHub Actions runner performing automated code review. The gh CLI is available and authenticated via GH_TOKEN. You may comment on pull requests.
+# Function to cleanup and force exit
+# This is necessary due to cursor-agent hanging issue mentioned above
+cleanup_and_exit() {
+    echo "Cleaning up cursor-agent processes..."
+    pkill -f cursor-agent 2>/dev/null || true
+    pkill -9 -f cursor-agent 2>/dev/null || true
+    echo "Code review completed"
+    exit 0
+}
+
+# Set up signal handlers for cleanup
+trap cleanup_and_exit SIGTERM SIGINT EXIT
+
+# Start cursor-agent in background with timeout
+timeout 240 cursor-agent --force --model "$MODEL" --output-format=text --print "You are operating in a GitHub Actions runner performing automated code review. The gh CLI is available and authenticated via GH_TOKEN. You may comment on pull requests.
 
 Context:
 - Repo: ${REPO}
@@ -57,6 +75,21 @@ Submission:
 - If there ARE issues to report, submit ONE review containing ONLY inline comments plus an optional concise summary body. Use the GitHub Reviews API to ensure comments are inline:
   - Build a JSON array of comments like: [{ \"path\": \"<file>\", \"position\": <diff_position>, \"body\": \"...\" }]
   - Submit via: gh api repos/${REPO}/pulls/${PR_NUMBER}/reviews -f event=COMMENT -f body=\"\$SUMMARY\" -f comments='\$COMMENTS_JSON'
-- Do NOT use: gh pr review --approve or --request-changes"
+- Do NOT use: gh pr review --approve or --request-changes
 
-echo "Code review completed"
+CRITICAL: When you finish the review, immediately type 'REVIEW_COMPLETE' and the process will terminate." &
+
+# Get the PID of the cursor-agent process
+CURSOR_PID=$!
+
+# Monitor the process and force cleanup if it hangs
+for i in {1..240}; do
+    if ! kill -0 $CURSOR_PID 2>/dev/null; then
+        echo "Cursor-agent completed naturally"
+        break
+    fi
+    sleep 1
+done
+
+# Force cleanup regardless of completion status
+cleanup_and_exit
