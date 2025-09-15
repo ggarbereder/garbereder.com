@@ -46,6 +46,7 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npx update-browserslist-db@latest # Update browser compatibility database
+      - run: npm audit
       - run: npm run lint # Run linting checks
       # work around for https://github.com/parcel-bundler/parcel/issues/5961#issuecomment-2724301882 in build-ci
       - run: npm run build
