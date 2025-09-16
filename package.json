@@ -14,7 +14,8 @@
     "cy:run": "cypress run --config baseUrl=http://localhost:4321",
     "test:e2e": "start-server-and-test dev http://localhost:4321 cy:run",
     "test": "npm run lint && npm run test:e2e",
-    "prepare": "npx husky"
+    "prepare": "npx husky",
+    "security:audit": "npm audit"
   },
   "devDependencies": {
     "@astrojs/preact": "^4.1.1",

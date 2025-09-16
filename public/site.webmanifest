@@ -1,15 +1,27 @@
 {
+  "name": "Gerrit Garbereder - Senior Engineering Manager",
+  "short_name": "Garbereder",
+  "description": "Senior Engineering Manager with expertise in leading cross-functional teams, project delivery, and fostering innovation.",
   "icons": [
     {
       "src": "android-chrome-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "android-chrome-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
-  "display": "standalone"
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/",
+  "theme_color": "#0c4a6e",
+  "background_color": "#0c4a6e",
+  "orientation": "portrait-primary",
+  "categories": ["business", "productivity"],
+  "lang": "en"
 }
