@@ -66,3 +66,22 @@ Github Actions handle continuous integration and deployment:
 - Executes full test suite before deployment
 - Deploys to GitHub Pages on successful main branch builds
 - Runs post-deployment verification tests
+
+## Security
+
+This project implements several security measures:
+
+- **Dependency Scanning**: Automated vulnerability scanning with `npm audit`
+- **Code Quality**: ESLint with security-focused rules
+- **TypeScript**: Strict type checking to prevent runtime errors
+- **Responsible Disclosure**: Security vulnerabilities can be reported via [security.txt](/.well-known/security.txt)
+
+### Security Scripts
+
+```bash
+# Run security audit
+npm run security:audit
+
+# Check for outdated dependencies
+npm run security:outdated
+```

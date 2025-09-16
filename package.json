@@ -15,7 +15,8 @@
     "test:e2e": "start-server-and-test dev http://localhost:4321 cy:run",
     "test": "npm run lint && npm run test:e2e",
     "prepare": "npx husky",
-    "security:audit": "npm audit"
+    "security:audit": "npm audit",
+    "security:outdated": "npm outdated"
   },
   "devDependencies": {
     "@astrojs/preact": "^4.1.1",
