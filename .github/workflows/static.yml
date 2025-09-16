@@ -36,6 +36,7 @@ jobs:
   # Build job: Compiles the website and creates the distribution files
   build:
     runs-on: ubuntu-latest
+    continue-on-error: false
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -44,7 +45,8 @@ jobs:
         with:
           node-version: '24'
           cache: 'npm'
-      - run: npm ci
+      - run: npm run security:audit
+      - run: npm ci --ignore-scripts
       - run: npx update-browserslist-db@latest # Update browser compatibility database
       - run: npm run lint # Run linting checks
       # work around for https://github.com/parcel-bundler/parcel/issues/5961#issuecomment-2724301882 in build-ci

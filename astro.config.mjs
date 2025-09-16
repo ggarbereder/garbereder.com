@@ -9,6 +9,7 @@ export default defineConfig({
   integrations: [preact()],
 
   vite: {
+    // @ts-ignore - Plugin compatibility issues with newer Vite versions
     plugins: [tailwindcss(), imagetools()],
   },
 });

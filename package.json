@@ -1,7 +1,7 @@
 {
-  "name": "astro",
+  "name": "garbereder.com",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -14,15 +14,17 @@
     "cy:run": "cypress run --config baseUrl=http://localhost:4321",
     "test:e2e": "start-server-and-test dev http://localhost:4321 cy:run",
     "test": "npm run lint && npm run test:e2e",
-    "prepare": "npx husky"
+    "prepare": "npx husky",
+    "security:audit": "npm audit",
+    "security:outdated": "npm outdated"
   },
   "devDependencies": {
     "@astrojs/preact": "^4.1.1",
     "@eslint/js": "^9.35.0",
     "@tailwindcss/postcss": "^4.1.13",
     "@tailwindcss/vite": "^4.1.13",
-    "@typescript-eslint/eslint-plugin": "^8.43.0",
-    "@typescript-eslint/parser": "^8.43.0",
+    "@typescript-eslint/eslint-plugin": "^8.44.0",
+    "@typescript-eslint/parser": "^8.44.0",
     "astro": "^5.13.7",
     "cssnano": "^7.1.1",
     "cypress": "^15.2.0",
@@ -36,7 +38,7 @@
     "prettier-plugin-astro": "^0.14.1",
     "sass": "^1.92.1",
     "tailwindcss": "^4.1.13",
-    "typescript-eslint": "^8.43.0",
+    "typescript-eslint": "^8.44.0",
     "vite-imagetools": "^8.0.0",
     "start-server-and-test": "^2.1.0",
     "husky": "^9.1.7"
