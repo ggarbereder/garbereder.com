@@ -1,6 +1,6 @@
 Contact: mailto:gerrit@garbereder.com
 Expires: 2025-12-31T23:59:59.000Z
-Encryption: https://keys.openpgp.org/vks/v1/by-fingerprint/153DA0A79361C1CB3D58EAF1A981389EAD0F14C0
+Encryption: https://keys.openpgp.org/search?q=gerrit%40garbereder.com
 Preferred-Languages: en
 Canonical: https://www.garbereder.com/.well-known/security.txt
 
