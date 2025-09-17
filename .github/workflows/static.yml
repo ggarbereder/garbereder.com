@@ -67,7 +67,7 @@ jobs:
             npm run version:patch
             git add package.json package-lock.json
             git commit -m "chore: bump version [skip ci]"
-            git push origin HEAD
+            git push origin ${{ github.head_ref }}
           else
             echo "Skipping version bump as current version ($CURRENT_VERSION) is higher than main version ($MAIN_VERSION)"
           fi
