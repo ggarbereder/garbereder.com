@@ -40,6 +40,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -49,6 +51,16 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npx update-browserslist-db@latest # Update browser compatibility database
       - run: npm run lint # Run linting checks
+      # Bump version and commit back to default branch (only on default branch pushes)
+      - name: Bump version
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          npm run version:patch
+          git add package.json package-lock.json
+          git commit -m "chore: bump version [skip ci]"
+          git push
       # work around for https://github.com/parcel-bundler/parcel/issues/5961#issuecomment-2724301882 in build-ci
       - run: npm run build
       - uses: actions/upload-artifact@v4

@@ -16,7 +16,10 @@
     "test": "npm run lint && npm run test:e2e",
     "prepare": "npx husky",
     "security:audit": "npm audit",
-    "security:outdated": "npm outdated"
+    "security:outdated": "npm outdated",
+    "version:patch": "npm version patch --no-git-tag-version",
+    "version:minor": "npm version minor --no-git-tag-version",
+    "version:major": "npm version major --no-git-tag-version"
   },
   "devDependencies": {
     "@astrojs/preact": "^4.1.1",
