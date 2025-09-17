@@ -52,6 +52,8 @@ jobs:
         with:
           node-version: '24'
           cache: 'npm'
+      - name: Fetch main branch
+        run: git fetch origin main:refs/remotes/origin/main
       - name: Bump version
         run: |
           git config --local user.email "action@github.com"
@@ -61,8 +63,8 @@ jobs:
           CURRENT_VERSION=$(node -p "require('./package.json').version")
           echo "Current version: $CURRENT_VERSION"
 
-          # Fetch main branch and get its version
-          MAIN_VERSION=$(git show origin/main:package.json | jq -r .version)
+          # Get main version
+          MAIN_VERSION=$(git show main:package.json | jq -r .version)
           echo "Main version: $MAIN_VERSION"
 
           if [[ $(echo -e "$CURRENT_VERSION\n$MAIN_VERSION" | sort -V | head -n1) == "$CURRENT_VERSION" ]]; then
