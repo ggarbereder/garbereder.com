@@ -54,6 +54,8 @@ jobs:
           cache: 'npm'
       - name: Fetch main branch
         run: git fetch origin main:refs/remotes/origin/main
+      - name: Fetch feature branch
+        run: git fetch origin $GITHUB_HEAD_REF
       - name: Bump version
         run: |
           git config --local user.email "action@github.com"
