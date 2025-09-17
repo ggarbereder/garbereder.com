@@ -50,7 +50,6 @@ jobs:
           cache: 'npm'
       - name: Bump version
         run: |
-          git branch --show-current
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
@@ -62,10 +61,10 @@ jobs:
           git fetch origin main:main
           MAIN_VERSION=$(git show main:package.json | jq -r .version)
           echo "Main version: $MAIN_VERSION"
-          git branch --show-current
 
           if [[ $(echo -e "$CURRENT_VERSION\n$MAIN_VERSION" | sort -V | head -n1) == "$CURRENT_VERSION" ]]; then
             echo "Bumping version as current version ($CURRENT_VERSION) is same or lower than main version ($MAIN_VERSION)"
+            git checkout ${{ github.ref_name }}
             npm run version:patch
             git add package.json package-lock.json
             git commit -m "chore: bump version [skip ci]"
