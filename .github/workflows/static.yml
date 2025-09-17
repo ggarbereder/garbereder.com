@@ -39,6 +39,10 @@ jobs:
     continue-on-error: false
     if: github.event_name == 'pull_request'
     steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        id: extract_branch
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -68,7 +72,7 @@ jobs:
             git add package.json package-lock.json
             git commit -m "chore: bump version [skip ci]"
             BRANCH_NAME=$(git branch --show-current)
-            git push origin HEAD:$BRANCH_NAME
+            git push origin ${{ steps.extract_branch.outputs.branch }}
           else
             echo "Skipping version bump as current version ($CURRENT_VERSION) is higher than main version ($MAIN_VERSION)"
           fi
