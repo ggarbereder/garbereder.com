@@ -39,10 +39,6 @@ jobs:
     continue-on-error: false
     if: github.event_name == 'pull_request'
     steps:
-      - name: Extract branch name
-        shell: bash
-        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-        id: extract_branch
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -54,6 +50,7 @@ jobs:
           cache: 'npm'
       - name: Bump version
         run: |
+          git branch --show-current
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
@@ -65,14 +62,14 @@ jobs:
           git fetch origin main:main
           MAIN_VERSION=$(git show main:package.json | jq -r .version)
           echo "Main version: $MAIN_VERSION"
+          git branch --show-current
 
           if [[ $(echo -e "$CURRENT_VERSION\n$MAIN_VERSION" | sort -V | head -n1) == "$CURRENT_VERSION" ]]; then
             echo "Bumping version as current version ($CURRENT_VERSION) is same or lower than main version ($MAIN_VERSION)"
             npm run version:patch
             git add package.json package-lock.json
             git commit -m "chore: bump version [skip ci]"
-            BRANCH_NAME=$(git branch --show-current)
-            git push origin ${{ steps.extract_branch.outputs.branch }}
+            git push origin ${{ github.ref_name }}
           else
             echo "Skipping version bump as current version ($CURRENT_VERSION) is higher than main version ($MAIN_VERSION)"
           fi
