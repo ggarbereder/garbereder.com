@@ -33,8 +33,55 @@ env:
   NODE_ENV: development
 
 jobs:
-  # Build job: Compiles the website and creates the distribution files
-  build:
+  # Version job: Handles version bumping for pull requests
+  version:
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        id: extract_branch
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+      - name: Fetch main branch
+        run: git fetch origin main:refs/remotes/origin/main
+      - name: Fetch feature branch
+        run: git fetch origin $GITHUB_HEAD_REF
+      - name: Bump version
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          # Get current version from PR branch
+          CURRENT_VERSION=$(node -p "require('./package.json').version") || { echo "Failed to get version from package.json"; exit 1; }
+          echo "Current version: $CURRENT_VERSION"
+
+          # Get main version
+          MAIN_VERSION=$(git show origin/main:package.json | jq -r .version) || { echo "Failed to get version from package-main.json"; exit 1; }
+          echo "Main version: $MAIN_VERSION"
+
+          if [[ $(echo -e "$CURRENT_VERSION\n$MAIN_VERSION" | sort -V | head -n1) == "$CURRENT_VERSION" ]]; then
+            echo "Bumping version as current version ($CURRENT_VERSION) is same or lower than main version ($MAIN_VERSION)"
+            git checkout $GITHUB_HEAD_REF
+            npm run version:patch
+            git add package.json package-lock.json
+            git commit -m "chore: bump version [skip ci]"
+            git push origin $GITHUB_HEAD_REF
+          else
+            echo "Skipping version bump as current version ($CURRENT_VERSION) is higher than main version ($MAIN_VERSION)"
+          fi
+
+  # Audit job: Runs security audits and linting checks
+  audit:
     runs-on: ubuntu-latest
     continue-on-error: false
     steps:
@@ -47,23 +94,54 @@ jobs:
         with:
           node-version: '24'
           cache: 'npm'
-      - run: npm run security:audit
-      - run: npm ci --ignore-scripts
-      - run: npx update-browserslist-db@latest # Update browser compatibility database
-      - run: npm run lint # Run linting checks
-      # Bump version and commit back to default branch (only on default branch pushes)
-      - name: Bump version
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          npm run version:patch
-          git add package.json package-lock.json
-          git commit -m "chore: bump version [skip ci]"
-          git push
-      # work around for https://github.com/parcel-bundler/parcel/issues/5961#issuecomment-2724301882 in build-ci
-      - run: npm run build
-      - uses: actions/upload-artifact@v4
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+      - name: Update browser compatibility database
+        run: npx update-browserslist-db@latest
+      - name: Security audit
+        run: npm run security:audit
+      - name: Lint code
+        run: npm run lint
+
+  # Build job: Compiles the website and creates the distribution files
+  build:
+    runs-on: ubuntu-latest
+    needs: audit # Requires audit job to pass first
+    continue-on-error: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+      - name: Build website
+        run: npm run build
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist/
