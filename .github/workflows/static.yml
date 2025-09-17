@@ -82,7 +82,6 @@ jobs:
   # Audit job: Runs security audits and linting checks
   audit:
     runs-on: ubuntu-latest
-    needs: version # Requires version job to pass first
     continue-on-error: false
     steps:
       - name: Checkout
@@ -115,7 +114,7 @@ jobs:
   # Build job: Compiles the website and creates the distribution files
   build:
     runs-on: ubuntu-latest
-    needs: [version, audit] # Requires both audit and version jobs to complete
+    needs: audit # Requires audit job to pass first
     continue-on-error: false
     steps:
       - name: Checkout
