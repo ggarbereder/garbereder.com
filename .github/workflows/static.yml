@@ -63,11 +63,13 @@ jobs:
           echo "Main version: $MAIN_VERSION"
 
           # Compare versions using semver
-          VERSION_COMPARISON=$(npx semver compare $CURRENT_VERSION $MAIN_VERSION)
-          echo "Version comparison result: $VERSION_COMPARISON"
+          # semver compare returns: -1 (lower), 0 (equal), 1 (higher)
+          VERSION_COMPARISON=$(npx semver compare $CURRENT_VERSION $MAIN_VERSION 2>/dev/null || echo "0")
+          echo "Version comparison result: '$VERSION_COMPARISON'"
 
-          # Only bump if current version is same or lower than main version
-          if [ "$VERSION_COMPARISON" -le 0 ]; then
+          # Cast to number and only bump if current version is same or lower than main version
+          VERSION_COMPARISON_NUM=$((VERSION_COMPARISON))
+          if [ "$VERSION_COMPARISON_NUM" -le 0 ]; then
             echo "Bumping version as current version ($CURRENT_VERSION) is same or lower than main version ($MAIN_VERSION)"
             npm run version:patch
             git add package.json package-lock.json
