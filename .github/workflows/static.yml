@@ -59,7 +59,7 @@ jobs:
           git config --local user.name "GitHub Action"
           npm run version:patch
           git add package.json package-lock.json
-          git commit -m "chore: bump version to $(node -p "require('./package.json').version") [skip ci]"
+          git commit -m "chore: bump version [skip ci]"
           git push
       # work around for https://github.com/parcel-bundler/parcel/issues/5961#issuecomment-2724301882 in build-ci
       - run: npm run build
