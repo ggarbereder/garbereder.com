@@ -64,11 +64,11 @@ jobs:
 
           if [[ $(echo -e "$CURRENT_VERSION\n$MAIN_VERSION" | sort -V | head -n1) == "$CURRENT_VERSION" ]]; then
             echo "Bumping version as current version ($CURRENT_VERSION) is same or lower than main version ($MAIN_VERSION)"
-            git checkout ${{ github.ref_name }}
+            git checkout $GITHUB_HEAD_REF
             npm run version:patch
             git add package.json package-lock.json
             git commit -m "chore: bump version [skip ci]"
-            git push origin ${{ github.ref_name }}
+            git push origin $GITHUB_HEAD_REF
           else
             echo "Skipping version bump as current version ($CURRENT_VERSION) is higher than main version ($MAIN_VERSION)"
           fi
