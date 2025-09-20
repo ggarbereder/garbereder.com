@@ -1,7 +1,7 @@
 {
   "name": "garbereder.com",
   "type": "module",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -23,15 +23,15 @@
   },
   "devDependencies": {
     "@astrojs/preact": "^4.1.1",
-    "@eslint/js": "^9.35.0",
+    "@eslint/js": "^9.36.0",
     "@tailwindcss/postcss": "^4.1.13",
     "@tailwindcss/vite": "^4.1.13",
     "@typescript-eslint/eslint-plugin": "^8.44.0",
     "@typescript-eslint/parser": "^8.44.0",
-    "astro": "^5.13.7",
+    "astro": "^5.13.9",
     "cssnano": "^7.1.1",
     "cypress": "^15.2.0",
-    "eslint": "^9.35.0",
+    "eslint": "^9.36.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.37.5",
@@ -39,11 +39,11 @@
     "preact": "^10.27.2",
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
-    "sass": "^1.92.1",
+    "sass": "^1.93.0",
     "tailwindcss": "^4.1.13",
     "typescript-eslint": "^8.44.0",
     "vite-imagetools": "^8.0.0",
-    "start-server-and-test": "^2.1.0",
+    "start-server-and-test": "^2.1.2",
     "husky": "^9.1.7"
   }
 }
