@@ -18,6 +18,7 @@ on:
 # These permissions are required for GitHub Pages deployment
 permissions:
   contents: read
+  pages: write
   id-token: write
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
