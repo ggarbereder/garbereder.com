@@ -17,7 +17,7 @@ on:
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 # These permissions are required for GitHub Pages deployment
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -33,53 +33,6 @@ env:
   NODE_ENV: development
 
 jobs:
-  # Version job: Handles version bumping for pull requests
-  version:
-    runs-on: ubuntu-latest
-    continue-on-error: false
-    if: github.event_name == 'pull_request'
-    steps:
-      - name: Extract branch name
-        shell: bash
-        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-        id: extract_branch
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-          cache: 'npm'
-      - name: Fetch main branch
-        run: git fetch origin main:refs/remotes/origin/main
-      - name: Fetch feature branch
-        run: git fetch origin $GITHUB_HEAD_REF
-      - name: Bump version
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-
-          # Get current version from PR branch
-          CURRENT_VERSION=$(node -p "require('./package.json').version") || { echo "Failed to get version from package.json"; exit 1; }
-          echo "Current version: $CURRENT_VERSION"
-
-          # Get main version
-          MAIN_VERSION=$(git show origin/main:package.json | jq -r .version) || { echo "Failed to get version from package-main.json"; exit 1; }
-          echo "Main version: $MAIN_VERSION"
-
-          if [[ $(echo -e "$CURRENT_VERSION\n$MAIN_VERSION" | sort -V | head -n1) == "$CURRENT_VERSION" ]]; then
-            echo "Bumping version as current version ($CURRENT_VERSION) is same or lower than main version ($MAIN_VERSION)"
-            git checkout $GITHUB_HEAD_REF
-            npm run version:patch
-            git add package.json package-lock.json
-            git commit -m "chore: bump version [skip ci]"
-            git push origin $GITHUB_HEAD_REF
-          else
-            echo "Skipping version bump as current version ($CURRENT_VERSION) is higher than main version ($MAIN_VERSION)"
-          fi
-
   # Audit job: Runs security audits and linting checks
   audit:
     runs-on: ubuntu-latest
