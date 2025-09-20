@@ -13,6 +13,7 @@ on:
 # Sets permissions of the GITHUB_TOKEN to allow pushing to the PR branch
 permissions:
   contents: write
+  id-token: write
 
 # Environment variables for the workflow
 env:
