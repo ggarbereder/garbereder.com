@@ -2,7 +2,7 @@
 name: Build and Deploy (main only) content to Pages
 
 on:
-  # Runs on pushes targeting the default branch
+  # Runs on pushes targeting the default branch (main)
   push:
     branches: ['main']
 
