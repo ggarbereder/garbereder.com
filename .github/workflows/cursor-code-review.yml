@@ -35,7 +35,7 @@ jobs:
         timeout-minutes: 5
         env:
           CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
-          MODEL: claude-4-sonnet
+          MODEL: sonnet-4.5
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           chmod +x .github/scripts/code-review.sh
