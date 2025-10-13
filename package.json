@@ -1,7 +1,11 @@
 {
   "name": "garbereder.com",
   "type": "module",
+<<<<<<< HEAD
   "version": "1.0.12",
+=======
+  "version": "1.0.11",
+>>>>>>> 30adf3b (chore: bump version)
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
