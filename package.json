@@ -30,7 +30,7 @@
     "@typescript-eslint/parser": "^8.46.0",
     "astro": "^5.14.3",
     "cssnano": "^7.1.1",
-    "cypress": "^15.3.0",
+    "cypress": "^15.4.0",
     "eslint": "^9.37.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
