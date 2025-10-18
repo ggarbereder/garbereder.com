@@ -1,11 +1,7 @@
 {
   "name": "garbereder.com",
   "type": "module",
-<<<<<<< HEAD
-  "version": "1.0.12",
-=======
   "version": "1.0.11",
->>>>>>> 30adf3b (chore: bump version)
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -31,8 +27,8 @@
     "@tailwindcss/postcss": "^4.1.14",
     "@tailwindcss/vite": "^4.1.14",
     "@typescript-eslint/eslint-plugin": "^8.46.0",
-    "astro": "^5.14.4",
     "@typescript-eslint/parser": "^8.46.0",
+    "astro": "^5.14.4",
     "cssnano": "^7.1.1",
     "cypress": "^15.4.0",
     "eslint": "^9.37.0",
