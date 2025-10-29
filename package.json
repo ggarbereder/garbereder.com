@@ -1,7 +1,7 @@
 {
   "name": "garbereder.com",
   "type": "module",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -22,28 +22,29 @@
     "version:major": "npm version major --no-git-tag-version"
   },
   "devDependencies": {
-    "@astrojs/preact": "^4.1.1",
-    "@eslint/js": "^9.37.0",
-    "@tailwindcss/postcss": "^4.1.14",
-    "@tailwindcss/vite": "^4.1.14",
-    "@typescript-eslint/eslint-plugin": "^8.46.0",
-    "@typescript-eslint/parser": "^8.46.0",
-    "astro": "^5.14.4",
-    "cssnano": "^7.1.1",
-    "cypress": "^15.4.0",
-    "eslint": "^9.37.0",
+    "@astrojs/preact": "^4.1.2",
+    "@eslint/js": "^9.38.0",
+    "@tailwindcss/postcss": "^4.1.16",
+    "@tailwindcss/vite": "^4.1.16",
+    "@typescript-eslint/eslint-plugin": "^8.46.2",
+    "@typescript-eslint/parser": "^8.46.2",
+    "astro": "^5.15.2",
+    "cssnano": "^7.1.2",
+    "cypress": "^15.5.0",
+    "eslint": "^9.38.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.37.5",
+    "husky": "^9.1.7",
     "postcss": "^8.5.6",
     "preact": "^10.27.2",
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
     "sass": "^1.93.2",
-    "tailwindcss": "^4.1.14",
-    "typescript-eslint": "^8.46.0",
-    "vite-imagetools": "^9.0.0",
     "start-server-and-test": "^2.1.2",
-    "husky": "^9.1.7"
+    "tailwindcss": "^4.1.16",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.2",
+    "vite-imagetools": "^9.0.0"
   }
 }
