@@ -21,7 +21,7 @@ function initTestimonialsSlideshow(container: HTMLElement) {
 
   const total = slides.length;
   let isProgrammaticScroll = false;
-  let fallbackTimerId: ReturnType<typeof setTimeout> | undefined;
+  let fallbackTimerId: ReturnType<typeof window.setTimeout> | undefined;
 
   function getScrollPosition() {
     return viewport.scrollLeft;
@@ -36,7 +36,7 @@ function initTestimonialsSlideshow(container: HTMLElement) {
   }
 
   function goToIndex(index: number) {
-    clearTimeout(fallbackTimerId);
+    window.clearTimeout(fallbackTimerId);
     fallbackTimerId = undefined;
 
     const i = Math.max(0, Math.min(index, total - 1));
@@ -49,10 +49,10 @@ function initTestimonialsSlideshow(container: HTMLElement) {
     const onScrollEnd = () => {
       isProgrammaticScroll = false;
     };
-    const myFallbackId = setTimeout(onScrollEnd, 400);
+    const myFallbackId = window.setTimeout(onScrollEnd, 400);
     fallbackTimerId = myFallbackId;
     viewport.addEventListener('scrollend', () => {
-      clearTimeout(myFallbackId);
+      window.clearTimeout(myFallbackId);
       onScrollEnd();
     }, { once: true });
   }
