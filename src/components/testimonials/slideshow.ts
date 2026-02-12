@@ -21,6 +21,7 @@ function initTestimonialsSlideshow(container: HTMLElement) {
 
   const total = slides.length;
   let isProgrammaticScroll = false;
+  let fallbackTimerId: ReturnType<typeof setTimeout> | undefined;
 
   function getScrollPosition() {
     return viewport.scrollLeft;
@@ -35,17 +36,25 @@ function initTestimonialsSlideshow(container: HTMLElement) {
   }
 
   function goToIndex(index: number) {
+    clearTimeout(fallbackTimerId);
+    fallbackTimerId = undefined;
+
     const i = Math.max(0, Math.min(index, total - 1));
     const step = getScrollDistance();
     isProgrammaticScroll = true;
     viewport.scrollTo({ left: i * step, behavior: 'smooth' });
     updateDots(i);
     updateButtons(i);
+
     const onScrollEnd = () => {
       isProgrammaticScroll = false;
     };
-    viewport.addEventListener('scrollend', onScrollEnd, { once: true });
-    setTimeout(onScrollEnd, 400);
+    const myFallbackId = setTimeout(onScrollEnd, 400);
+    fallbackTimerId = myFallbackId;
+    viewport.addEventListener('scrollend', () => {
+      clearTimeout(myFallbackId);
+      onScrollEnd();
+    }, { once: true });
   }
 
   function updateDots(current: number) {
