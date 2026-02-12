@@ -1,0 +1,17 @@
+---
+import CV from './cv/cv.astro';
+import Testimonials from './testimonials/testimonials.astro';
+import cvEntriesData from '../data/cv-entries.json';
+import testimonials from '../data/testimonials.json';
+
+const { id } = Astro.props;
+const cvEntries = Array.isArray(cvEntriesData) ? cvEntriesData : [];
+---
+
+<div
+  class="bg-gradient-to-br from-cyan-900 to-cyan-800 flex flex-col items-center gap-24 z-1 pb-25"
+>
+  <CV id={id} entries={cvEntries} />
+
+  <Testimonials testimonials={testimonials} />
+</div>
