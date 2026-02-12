@@ -8,6 +8,11 @@ import { imagetools } from 'vite-imagetools';
 export default defineConfig({
   integrations: [preact()],
 
+  server: {
+    host: true, // listen on all addresses (helps avoid localhost resolution issues on Windows)
+    port: 4321,
+  },
+
   vite: {
     // @ts-ignore - Plugin compatibility issues with newer Vite versions
     plugins: [tailwindcss(), imagetools()],
