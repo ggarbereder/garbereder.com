@@ -1,17 +1,27 @@
 ---
 import CV from './cv/cv.astro';
+import Patents from './patents/patents.astro';
 import Testimonials from './testimonials/testimonials.astro';
 import cvEntriesData from '../data/cv-entries.json';
-import testimonials from '../data/testimonials.json';
+import patentsData from '../data/patents.json';
+import testimonialsData from '../data/testimonials.json';
+
+interface Props {
+  id: string;
+}
 
 const { id } = Astro.props;
 const cvEntries = Array.isArray(cvEntriesData) ? cvEntriesData : [];
+const patents = Array.isArray(patentsData) ? patentsData : [];
+const testimonials = Array.isArray(testimonialsData) ? testimonialsData : [];
 ---
 
 <div
   class="bg-gradient-to-br from-cyan-900 to-cyan-800 flex flex-col items-center gap-24 z-1 pb-25"
 >
   <CV id={id} entries={cvEntries} />
+
+  <Patents patents={patents} />
 
   <Testimonials testimonials={testimonials} />
 </div>

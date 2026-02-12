@@ -25,16 +25,20 @@ const { id, entries = [] }: Props = Astro.props as Props;
     Experience
   </h2>
   <ol class="relative border-l border-cyan-900/50 pt-14 pb-0 ml-10 mr-10">
-    {entries.map((entry) => (
-      <Entry
-        start={entry.start}
-        end={entry.end}
-        title={entry.title}
-        employer={entry.employer}
-      >
-        {entry.paragraphs.map((text) => <p>{text}</p>)}
-      </Entry>
-    ))}
+    {
+      entries.map((entry) => (
+        <Entry
+          start={entry.start}
+          end={entry.end}
+          title={entry.title}
+          employer={entry.employer}
+        >
+          {entry.paragraphs.map((text) => (
+            <p>{text}</p>
+          ))}
+        </Entry>
+      ))
+    }
   </ol>
 </section>
 
