@@ -1,0 +1,9 @@
+[
+  {
+    "number": "US12197614B1",
+    "title": "Stateless system to enable data breach lookup",
+    "year": 2025,
+    "url": "https://patents.google.com/patent/US12197614B1",
+    "summary": "Privacy-preserving system that lets users check whether their data has appeared in a known breach without sending the actual data to the server. Uses hashing, salting, and partial hash exchange so the infrastructure never sees private data in plaintext."
+  }
+]

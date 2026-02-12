@@ -1,7 +1,11 @@
 ---
 import Portrait from './portrait.jsx';
 
-const { href } = Astro.props;
+interface Props {
+  href: string;
+}
+
+const { href }: Props = Astro.props;
 ---
 
 <header
@@ -36,7 +40,7 @@ const { href } = Astro.props;
           >
         </h2>
         <div
-          class="text-xl 2xl:text-2xl mx-auto mt-4 xl:ml-0 px-4 md:px-0 s max-w-2xl"
+          class="text-xl 2xl:text-2xl mx-auto mt-4 xl:ml-0 px-4 md:px-0 max-w-2xl"
         >
           <p
             class="contrast-more:bg-black/20 contrast-more:backdrop-blur-md contrast-more:rounded-lg contrast-more:p-4"

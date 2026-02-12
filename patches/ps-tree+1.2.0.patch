@@ -1,0 +1,26 @@
+diff --git a/node_modules/ps-tree/index.js b/node_modules/ps-tree/index.js
+index 8db8b3e..7d60aef 100644
+--- a/node_modules/ps-tree/index.js
++++ b/node_modules/ps-tree/index.js
+@@ -41,8 +41,9 @@ module.exports = function childrenOfPid(pid, callback) {
+ 
+   var processLister;
+   if (process.platform === 'win32') {
+-    // See also: https://github.com/nodejs/node-v0.x-archive/issues/2318
+-    processLister = spawn('wmic.exe', ['PROCESS', 'GET', 'Name,ProcessId,ParentProcessId,Status']);
++    // wmic.exe was deprecated and removed on Windows 11 24H2+; use PowerShell instead
++    var psCommand = "Write-Output 'ProcessId ParentProcessId Status Name'; (Get-CimInstance Win32_Process).ForEach({ \"$($_.ProcessId) $($_.ParentProcessId) Running $($_.Name)\" })";
++    processLister = spawn('powershell', ['-NoProfile', '-Command', psCommand]);
+   } else {
+     processLister = spawn('ps', ['-A', '-o', 'ppid,pid,stat,comm']);
+   }
+@@ -52,7 +53,8 @@ module.exports = function childrenOfPid(pid, callback) {
+     processLister.stdout,
+     es.split(),
+     es.map(function (line, cb) { //this could parse alot of unix command output
+-      var columns = line.trim().split(/\s+/);
++      if (!line.trim()) return cb();
++      var columns = line.trim().split(/\s+/).filter(Boolean);
+       if (!headers) {
+         headers = columns;
+ 

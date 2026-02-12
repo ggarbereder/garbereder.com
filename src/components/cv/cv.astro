@@ -1,0 +1,47 @@
+---
+import Entry from './entry.astro';
+
+interface Props {
+  id: string;
+  entries: Array<{
+    start: string;
+    end: string;
+    title: string;
+    employer: string;
+    paragraphs: Array<string>;
+  }>;
+}
+const { id, entries = [] }: Props = Astro.props as Props;
+---
+
+<section
+  class="w-full max-w-4xl bg-slate-50/90 backdrop-blur-sm rounded-b-lg shadow-2xl"
+  id={id}
+  data-animate-section
+>
+  <h2
+    class="border-l border-cyan-900/50 text-4xl font-light ml-10 pt-10 pl-4 opacity-0 animate"
+  >
+    Experience
+  </h2>
+  <ol class="relative border-l border-cyan-900/50 pt-14 pb-0 ml-10 mr-10">
+    {
+      entries.map((entry) => (
+        <Entry
+          start={entry.start}
+          end={entry.end}
+          title={entry.title}
+          employer={entry.employer}
+        >
+          {entry.paragraphs.map((text) => (
+            <p>{text}</p>
+          ))}
+        </Entry>
+      ))
+    }
+  </ol>
+</section>
+
+<script>
+  import './animate-sections';
+</script>

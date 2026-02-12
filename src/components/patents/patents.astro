@@ -1,0 +1,50 @@
+---
+interface Props {
+  patents: Array<{
+    number: string;
+    title: string;
+    year: number;
+    url: string;
+    summary?: string;
+  }>;
+}
+
+const { patents } = Astro.props;
+---
+
+<section
+  id="patents"
+  class="w-full max-w-4xl bg-slate-50/90 backdrop-blur-sm rounded-lg shadow-2xl overflow-hidden"
+  aria-labelledby="patents-heading"
+>
+  <h2 id="patents-heading" class="text-4xl font-light ml-10 pt-10 pl-4">
+    Patents
+  </h2>
+  <ul class="pt-14 pb-10 ml-10 mr-10 list-none space-y-6">
+    {
+      patents.map((patent) => (
+        <li class="border-l border-cyan-900/50 pl-4 py-2">
+          <a
+            href={patent.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group block"
+          >
+            <span class="text-xl font-semibold text-cyan-900 group-hover:text-orange-500 transition-colors duration-300">
+              {patent.number}
+            </span>
+            <span class="text-slate-600"> — {patent.year}</span>
+            <p class="text-lg font-medium text-slate-900 mt-1 group-hover:text-cyan-900 transition-colors duration-300">
+              {patent.title}
+            </p>
+            {patent.summary && (
+              <p class="text-slate-700 mt-2 text-base leading-relaxed">
+                {patent.summary}
+              </p>
+            )}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</section>

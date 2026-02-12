@@ -1,5 +1,12 @@
 ---
-const { start, end, title, employer } = Astro.props;
+interface Props {
+  start: string;
+  end: string;
+  title: string;
+  employer: string;
+}
+
+const { start, end, title, employer }: Props = Astro.props;
 ---
 
 <li class="job opacity-0 animate">
