@@ -51,10 +51,14 @@ function initTestimonialsSlideshow(container: HTMLElement) {
     };
     const myFallbackId = window.setTimeout(onScrollEnd, 400);
     fallbackTimerId = myFallbackId;
-    viewport.addEventListener('scrollend', () => {
-      window.clearTimeout(myFallbackId);
-      onScrollEnd();
-    }, { once: true });
+    viewport.addEventListener(
+      'scrollend',
+      () => {
+        window.clearTimeout(myFallbackId);
+        onScrollEnd();
+      },
+      { once: true }
+    );
   }
 
   function updateDots(current: number) {
