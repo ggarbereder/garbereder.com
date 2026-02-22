@@ -8,9 +8,11 @@ interface Props {
   description?: string;
   canonical?: string;
   keywords?: string;
+  /** Optional extra font stylesheet URL (injected into head). */
+  extraFontUrl?: string;
 }
 
-const { title, description, canonical, keywords } = Astro.props;
+const { title, description, canonical, keywords, extraFontUrl } = Astro.props;
 ---
 
 <!doctype html>
@@ -20,6 +22,7 @@ const { title, description, canonical, keywords } = Astro.props;
     description={description}
     canonical={canonical}
     keywords={keywords}
+    extraFontUrl={extraFontUrl}
   />
   <StructuredData />
   <body>

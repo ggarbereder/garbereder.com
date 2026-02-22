@@ -1,9 +1,21 @@
-/* Start at :05 page – uses @apply for Tailwind colors/utilities */
+// Start at :05 page – Tailwind @apply, scoped to .start-at-05
+// Best practice: use Tailwind utilities; keep nesting shallow (max 3 levels)
+
+$start-at-05-font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$start-at-05-font-serif: 'Fraunces', Georgia, serif;
+
 .start-at-05 {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: $start-at-05-font-sans;
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 
   h1, h2, h3 {
-    font-family: 'Fraunces', Georgia, serif;
+    font-family: $start-at-05-font-serif;
   }
 
   header h1 {
@@ -22,13 +34,13 @@
   }
 
   h2 {
-    @apply font-light;
+    @apply text-orange-400 font-light;
     font-size: 1.875rem;
     line-height: 1.3;
   }
 
   h3 {
-    @apply font-semibold uppercase;
+    @apply text-orange-400 font-semibold uppercase;
     font-size: 0.8125rem;
     letter-spacing: 0.05em;
     line-height: 1.4;
@@ -45,7 +57,7 @@
 
   /* Cards */
   .card {
-    @apply my-8 rounded-2xl border border-slate-600 bg-slate-800 px-7 py-6 text-base shadow-md;
+    @apply my-8 rounded-2xl border border-slate-600 bg-slate-800 p-6 text-base shadow-md;
   }
 
   .card.highlight {
@@ -57,22 +69,14 @@
     }
 
     h2 {
-      @apply text-slate-300 font-light;
+      @apply text-orange-400 font-light;
       font-size: 1.875rem;
     }
 
     h3 {
-      @apply text-orange-400 font-semibold uppercase;
+      @apply font-semibold uppercase;
       font-size: 0.8125rem;
       letter-spacing: 0.05em;
-
-      &.large {
-        @apply text-2xl normal-case;
-      }
-    }
-
-    p, .list li {
-      @apply text-slate-400;
     }
 
     p span {
@@ -81,7 +85,7 @@
   }
 
   .slot {
-    @apply rounded-xl border border-slate-600 bg-slate-800 p-5 text-center text-base shadow-md;
+    @apply rounded-xl border border-slate-600 bg-slate-800 p-6 text-center text-base shadow-md;
   }
 
   .slot .time {
@@ -94,48 +98,32 @@
 
   /* Lists */
   .list {
-    @apply m-0 list-none p-0 text-base;
+    @apply m-0 flex list-none flex-col gap-4 p-0 text-base;
   }
 
   .list li {
-    @apply flex gap-3 text-slate-300;
-    margin-bottom: 0.75rem;
+    @apply flex gap-4 text-slate-400;
     line-height: 1.5;
-
-    &:last-child {
-      @apply mb-0;
-    }
 
     &::before {
       content: '';
       @apply mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-orange-600;
-      margin-top: 0.5rem;
     }
   }
 
-  /* Bands */
+  /* Bands (full-bleed with inner max-width) */
   .band {
-    @apply w-[100vw] bg-slate-900 py-6;
-    position: relative;
+    @apply relative w-screen bg-slate-900 py-0;
     left: 50%;
     margin-left: -50vw;
   }
 
   .band-inner {
-    @apply mx-auto max-w-3xl px-4;
-    max-width: 48rem;
-
-    @media (min-width: 640px) {
-      @apply px-6;
-    }
+    @apply mx-auto max-w-3xl px-4 sm:px-6;
   }
 
   .band .card {
-    @apply my-0 px-4;
-
-    @media (min-width: 640px) {
-      @apply px-6;
-    }
+    @apply my-0 p-6;
   }
 
   /* Timeline */
@@ -144,7 +132,7 @@
   }
 
   .timeline-vertical li {
-    @apply pl-6;
+    @apply pl-8;
   }
 
   .timeline-vertical .timeline-dot {
@@ -157,6 +145,6 @@
   }
 
   .timeline-horizontal .timeline-connector {
-    @apply mt-1.5;
+    @apply mt-2;
   }
 }
