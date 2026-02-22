@@ -1,7 +1,8 @@
 ---
 import Main from '../layouts/main.astro';
 
-const sectionClass = 'py-12 sm:py-16 border-t-2 border-cyan-200';
+const sectionClass = 'py-12 sm:py-16 border-t border-slate-700';
+const summarySectionClass = 'pt-6 sm:pt-8 pb-8';
 const containerClass = 'max-w-3xl mx-auto px-4 sm:px-6';
 const slotCards = [
   { time: '10:05 – 10:55', label: 'Full hour' },
@@ -17,205 +18,22 @@ const slotCards = [
   keywords="meeting policy, meeting times, Start at :05, scheduling, productivity, calendar, back-to-back meetings"
 >
   <div class="start-at-05 min-h-screen flex flex-col">
-    <style is:inline>
-      /* Type scale */
-      .start-at-05 h1 {
-        font-size: clamp(2.25rem, 5vw, 3.75rem);
-        font-weight: 300;
-        line-height: 1.1;
-        letter-spacing: -0.02em;
-      }
-      .start-at-05 h2 {
-        font-size: 1.875rem;
-        font-weight: 300;
-        line-height: 1.3;
-      }
-      .start-at-05 h2.small {
-        font-size: 1.5rem;
-      }
-      .start-at-05 h3 {
-        font-size: 0.8125rem;
-        font-weight: 600;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        line-height: 1.4;
-      }
-      .start-at-05 p {
-        font-size: 1rem;
-        line-height: 1.6;
-      }
-      .start-at-05 .lead {
-        font-size: 1.125rem;
-      }
-      /* Cards */
-      .start-at-05 .card {
-        font-size: 1rem;
-        background: white;
-        border-radius: 1rem;
-        padding: 1.5rem 1.75rem;
-        margin: 2rem 0;
-        border: 1px solid rgb(203 213 225);
-        box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.06);
-      }
-      .start-at-05 .card.highlight {
-        position: relative;
-        overflow: hidden;
-        background: linear-gradient(
-          to bottom right,
-          rgb(22 78 99),
-          rgb(22 91 116)
-        );
-        border: 1px solid rgb(22 91 116);
-      }
-      .start-at-05 .card.highlight::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 70%;
-        height: 100%;
-        background: linear-gradient(
-          to left,
-          rgba(249 115 22 / 0.2),
-          transparent
-        );
-        pointer-events: none;
-      }
-      .start-at-05 .card.highlight h2 {
-        color: white;
-        font-size: 1.875rem;
-        font-weight: 300;
-      }
-      .start-at-05 .card.highlight h3 {
-        color: rgb(251 146 60);
-        font-size: 0.8125rem;
-        font-weight: 600;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-      }
-      .start-at-05 .card.highlight h3.large {
-        font-size: 1.5rem;
-      }
-      .start-at-05 .card.highlight p,
-      .start-at-05 .card.highlight .list li {
-        color: rgb(226 232 240);
-      }
-      .start-at-05 .card.highlight p span {
-        color: rgb(251 146 60);
-      }
-      .start-at-05 .card.highlight .list li::before {
-        background: rgb(251 146 60);
-      }
-      .start-at-05 .card.highlight .list-cyan li::before {
-        background: rgb(103 232 249);
-      }
-      .start-at-05 .slot {
-        font-size: 1rem;
-        background: white;
-        border-radius: 0.75rem;
-        padding: 1.25rem;
-        border: 1px solid rgb(203 213 225);
-        box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.06);
-        text-align: center;
-      }
-      .start-at-05 .slot .time {
-        font-size: 1.5rem;
-        font-weight: 300;
-      }
-      .start-at-05 .slot .label {
-        font-size: 0.875rem;
-      }
-      /* Lists */
-      .start-at-05 .list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        font-size: 1rem;
-      }
-      .start-at-05 .list li {
-        display: flex;
-        gap: 0.75rem;
-        margin-bottom: 0.75rem;
-        line-height: 1.5;
-        color: rgb(30 41 59);
-      }
-      .start-at-05 .list li:last-child {
-        margin-bottom: 0;
-      }
-      .start-at-05 .list li::before {
-        content: '';
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        flex-shrink: 0;
-        margin-top: 0.5rem;
-        background: rgb(234 88 12);
-      }
-
-      /* Bands (full-width alignment) */
-      .start-at-05 .band {
-        width: 100vw;
-        position: relative;
-        left: 50%;
-        margin-left: -50vw;
-        padding: 1.5rem 0;
-      }
-      .start-at-05 .band-inner {
-        max-width: 48rem;
-        margin-left: auto;
-        margin-right: auto;
-        padding: 1.5rem 1rem;
-      }
-      @media (min-width: 640px) {
-        .start-at-05 .band-inner {
-          padding-left: 1.5rem;
-          padding-right: 1.5rem;
-        }
-      }
-      .start-at-05 .band .card {
-        margin: 0;
-        padding-left: 1rem;
-        padding-right: 1rem;
-      }
-      @media (min-width: 640px) {
-        .start-at-05 .band .card {
-          padding-left: 1.5rem;
-          padding-right: 1.5rem;
-        }
-      }
-      /* Timeline: vertical bullets on line, horizontal row aligned */
-      .start-at-05 .timeline-vertical {
-        padding-left: 0;
-      }
-      .start-at-05 .timeline-vertical li {
-        padding-left: 1.5rem;
-      }
-      .start-at-05 .timeline-vertical .timeline-dot {
-        left: -6px;
-        transform: translate(-50%, -50%);
-        top: 50%;
-      }
-      .start-at-05 .timeline-horizontal {
-        align-items: flex-start;
-      }
-      .start-at-05 .timeline-horizontal .timeline-connector {
-        margin-top: 0.375rem;
-      }
-    </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,400&display=swap" />
 
     <header
-      class="relative overflow-hidden py-16 sm:py-24 px-4 bg-gradient-to-br from-cyan-900 to-cyan-800 shadow-xl"
+      class="relative overflow-hidden py-16 sm:py-24 px-4 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 shadow-xl"
     >
       <div
-        class="absolute top-0 right-0 w-3/4 h-full max-w-xl bg-gradient-to-l from-orange-500/20 to-transparent pointer-events-none"
+        class="absolute top-0 right-0 w-3/4 h-full max-w-xl bg-gradient-to-l from-orange-500/15 to-transparent pointer-events-none"
         aria-hidden="true"
       >
       </div>
       <div class={`${containerClass} relative z-10`}>
-        <h1 class="text-white">
+        <h1 class="text-slate-300">
           Start at <span class="text-orange-400 font-normal italic">:05</span>
         </h1>
-        <p class="lead mt-4 text-slate-200 max-w-[28ch]">
+        <p class="lead mt-4 max-w-[28ch] text-slate-400">
           Start meetings five minutes after the hour. Fewer late arrivals,
           calmer transitions, built-in breaks.
         </p>
@@ -228,7 +46,7 @@ const slotCards = [
         >
           <!-- Vertical timeline (mobile) -->
           <ul
-            class="timeline-vertical sm:hidden border-l-2 border-slate-400 space-y-4 list-none"
+            class="timeline-vertical sm:hidden border-l-2 border-slate-500 space-y-4 list-none"
           >
             <li class="relative flex items-center min-h-[2rem]">
               <span
@@ -240,13 +58,13 @@ const slotCards = [
               <span
                 class="timeline-dot absolute w-2.5 h-2.5 rounded-full bg-orange-400 ring-4 ring-orange-400/30"
                 aria-hidden="true"></span>
-              <span class="text-sm font-semibold text-white">10:05 Start</span>
+              <span class="timeline-label text-sm text-slate-300">10:05 Start</span>
             </li>
             <li class="relative flex items-center min-h-[2rem]">
               <span
                 class="timeline-dot absolute w-2.5 h-2.5 rounded-full bg-cyan-300 ring-4 ring-cyan-300/30"
                 aria-hidden="true"></span>
-              <span class="text-sm font-semibold text-white">10:55 End</span>
+              <span class="timeline-label text-sm text-slate-300">10:55 End</span>
             </li>
             <li class="relative flex items-center min-h-[2rem]">
               <span
@@ -275,18 +93,17 @@ const slotCards = [
               <span
                 class="w-3.5 h-3.5 rounded-full bg-orange-400 ring-4 ring-orange-400/30"
                 aria-hidden="true"></span>
-              <span class="text-sm font-semibold text-white">10:05 Start</span>
+              <span class="timeline-label text-sm text-slate-300">10:05 Start</span>
             </div>
             <div
               class="timeline-connector flex-1 min-w-[24px] h-0.5 rounded bg-gradient-to-r from-orange-400 to-cyan-300"
               aria-hidden="true"
-            >
-            </div>
+            ></div>
             <div class="flex flex-col items-center gap-2 shrink-0">
               <span
                 class="w-3.5 h-3.5 rounded-full bg-cyan-300 ring-4 ring-cyan-300/30"
                 aria-hidden="true"></span>
-              <span class="text-sm font-semibold text-white">10:55 End</span>
+              <span class="timeline-label text-sm text-slate-300">10:55 End</span>
             </div>
             <div
               class="timeline-connector w-6 sm:w-8 h-0.5 rounded bg-slate-500 shrink-0 max-w-[40px]"
@@ -306,20 +123,18 @@ const slotCards = [
 
     <main
       id="main-content"
-      class="flex-1 bg-gradient-to-b from-cyan-50 to-slate-100 text-slate-800"
+      class="flex-1 bg-slate-900 text-slate-400"
     >
       <article aria-label="Start at :05 meeting policy">
         <section class={sectionClass}>
           <div class={containerClass}>
-            <h2 class="text-cyan-900 mb-4">Why not "on the hour"?</h2>
-            <p class="lead text-slate-800 mb-4">
-              Meetings usually are about <strong>30</strong> or <strong
-                >60 minutes</strong
-              > long. Many teams use 50‑minute slots to create buffers—but that creates
+            <h2 class="text-slate-100 mb-4">Why not "on the hour"?</h2>
+            <p class="lead mb-4">
+              Meetings usually are about <strong class="text-slate-400">30</strong> or <strong class="text-slate-400">60 minutes</strong> long. Many teams use 50‑minute slots to create buffers—but that creates
               friction too.
             </p>
             <div class="card mt-6">
-              <h3 class="text-orange-600 mb-3">
+              <h3 class="text-orange-400 mb-3">
                 Problems with 50‑minute blocks
               </h3>
               <ul class="list">
@@ -332,6 +147,9 @@ const slotCards = [
                   show at 10:00—and miss a 10:00 sharp start.
                 </li>
                 <li>
+                  Back-to-back 50‑minute blocks cause physical and psychological strain with no real break.
+                </li>
+                <li>
                   It's easier to protect the full 50 minutes by starting late
                   rather than by forcing a hard stop on the hour.
                 </li>
@@ -342,9 +160,9 @@ const slotCards = [
 
         <section class={sectionClass}>
           <div class={containerClass}>
-            <h2 class="text-cyan-900 mb-4">The fix: Start at :05</h2>
-            <p class="text-slate-700 mb-4">
-              Schedule meetings to <span class="text-orange-600 font-semibold"
+            <h2 class="text-slate-100 mb-4">The fix: Start at :05</h2>
+            <p class="mb-4">
+              Schedule meetings to <span class="text-orange-400 font-semibold"
                 >start at :05</span
               > (five minutes after the hour)—or at :35 for half-hour slots. You keep
               buffer time between back-to-backs while matching how people think about
@@ -375,28 +193,28 @@ const slotCards = [
             </div>
           </div>
           <div class={containerClass}>
-            <h2 class="text-cyan-900 mb-3 small">Examples</h2>
-            <p class="text-slate-700 mb-3">
-              For <strong class="text-cyan-900">60‑minute</strong> meetings, start
+            <h3 class="text-slate-100 mb-3">Examples</h3>
+            <p class="mb-3">
+              For <strong class="text-slate-400">60‑minute</strong> meetings, start
               at :05 and end at :55.
             </p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
               <div class="slot">
-                <div class="time text-orange-600 mb-1">{slotCards[0].time}</div>
-                <div class="label text-slate-500">{slotCards[0].label}</div>
+                <div class="time mb-1">{slotCards[0].time}</div>
+                <div class="label">{slotCards[0].label}</div>
               </div>
             </div>
 
-            <p class="text-slate-700 mb-3">
-              For <strong class="text-cyan-900">30‑minute</strong> meetings, start
+            <p class="mb-3">
+              For <strong class="text-slate-400">30‑minute</strong> meetings, start
               at :05 or :35.
             </p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {
                 slotCards.slice(1).map((slot) => (
                   <div class="slot">
-                    <div class="time text-orange-600 mb-1">{slot.time}</div>
-                    <div class="label text-slate-500">{slot.label}</div>
+                    <div class="time mb-1">{slot.time}</div>
+                    <div class="label">{slot.label}</div>
                   </div>
                 ))
               }
@@ -404,7 +222,7 @@ const slotCards = [
           </div>
         </section>
 
-        <section class="pb-8">
+        <section class={summarySectionClass}>
           <div class="band">
             <div class="band-inner">
               <div class="card highlight">
@@ -427,17 +245,17 @@ const slotCards = [
     </main>
 
     <footer
-      class="bg-slate-100 pb-8 text-center text-cyan-900 font-medium text-sm border-t-2 border-cyan-200 pt-4"
+      class="bg-slate-900 pb-8 text-center text-slate-300 font-medium text-sm border-t border-slate-700 pt-6"
     >
       <div class={containerClass}>
         <p>Start at :05 — Smarter meeting times</p>
-        <p class="mt-2 text-slate-600 font-normal text-xs">
+        <p class="mt-2 text-slate-400 font-normal text-xs">
           By <a
             href="https://www.garbereder.com"
-            class="text-cyan-700 hover:underline">Gerrit Garbereder</a
+            class="text-cyan-400 hover:underline">Gerrit Garbereder</a
           > · <a
             href="https://www.garbereder.com"
-            class="text-cyan-700 hover:underline">www.garbereder.com</a
+            class="text-cyan-400 hover:underline">www.garbereder.com</a
           >
         </p>
       </div>
