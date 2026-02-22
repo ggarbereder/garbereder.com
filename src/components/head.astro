@@ -1,39 +1,46 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  keywords?: string;
+  /** Optional Google Fonts stylesheet URL (e.g. Fraunces). Adds preconnect + link in head. */
+  extraFontUrl?: string;
+}
+
+const {
+  title = 'Gerrit Garbereder | Senior Engineering Manager',
+  description = 'Senior Engineering Manager with expertise in leading cross-functional teams, project delivery, and fostering innovation. View my professional experience and contact information.',
+  canonical = 'https://www.garbereder.com',
+  keywords = 'Engineering Manager, Project Management, Team Leadership, Software Development, Innovation',
+  extraFontUrl,
+} = Astro.props;
+---
+
 <head>
   <script>
     document.querySelector('html')?.classList.remove('nojs');
   </script>
 
   <meta charset="utf-8" />
-  <title>Gerrit Garbereder | Senior Engineering Manager</title>
-  <meta
-    name="description"
-    content="Senior Engineering Manager with expertise in leading cross-functional teams, project delivery, and fostering innovation. View my professional experience and contact information."
-  />
+  <title>{title}</title>
+  <meta name="description" content={description} />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta
-    name="keywords"
-    content="Engineering Manager, Project Management, Team Leadership, Software Development, Innovation"
-  />
+  <meta name="keywords" content={keywords} />
   <meta name="author" content="Gerrit Garbereder" />
   <meta name="robots" content="index, follow" />
 
-  <meta
-    property="og:title"
-    content="Gerrit Garbereder | Senior Engineering Manager"
-  />
+  <meta property="og:title" content={title} />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.garbereder.com" />
+  <meta property="og:url" content={canonical} />
   <meta
     property="og:image"
     content="https://www.garbereder.com/img/portrait.jpg"
   />
-  <meta
-    property="og:description"
-    content="Senior Engineering Manager with expertise in leading cross-functional teams, project delivery, and fostering innovation."
-  />
+  <meta property="og:description" content={description} />
   <meta property="og:site_name" content="Gerrit Garbereder" />
 
-  <link rel="canonical" href="https://www.garbereder.com" />
+  <link rel="canonical" href={canonical} />
 
   <link rel="manifest" href="site.webmanifest" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
@@ -44,11 +51,12 @@
     href="https://fonts.googleapis.com/css2?family=Quicksand"
     as="style"
   />
-
-  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
   <link
     rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Quicksand"
   />
+
+  {extraFontUrl && <link rel="stylesheet" href={extraFontUrl} />}
 </head>

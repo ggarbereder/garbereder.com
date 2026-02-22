@@ -2,11 +2,28 @@
 import Head from '../components/head.astro';
 import StructuredData from '../components/structured-data.astro';
 import '../styles/index.scss';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  keywords?: string;
+  /** Optional extra font stylesheet URL (injected into head). */
+  extraFontUrl?: string;
+}
+
+const { title, description, canonical, keywords, extraFontUrl } = Astro.props;
 ---
 
 <!doctype html>
 <html class="scroll-smooth nojs" lang="en">
-  <Head />
+  <Head
+    title={title}
+    description={description}
+    canonical={canonical}
+    keywords={keywords}
+    extraFontUrl={extraFontUrl}
+  />
   <StructuredData />
   <body>
     <slot />

@@ -29,10 +29,17 @@ describe('Landing Page', () => {
 
       // Resume link
       cy.get('header nav a')
+        .first()
         .should('have.text', 'Resumé')
         .and('have.attr', 'href', '#cv')
         .and('have.class', 'from-orange-500')
         .and('have.class', 'to-orange-400');
+
+      // Start at :05 link
+      cy.get('header nav a')
+        .eq(1)
+        .should('have.text', 'Start at :05')
+        .and('have.attr', 'href', '/start-at-05/');
     });
   });
 
