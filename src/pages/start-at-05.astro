@@ -38,10 +38,12 @@ const slotCards = [
       >
       </div>
       <div class={`${containerClass} relative z-10`}>
-        <h1 class="text-slate-300">
+        <h1
+          class="start-at-05-h1 text-slate-300 font-light leading-tight tracking-tight"
+        >
           Start at <span class="text-orange-400 font-normal italic">:05</span>
         </h1>
-        <p class="lead mt-8 max-w-[28ch] text-slate-400">
+        <p class="lead text-lg mt-8 max-w-[28ch] text-slate-400">
           Start meetings five minutes after the hour. Fewer late arrivals,
           calmer transitions, built-in breaks.
         </p>
@@ -54,27 +56,31 @@ const slotCards = [
         >
           <!-- Vertical timeline (mobile) -->
           <ul
-            class="timeline-vertical sm:hidden border-l-2 border-slate-500 space-y-8 list-none"
+            class="timeline-vertical sm:hidden border-l-2 border-slate-500 space-y-8 list-none pl-0"
           >
-            <li class="relative flex items-center min-h-[2rem]">
+            <li class="relative flex items-center min-h-[2rem] pl-8">
               <span
                 class="timeline-dot absolute w-2.5 h-2.5 rounded-full bg-slate-400"
                 aria-hidden="true"></span>
               <span class="text-sm font-semibold text-slate-400">10:00</span>
             </li>
-            <li class="relative flex items-center min-h-[2rem]">
+            <li class="relative flex items-center min-h-[2rem] pl-8">
               <span
                 class="timeline-dot absolute w-2.5 h-2.5 rounded-full bg-orange-400 ring-4 ring-orange-400/30"
                 aria-hidden="true"></span>
-              <span class="timeline-label text-sm text-slate-300">10:05 Start</span>
+              <span class="timeline-label text-sm font-medium text-slate-300"
+                >10:05 Start</span
+              >
             </li>
-            <li class="relative flex items-center min-h-[2rem]">
+            <li class="relative flex items-center min-h-[2rem] pl-8">
               <span
                 class="timeline-dot absolute w-2.5 h-2.5 rounded-full bg-orange-300 ring-4 ring-orange-300/30"
                 aria-hidden="true"></span>
-              <span class="timeline-label text-sm text-slate-300">10:55 End</span>
+              <span class="timeline-label text-sm font-medium text-slate-300"
+                >10:55 End</span
+              >
             </li>
-            <li class="relative flex items-center min-h-[2rem]">
+            <li class="relative flex items-center min-h-[2rem] pl-8">
               <span
                 class="timeline-dot absolute w-2.5 h-2.5 rounded-full bg-slate-400"
                 aria-hidden="true"></span>
@@ -84,7 +90,7 @@ const slotCards = [
 
           <!-- Horizontal timeline (sm+) -->
           <div
-            class="timeline-horizontal hidden sm:flex justify-center gap-0 flex-nowrap"
+            class="timeline-horizontal hidden sm:flex items-start justify-center gap-0 flex-nowrap"
           >
             <div class="flex flex-col items-center gap-4 shrink-0">
               <span
@@ -93,7 +99,7 @@ const slotCards = [
               <span class="text-sm font-semibold text-slate-400">10:00</span>
             </div>
             <div
-              class="timeline-connector w-6 sm:w-8 h-0.5 rounded bg-slate-500 shrink-0 max-w-[40px]"
+              class="timeline-connector mt-2 w-6 sm:w-8 h-0.5 rounded bg-slate-500 shrink-0 max-w-[40px]"
               aria-hidden="true"
             >
             </div>
@@ -101,20 +107,25 @@ const slotCards = [
               <span
                 class="w-3.5 h-3.5 rounded-full bg-orange-400 ring-4 ring-orange-400/30"
                 aria-hidden="true"></span>
-              <span class="timeline-label text-sm text-slate-300">10:05 Start</span>
+              <span class="timeline-label text-sm font-medium text-slate-300"
+                >10:05 Start</span
+              >
             </div>
             <div
-              class="timeline-connector flex-1 min-w-[24px] h-0.5 rounded bg-gradient-to-r from-orange-400 to-orange-300"
+              class="timeline-connector mt-2 flex-1 min-w-[24px] h-0.5 rounded bg-gradient-to-r from-orange-400 to-orange-300"
               aria-hidden="true"
-            ></div>
+            >
+            </div>
             <div class="flex flex-col items-center gap-4 shrink-0">
               <span
                 class="w-3.5 h-3.5 rounded-full bg-orange-300 ring-4 ring-orange-300/30"
                 aria-hidden="true"></span>
-              <span class="timeline-label text-sm text-slate-300">10:55 End</span>
+              <span class="timeline-label text-sm font-medium text-slate-300"
+                >10:55 End</span
+              >
             </div>
             <div
-              class="timeline-connector w-6 sm:w-8 h-0.5 rounded bg-slate-500 shrink-0 max-w-[40px]"
+              class="timeline-connector mt-2 w-6 sm:w-8 h-0.5 rounded bg-slate-500 shrink-0 max-w-[40px]"
               aria-hidden="true"
             >
             </div>
@@ -129,32 +140,45 @@ const slotCards = [
       </div>
     </header>
 
-    <main
-      id="main-content"
-      class="flex-1 bg-slate-900 text-slate-400"
-    >
+    <main id="main-content" class="flex-1 bg-slate-900 text-slate-400">
       <article aria-label="Start at :05 meeting policy">
         <section class={sectionClass}>
           <div class={containerClass}>
-            <h2 class="text-slate-100 mb-8">Why not "on the hour"?</h2>
-            <p class="lead mb-8">
-              Meetings usually are about <strong class="text-slate-400">30</strong> or <strong class="text-slate-400">60 minutes</strong> long. Many teams use 50‑minute slots to create buffers—but that creates
-              friction too.
+            <h2
+              class="start-at-05-h2 text-slate-100 mb-8 text-[1.875rem] font-light leading-snug"
+            >
+              Why not "on the hour"?
+            </h2>
+            <p class="lead text-lg mb-8">
+              Meetings usually are about <strong class="text-slate-400"
+                >30</strong
+              > or <strong class="text-slate-400">60 minutes</strong> long. Many teams
+              use 50‑minute slots to create buffers—but that creates friction too.
             </p>
-            <div class="card mt-8">
-              <h3 class="text-orange-400 mb-8">
+            <div
+              class="card my-8 rounded-2xl border border-slate-600 bg-slate-800 p-6 text-base shadow-md"
+            >
+              <h3
+                class="start-at-05-h3 text-orange-400 font-semibold uppercase text-[0.8125rem] tracking-widest leading-snug mb-8"
+              >
                 Problems with 50‑minute blocks
               </h3>
-              <ul class="list">
-                <li>
+              <ul class="list m-0 flex list-none flex-col gap-4 p-0 text-base">
+                <li
+                  class="start-at-05-list-li flex gap-4 text-slate-400 leading-[1.5]"
+                >
                   Rooms are often booked until the full hour anyway, so you
                   can't get in early.
                 </li>
-                <li>
+                <li
+                  class="start-at-05-list-li flex gap-4 text-slate-400 leading-[1.5]"
+                >
                   People think in round hours. "Meeting at 10:00" means they may
                   show at 10:00—and miss a 10:00 sharp start.
                 </li>
-                <li>
+                <li
+                  class="start-at-05-list-li flex gap-4 text-slate-400 leading-[1.5]"
+                >
                   It's easier to stick to the full 50 minutes by starting late
                   rather than by forcing a hard stop on the hour.
                 </li>
@@ -165,8 +189,12 @@ const slotCards = [
 
         <section class={sectionClass}>
           <div class={containerClass}>
-            <h2 class="text-slate-100 mb-8">The fix: Start at :05</h2>
-            <p class="mb-8">
+            <h2
+              class="start-at-05-h2 text-slate-100 mb-8 text-[1.875rem] font-light leading-snug"
+            >
+              The fix: Start at :05
+            </h2>
+            <p class="text-base mb-8">
               Schedule meetings to <span class="text-orange-400 font-semibold"
                 >start at :05</span
               > (five minutes after the hour)—or at :35 for half-hour slots. You keep
@@ -177,68 +205,120 @@ const slotCards = [
             </p>
           </div>
           <div class="band">
-            <div class="band-inner">
-              <div class="card highlight">
-                <h3 class="mb-8">Why it works</h3>
-                <ul class="list">
-                  <li>
+            <div class="band-inner mx-auto max-w-3xl px-4 sm:px-6">
+              <div
+                class="card highlight my-0 rounded-2xl relative overflow-hidden border border-slate-600 bg-gradient-to-br from-slate-900 to-slate-800 p-6"
+              >
+                <h3
+                  class="start-at-05-h3 text-orange-400 font-semibold uppercase text-[0.8125rem] tracking-widest leading-snug mb-8"
+                >
+                  Why it works
+                </h3>
+                <ul
+                  class="list m-0 flex list-none flex-col gap-4 p-0 text-base"
+                >
+                  <li
+                    class="start-at-05-list-li flex gap-4 text-slate-400 leading-[1.5]"
+                  >
                     People still think "on the hour" but you start at :05 (or
                     :35).
                   </li>
-                  <li>
+                  <li
+                    class="start-at-05-list-li flex gap-4 text-slate-400 leading-[1.5]"
+                  >
                     Everyone gets at least a 5‑minute break between meetings.
                   </li>
-                  <li>
+                  <li
+                    class="start-at-05-list-li flex gap-4 text-slate-400 leading-[1.5]"
+                  >
                     "Meeting at 10" still gives a 5‑minute window to reach the
                     room.
                   </li>
-                  <li>Encouraged to end on time by following meetings.</li>
+                  <li
+                    class="start-at-05-list-li flex gap-4 text-slate-400 leading-[1.5]"
+                  >
+                    Encouraged to end on time by following meetings.
+                  </li>
                 </ul>
               </div>
             </div>
           </div>
           <div class={`${containerClass} pt-8`}>
-            <h3 class="mb-4">Examples</h3>
-            <p class="mb-8">
+            <h3
+              class="start-at-05-h3 text-orange-400 font-semibold uppercase text-[0.8125rem] tracking-widest leading-snug mb-4"
+            >
+              Examples
+            </h3>
+            <p class="text-base mb-4">
               For <strong class="text-slate-400">60‑minute</strong> meetings, start
               at :05 and end at :55.
             </p>
             <div class="grid grid-cols-1 gap-8 mb-8">
-              <div class="slot">
-                <div class="time mb-4">{slotCards[0].time}</div>
-                <div class="label">{slotCards[0].label}</div>
+              <div
+                class="slot rounded-xl border border-slate-600 bg-slate-800 p-6 text-center text-base shadow-md"
+              >
+                <div class="time text-orange-400 font-light text-2xl mb-4">
+                  {slotCards[0].time}
+                </div>
+                <div class="label text-sm text-slate-400">
+                  {slotCards[0].label}
+                </div>
               </div>
             </div>
 
-            <p class="mb-8">
+            <p class="text-base mb-4">
               For <strong class="text-slate-400">30‑minute</strong> meetings, start
               at :05 or :35.
             </p>
             <div class="grid grid-cols-1 gap-8 sm:grid-cols-2">
-              {slotCards.slice(1).map((slot) => (
-                <div class="slot">
-                  <div class="time mb-4">{slot.time}</div>
-                  <div class="label">{slot.label}</div>
-                </div>
-              ))}
+              {
+                slotCards.slice(1).map((slot) => (
+                  <div class="slot rounded-xl border border-slate-600 bg-slate-800 p-6 text-center text-base shadow-md">
+                    <div class="time text-orange-400 font-light text-2xl mb-4">
+                      {slot.time}
+                    </div>
+                    <div class="label text-sm text-slate-400">{slot.label}</div>
+                  </div>
+                ))
+              }
             </div>
           </div>
         </section>
 
         <section class={summarySectionClass}>
           <div class="band">
-            <div class="band-inner">
-              <div class="card highlight">
-                <h2 class="mb-8">Summary</h2>
-                <p class="mb-8">
-                  By consistently using <span class="font-semibold"
-                    >Start at :05</span
+            <div class="band-inner mx-auto max-w-3xl px-4 sm:px-6">
+              <div
+                class="card highlight my-0 rounded-2xl relative overflow-hidden border border-slate-600 bg-gradient-to-br from-slate-900 to-slate-800 p-6"
+              >
+                <h2
+                  class="start-at-05-h2 text-orange-400 font-light text-[1.875rem] leading-snug mb-8"
+                >
+                  Summary
+                </h2>
+                <p class="text-base mb-8">
+                  By consistently using <span
+                    class="font-semibold text-orange-400">Start at :05</span
                   > (and :35 for half-hour slots), we:
                 </p>
-                <ul class="list">
-                  <li>Reduce lateness from "on-the-hour" mental scheduling</li>
-                  <li>Make room transitions easier</li>
-                  <li>Build in short but meaningful breaks between sessions</li>
+                <ul
+                  class="list m-0 flex list-none flex-col gap-4 p-0 text-base"
+                >
+                  <li
+                    class="start-at-05-list-li flex gap-4 text-slate-400 leading-[1.5]"
+                  >
+                    Reduce lateness from "on-the-hour" mental scheduling
+                  </li>
+                  <li
+                    class="start-at-05-list-li flex gap-4 text-slate-400 leading-[1.5]"
+                  >
+                    Make room transitions easier
+                  </li>
+                  <li
+                    class="start-at-05-list-li flex gap-4 text-slate-400 leading-[1.5]"
+                  >
+                    Build in short but meaningful breaks between sessions
+                  </li>
                 </ul>
               </div>
             </div>
@@ -252,14 +332,17 @@ const slotCards = [
       class="border-t border-slate-700 bg-slate-900 pt-8 pb-8 text-center text-xs font-normal text-slate-400"
     >
       <div class={containerClass}>
-        <p>Start at <span class="text-orange-400">:05</span> — Smarter meeting times</p>
+        <p>
+          Start at <span class="text-orange-400">:05</span> — Smarter meeting times
+        </p>
         <p class="mt-4">
           By <a
             href="https://www.garbereder.com"
             target="_blank"
             rel="noopener noreferrer"
             class="text-orange-400 hover:text-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 rounded"
-          >Gerrit Garbereder</a>
+            >Gerrit Garbereder</a
+          >
         </p>
       </div>
     </footer>

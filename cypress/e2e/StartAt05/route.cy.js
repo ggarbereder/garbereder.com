@@ -8,10 +8,7 @@ describe('Start at :05 — Routes', () => {
 
   it('has correct document title', () => {
     cy.visit('/start-at-05/');
-    cy.title().should(
-      'include',
-      'Start at :05'
-    );
+    cy.title().should('include', 'Start at :05');
     cy.title().should('include', 'Smarter meeting times');
   });
 

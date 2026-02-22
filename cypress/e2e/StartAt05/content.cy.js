@@ -62,12 +62,17 @@ describe('Start at :05 — Content', () => {
     it('mentions 30 and 60 minutes and 50‑minute slots', () => {
       cy.get('main').should('contain.text', '30');
       cy.get('main').should('contain.text', '60 minutes');
-      cy.get('main').invoke('text').should('match', /50.*minute/);
+      cy.get('main')
+        .invoke('text')
+        .should('match', /50.*minute/);
     });
 
     it('displays Problems with 50‑minute blocks card', () => {
       cy.get('main').within(() => {
-        cy.get('h3').first().invoke('text').should('match', /Problems.*50.*minute.*blocks/);
+        cy.get('h3')
+          .first()
+          .invoke('text')
+          .should('match', /Problems.*50.*minute.*blocks/);
       });
       cy.get('.card .list li').should('have.length.at.least', 3);
     });
@@ -99,14 +104,18 @@ describe('Start at :05 — Content', () => {
     });
 
     it('shows 60‑minute example: start at :05, end at :55', () => {
-      cy.get('main').invoke('text').should('match', /60.*minute/);
+      cy.get('main')
+        .invoke('text')
+        .should('match', /60.*minute/);
       cy.get('main').should('contain.text', ':55');
       cy.get('.slot .time').first().should('contain.text', '10:05');
       cy.get('.slot .time').first().should('contain.text', '10:55');
     });
 
     it('shows 30‑minute examples with :05 and :35', () => {
-      cy.get('main').invoke('text').should('match', /30.*minute/);
+      cy.get('main')
+        .invoke('text')
+        .should('match', /30.*minute/);
       cy.get('.slot').should('have.length.at.least', 2);
     });
 
@@ -155,8 +164,11 @@ describe('Start at :05 — Content', () => {
     });
 
     it('footer link has target _blank and rel noopener noreferrer', () => {
-      cy.get('footer a[href="https://www.garbereder.com"]')
-        .should('have.attr', 'target', '_blank');
+      cy.get('footer a[href="https://www.garbereder.com"]').should(
+        'have.attr',
+        'target',
+        '_blank'
+      );
       cy.get('footer a[href="https://www.garbereder.com"]')
         .invoke('attr', 'rel')
         .should('include', 'noopener')
