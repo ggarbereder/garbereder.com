@@ -38,11 +38,21 @@ function isRedirect(status: number): boolean {
   return (status >= 301 && status <= 303) || status === 307 || status === 308;
 }
 
+function mustPreserveMethodAndBody(status: number): boolean {
+  return status === 307 || status === 308;
+}
+
 async function fetchFollowingRedirects(
   request: Request,
-  redirectCount: number
+  redirectCount: number,
+  bodyBuffer: ArrayBuffer | null
 ): Promise<Response> {
-  const response = await fetch(request);
+  let response: Response;
+  try {
+    response = await fetch(request);
+  } catch (err) {
+    return new Response('Bad Gateway', { status: 502 });
+  }
 
   if (redirectCount >= MAX_REDIRECTS || !isRedirect(response.status)) {
     return response;
@@ -53,37 +63,58 @@ async function fetchFollowingRedirects(
     return response;
   }
 
-  const targetUrl = new URL(location, request.url);
+  let targetUrl: URL;
+  try {
+    targetUrl = new URL(location, request.url);
+  } catch {
+    return response;
+  }
   // Only follow redirects to our origin; pass through redirects to other hosts
   if (targetUrl.host !== ORIGIN_HOST) {
     return response;
   }
 
+  const preserve = mustPreserveMethodAndBody(response.status);
   const nextRequest = new Request(targetUrl, {
-    method: 'GET',
+    method: preserve ? request.method : 'GET',
     headers: request.headers,
-    body: null,
+    body: preserve ? bodyBuffer : null,
     redirect: 'manual',
   });
   nextRequest.headers.set('Host', ORIGIN_HOST);
 
-  return fetchFollowingRedirects(nextRequest, redirectCount + 1);
+  return fetchFollowingRedirects(nextRequest, redirectCount + 1, bodyBuffer);
 }
 
 export default {
   async fetch(request: Request, _env: Env, _ctx: unknown): Promise<Response> {
-    const url = new URL(request.url);
-    const originUrl = ORIGIN + originPath(url);
+    let url: URL;
+    try {
+      url = new URL(request.url);
+    } catch {
+      return new Response('Bad Request', { status: 400 });
+    }
 
+    // Buffer body once so it can be reused for 307/308 redirects (body is single-use)
+    let bodyBuffer: ArrayBuffer | null = null;
+    if (request.method !== 'GET' && request.method !== 'HEAD' && request.body) {
+      try {
+        bodyBuffer = await request.clone().arrayBuffer();
+      } catch {
+        return new Response('Bad Request', { status: 400 });
+      }
+    }
+
+    const originUrl = ORIGIN + originPath(url);
     const originHeaders = new Headers(request.headers);
     originHeaders.set('Host', ORIGIN_HOST);
     const originRequest = new Request(originUrl, {
       method: request.method,
       headers: originHeaders,
-      body: request.body,
+      body: bodyBuffer ?? request.body,
       redirect: 'manual',
     });
 
-    return fetchFollowingRedirects(originRequest, 0);
+    return fetchFollowingRedirects(originRequest, 0, bodyBuffer);
   },
 };
