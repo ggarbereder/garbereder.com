@@ -39,7 +39,7 @@ describe('Landing Page', () => {
       cy.get('header nav a')
         .eq(1)
         .should('have.text', 'Start at :05')
-        .and('have.attr', 'href', '/start-at-05/');
+        .and('have.attr', 'href', '//start-at-05.com/');
     });
   });
 
