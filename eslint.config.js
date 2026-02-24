@@ -12,7 +12,6 @@ export default defineConfig([
       sourceType: 'module',
       parser: tseslint.parser,
       globals: {
-        // Browser globals
         window: 'readonly',
         document: 'readonly',
         HTMLElement: 'readonly',
@@ -25,7 +24,6 @@ export default defineConfig([
         Event: 'readonly',
         CustomEvent: 'readonly',
         KeyboardEvent: 'readonly',
-        // Cypress globals
         cy: 'readonly',
         describe: 'readonly',
         it: 'readonly',

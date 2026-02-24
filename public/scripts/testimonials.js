@@ -99,6 +99,7 @@
     viewport.addEventListener(
       'testimonials-navigate',
       function (e) {
+        if (!e.detail || typeof e.detail.delta !== 'number') return;
         const delta = e.detail.delta;
         goToIndex(
           Math.round(getScrollPosition() / getScrollDistance()) + delta
@@ -111,28 +112,42 @@
     updateButtons(0);
   }
 
+  let keydownController = null;
+  function setupKeydown() {
+    if (keydownController) {
+      keydownController.abort();
+    }
+    keydownController = new AbortController();
+    const keydownSignal = keydownController.signal;
+    document.addEventListener(
+      'keydown',
+      function (e) {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+        const slideshows = document.querySelectorAll('.testimonials-slideshow');
+        for (let i = 0; i < slideshows.length; i++) {
+          const el = slideshows[i];
+          const rect = el.getBoundingClientRect();
+          if (rect.top >= window.innerHeight || rect.bottom <= 0) continue;
+          const viewport = el.querySelector('.testimonials-viewport');
+          if (viewport) {
+            e.preventDefault();
+            viewport.dispatchEvent(
+              new CustomEvent('testimonials-navigate', {
+                detail: { delta: e.key === 'ArrowLeft' ? -1 : 1 },
+                bubbles: true,
+              })
+            );
+            break;
+          }
+        }
+      },
+      { signal: keydownSignal }
+    );
+  }
+
   document.querySelectorAll('.testimonials-slideshow').forEach(function (el) {
     initTestimonialsSlideshow(el);
   });
 
-  document.addEventListener('keydown', function (e) {
-    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-    const slideshows = document.querySelectorAll('.testimonials-slideshow');
-    for (let i = 0; i < slideshows.length; i++) {
-      const el = slideshows[i];
-      const rect = el.getBoundingClientRect();
-      if (rect.top >= window.innerHeight || rect.bottom <= 0) continue;
-      const viewport = el.querySelector('.testimonials-viewport');
-      if (viewport) {
-        e.preventDefault();
-        viewport.dispatchEvent(
-          new CustomEvent('testimonials-navigate', {
-            detail: { delta: e.key === 'ArrowLeft' ? -1 : 1 },
-            bubbles: true,
-          })
-        );
-        break;
-      }
-    }
-  });
+  setupKeydown();
 })();
