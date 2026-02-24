@@ -3,9 +3,16 @@ import Main from '../layouts/main.astro';
 import Header from '../components/header.astro';
 import Content from '../components/content.astro';
 import Footer from '../components/footer.astro';
+import portraitImages from '../assets/portrait.jpg?w=400;800;1600&format=webp';
 ---
 
-<Main>
+<Main
+  lcpPreload={{
+    src: portraitImages[0],
+    srcset: `${portraitImages[0]} 1x, ${portraitImages[1]} 2x, ${portraitImages[2]} 3x`,
+  }}
+  videoPreload="/bg.webm"
+>
   <Header href="cv" />
   <main id="main-content">
     <Content id="cv" />

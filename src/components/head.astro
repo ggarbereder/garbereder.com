@@ -6,6 +6,10 @@ interface Props {
   keywords?: string;
   /** Optional Google Fonts stylesheet URL (e.g. Fraunces). Adds preconnect + link in head. */
   extraFontUrl?: string;
+  /** Optional LCP image preload: { src, srcset } so the image is discoverable from HTML immediately. */
+  lcpPreload?: { src: string; srcset: string };
+  /** Optional video preload URL (e.g. background hero video). */
+  videoPreload?: string;
 }
 
 const {
@@ -14,13 +18,38 @@ const {
   canonical = 'https://www.garbereder.com',
   keywords = 'Engineering Manager, Project Management, Team Leadership, Software Development, Innovation',
   extraFontUrl,
+  lcpPreload,
+  videoPreload,
 } = Astro.props;
 ---
 
 <head>
-  <script type="module" src="/scripts/nojs.js"></script>
-
   <meta charset="utf-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link
+    rel="preload"
+    href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap"
+    as="style"
+  />
+  {
+    lcpPreload && (
+      <link
+        rel="preload"
+        as="image"
+        href={lcpPreload.src}
+        imagesrcset={lcpPreload.srcset}
+        imagesizes="(max-width: 1024px) 256px, (max-width: 1280px) 320px, 400px"
+      />
+    )
+  }
+  {
+    videoPreload && (
+      <link rel="preload" href={videoPreload} as="video" type="video/webm" />
+    )
+  }
+
   <title>{title}</title>
   <meta name="description" content={description} />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -39,20 +68,14 @@ const {
   <meta property="og:site_name" content="Gerrit Garbereder" />
 
   <link rel="canonical" href={canonical} />
-
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
   <link
-    rel="preload"
-    href="https://fonts.googleapis.com/css2?family=Quicksand"
-    as="style"
-  />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-  <link
     rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Quicksand"
+    href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap"
   />
 
   {extraFontUrl && <link rel="stylesheet" href={extraFontUrl} />}
+
+  <script type="module" src="/scripts/nojs.js"></script>
 </head>
