@@ -1,0 +1,15 @@
+# Deploy: from this directory run  npx wrangler deploy
+# Requires: start-at-05.com zone in the same Cloudflare account.
+
+name = "start-at-05-proxy"
+main = "src/index.ts"
+compatibility_date = "2025-02-01"
+
+# Only serve on custom domain routes; no workers.dev or preview URL
+workers_dev = false
+preview_urls = false
+
+routes = [
+  { pattern = "start-at-05.com/*", zone_name = "start-at-05.com" },
+  { pattern = "www.start-at-05.com/*", zone_name = "start-at-05.com" },
+]

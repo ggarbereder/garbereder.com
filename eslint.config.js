@@ -4,7 +4,7 @@ import importPlugin from 'eslint-plugin-import';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig([
-  globalIgnores(['**/dist/**', '**/.astro/**']),
+  globalIgnores(['**/dist/**', '**/.astro/**', '**/workers/**']),
   {
     files: ['**/*.{js,mjs,cjs,ts,tsx}'],
     languageOptions: {

@@ -1,0 +1,12 @@
+{
+  "name": "start-at-05-proxy",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  },
+  "devDependencies": {
+    "wrangler": "^3.99.0",
+    "typescript": "^5.0.0"
+  }
+}
