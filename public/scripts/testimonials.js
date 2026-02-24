@@ -1,0 +1,153 @@
+(function () {
+  const SLIDESHOW_INIT_KEY = 'data-testimonials-initialized';
+
+  function initTestimonialsSlideshow(container) {
+    const viewport = container.querySelector('.testimonials-viewport');
+    const prevBtn = container.querySelector('.testimonials-prev');
+    const nextBtn = container.querySelector('.testimonials-next');
+    const dots = container.querySelectorAll('.testimonials-dot');
+    const slides = container.querySelectorAll('.testimonial-slide');
+    if (!viewport || !prevBtn || !nextBtn || !slides.length) return;
+
+    const previousController = container._testimonialsAbortController;
+    if (previousController) {
+      previousController.abort();
+    }
+    const controller = new AbortController();
+    container._testimonialsAbortController = controller;
+    container.setAttribute(SLIDESHOW_INIT_KEY, 'true');
+    const signal = controller.signal;
+
+    const total = slides.length;
+    let isProgrammaticScroll = false;
+    let fallbackTimerId = undefined;
+
+    function getScrollPosition() {
+      return viewport.scrollLeft;
+    }
+    const GAP_PX = 24;
+    function getScrollDistance() {
+      const first = slides[0];
+      return first ? first.offsetWidth + GAP_PX : viewport.clientWidth + GAP_PX;
+    }
+    function goToIndex(index) {
+      window.clearTimeout(fallbackTimerId);
+      fallbackTimerId = undefined;
+      const i = Math.max(0, Math.min(index, total - 1));
+      const step = getScrollDistance();
+      isProgrammaticScroll = true;
+      viewport.scrollTo({ left: i * step, behavior: 'smooth' });
+      updateDots(i);
+      updateButtons(i);
+      function onScrollEnd() {
+        isProgrammaticScroll = false;
+      }
+      const myFallbackId = window.setTimeout(onScrollEnd, 400);
+      fallbackTimerId = myFallbackId;
+      viewport.addEventListener(
+        'scrollend',
+        function () {
+          window.clearTimeout(myFallbackId);
+          onScrollEnd();
+        },
+        { once: true, signal }
+      );
+    }
+    function updateDots(current) {
+      dots.forEach(function (dot, i) {
+        dot.setAttribute('aria-selected', String(i === current));
+        dot.classList.toggle('!bg-cyan-900', i === current);
+        dot.classList.toggle('scale-125', i === current);
+      });
+    }
+    function updateButtons(current) {
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === total - 1;
+    }
+    function updateFromScroll() {
+      if (isProgrammaticScroll) return;
+      const step = getScrollDistance();
+      const scroll = getScrollPosition();
+      const index = Math.round(scroll / step);
+      const clamped = Math.max(0, Math.min(index, total - 1));
+      updateDots(clamped);
+      updateButtons(clamped);
+    }
+    prevBtn.addEventListener(
+      'click',
+      function () {
+        goToIndex(Math.round(getScrollPosition() / getScrollDistance()) - 1);
+      },
+      { signal }
+    );
+    nextBtn.addEventListener(
+      'click',
+      function () {
+        goToIndex(Math.round(getScrollPosition() / getScrollDistance()) + 1);
+      },
+      { signal }
+    );
+    dots.forEach(function (dot, i) {
+      dot.addEventListener(
+        'click',
+        function () {
+          goToIndex(i);
+        },
+        { signal }
+      );
+    });
+    viewport.addEventListener(
+      'testimonials-navigate',
+      function (e) {
+        if (!e.detail || typeof e.detail.delta !== 'number') return;
+        const delta = e.detail.delta;
+        goToIndex(
+          Math.round(getScrollPosition() / getScrollDistance()) + delta
+        );
+      },
+      { signal }
+    );
+    viewport.addEventListener('scroll', updateFromScroll, { signal });
+    updateDots(0);
+    updateButtons(0);
+  }
+
+  let keydownController = null;
+  function setupKeydown() {
+    if (keydownController) {
+      keydownController.abort();
+    }
+    keydownController = new AbortController();
+    const keydownSignal = keydownController.signal;
+    document.addEventListener(
+      'keydown',
+      function (e) {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+        const slideshows = document.querySelectorAll('.testimonials-slideshow');
+        for (let i = 0; i < slideshows.length; i++) {
+          const el = slideshows[i];
+          const rect = el.getBoundingClientRect();
+          if (rect.top >= window.innerHeight || rect.bottom <= 0) continue;
+          const viewport = el.querySelector('.testimonials-viewport');
+          if (viewport) {
+            e.preventDefault();
+            viewport.dispatchEvent(
+              new CustomEvent('testimonials-navigate', {
+                detail: { delta: e.key === 'ArrowLeft' ? -1 : 1 },
+                bubbles: true,
+              })
+            );
+            break;
+          }
+        }
+      },
+      { signal: keydownSignal }
+    );
+  }
+
+  document.querySelectorAll('.testimonials-slideshow').forEach(function (el) {
+    initTestimonialsSlideshow(el);
+  });
+
+  setupKeydown();
+})();
