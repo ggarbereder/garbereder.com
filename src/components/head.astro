@@ -33,18 +33,22 @@ const {
     href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap"
     as="style"
   />
-  {lcpPreload && (
-    <link
-      rel="preload"
-      as="image"
-      href={lcpPreload.src}
-      imagesrcset={lcpPreload.srcset}
-      imagesizes="(max-width: 1024px) 256px, (max-width: 1280px) 320px, 400px"
-    />
-  )}
-  {videoPreload && (
-    <link rel="preload" href={videoPreload} as="video" type="video/webm" />
-  )}
+  {
+    lcpPreload && (
+      <link
+        rel="preload"
+        as="image"
+        href={lcpPreload.src}
+        imagesrcset={lcpPreload.srcset}
+        imagesizes="(max-width: 1024px) 256px, (max-width: 1280px) 320px, 400px"
+      />
+    )
+  }
+  {
+    videoPreload && (
+      <link rel="preload" href={videoPreload} as="video" type="video/webm" />
+    )
+  }
 
   <title>{title}</title>
   <meta name="description" content={description} />
