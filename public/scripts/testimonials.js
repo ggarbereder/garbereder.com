@@ -1,29 +1,29 @@
 (function () {
   function initTestimonialsSlideshow(container) {
-    var viewport = container.querySelector('.testimonials-viewport');
-    var prevBtn = container.querySelector('.testimonials-prev');
-    var nextBtn = container.querySelector('.testimonials-next');
-    var dots = container.querySelectorAll('.testimonials-dot');
-    var slides = container.querySelectorAll('.testimonial-slide');
+    const viewport = container.querySelector('.testimonials-viewport');
+    const prevBtn = container.querySelector('.testimonials-prev');
+    const nextBtn = container.querySelector('.testimonials-next');
+    const dots = container.querySelectorAll('.testimonials-dot');
+    const slides = container.querySelectorAll('.testimonial-slide');
     if (!viewport || !prevBtn || !nextBtn || !slides.length) return;
 
-    var total = slides.length;
-    var isProgrammaticScroll = false;
-    var fallbackTimerId;
+    const total = slides.length;
+    let isProgrammaticScroll = false;
+    let fallbackTimerId;
 
     function getScrollPosition() {
       return viewport.scrollLeft;
     }
-    var GAP_PX = 24;
+    const GAP_PX = 24;
     function getScrollDistance() {
-      var first = slides[0];
+      const first = slides[0];
       return first ? first.offsetWidth + GAP_PX : viewport.clientWidth + GAP_PX;
     }
     function goToIndex(index) {
       window.clearTimeout(fallbackTimerId);
       fallbackTimerId = undefined;
-      var i = Math.max(0, Math.min(index, total - 1));
-      var step = getScrollDistance();
+      const i = Math.max(0, Math.min(index, total - 1));
+      const step = getScrollDistance();
       isProgrammaticScroll = true;
       viewport.scrollTo({ left: i * step, behavior: 'smooth' });
       updateDots(i);
@@ -31,12 +31,16 @@
       function onScrollEnd() {
         isProgrammaticScroll = false;
       }
-      var myFallbackId = window.setTimeout(onScrollEnd, 400);
+      const myFallbackId = window.setTimeout(onScrollEnd, 400);
       fallbackTimerId = myFallbackId;
-      viewport.addEventListener('scrollend', function () {
-        window.clearTimeout(myFallbackId);
-        onScrollEnd();
-      }, { once: true });
+      viewport.addEventListener(
+        'scrollend',
+        function () {
+          window.clearTimeout(myFallbackId);
+          onScrollEnd();
+        },
+        { once: true }
+      );
     }
     function updateDots(current) {
       dots.forEach(function (dot, i) {
@@ -51,10 +55,10 @@
     }
     function updateFromScroll() {
       if (isProgrammaticScroll) return;
-      var step = getScrollDistance();
-      var scroll = getScrollPosition();
-      var index = Math.round(scroll / step);
-      var clamped = Math.max(0, Math.min(index, total - 1));
+      const step = getScrollDistance();
+      const scroll = getScrollPosition();
+      const index = Math.round(scroll / step);
+      const clamped = Math.max(0, Math.min(index, total - 1));
       updateDots(clamped);
       updateButtons(clamped);
     }
@@ -70,7 +74,7 @@
       });
     });
     viewport.addEventListener('testimonials-navigate', function (e) {
-      var delta = e.detail.delta;
+      const delta = e.detail.delta;
       goToIndex(Math.round(getScrollPosition() / getScrollDistance()) + delta);
     });
     viewport.addEventListener('scroll', updateFromScroll);
@@ -84,18 +88,20 @@
 
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-    var slideshows = document.querySelectorAll('.testimonials-slideshow');
-    for (var i = 0; i < slideshows.length; i++) {
-      var el = slideshows[i];
-      var rect = el.getBoundingClientRect();
+    const slideshows = document.querySelectorAll('.testimonials-slideshow');
+    for (let i = 0; i < slideshows.length; i++) {
+      const el = slideshows[i];
+      const rect = el.getBoundingClientRect();
       if (rect.top >= window.innerHeight || rect.bottom <= 0) continue;
-      var viewport = el.querySelector('.testimonials-viewport');
+      const viewport = el.querySelector('.testimonials-viewport');
       if (viewport) {
         e.preventDefault();
-        viewport.dispatchEvent(new CustomEvent('testimonials-navigate', {
-          detail: { delta: e.key === 'ArrowLeft' ? -1 : 1 },
-          bubbles: true
-        }));
+        viewport.dispatchEvent(
+          new CustomEvent('testimonials-navigate', {
+            detail: { delta: e.key === 'ArrowLeft' ? -1 : 1 },
+            bubbles: true,
+          })
+        );
         break;
       }
     }
