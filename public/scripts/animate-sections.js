@@ -1,8 +1,12 @@
 (function () {
   function OpacityObserver(cls) {
+    const self = this;
     this.observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
-        if (e.isIntersecting) e.target.classList.add(cls);
+        if (e.isIntersecting) {
+          e.target.classList.add(cls);
+          self.observer.unobserve(e.target);
+        }
       });
     });
   }
@@ -11,6 +15,9 @@
     element.querySelectorAll(selector).forEach(function (e) {
       self.observer.observe(e);
     });
+  };
+  OpacityObserver.prototype.disconnect = function () {
+    this.observer.disconnect();
   };
   document
     .querySelectorAll('[data-animate-section]')

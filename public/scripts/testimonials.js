@@ -1,4 +1,6 @@
 (function () {
+  const SLIDESHOW_INIT_KEY = 'data-testimonials-initialized';
+
   function initTestimonialsSlideshow(container) {
     const viewport = container.querySelector('.testimonials-viewport');
     const prevBtn = container.querySelector('.testimonials-prev');
@@ -7,9 +9,18 @@
     const slides = container.querySelectorAll('.testimonial-slide');
     if (!viewport || !prevBtn || !nextBtn || !slides.length) return;
 
+    const previousController = container._testimonialsAbortController;
+    if (previousController) {
+      previousController.abort();
+    }
+    const controller = new AbortController();
+    container._testimonialsAbortController = controller;
+    container.setAttribute(SLIDESHOW_INIT_KEY, 'true');
+    const signal = controller.signal;
+
     const total = slides.length;
     let isProgrammaticScroll = false;
-    let fallbackTimerId;
+    let fallbackTimerId = undefined;
 
     function getScrollPosition() {
       return viewport.scrollLeft;
@@ -39,7 +50,7 @@
           window.clearTimeout(myFallbackId);
           onScrollEnd();
         },
-        { once: true }
+        { once: true, signal }
       );
     }
     function updateDots(current) {
@@ -62,22 +73,40 @@
       updateDots(clamped);
       updateButtons(clamped);
     }
-    prevBtn.addEventListener('click', function () {
-      goToIndex(Math.round(getScrollPosition() / getScrollDistance()) - 1);
-    });
-    nextBtn.addEventListener('click', function () {
-      goToIndex(Math.round(getScrollPosition() / getScrollDistance()) + 1);
-    });
+    prevBtn.addEventListener(
+      'click',
+      function () {
+        goToIndex(Math.round(getScrollPosition() / getScrollDistance()) - 1);
+      },
+      { signal }
+    );
+    nextBtn.addEventListener(
+      'click',
+      function () {
+        goToIndex(Math.round(getScrollPosition() / getScrollDistance()) + 1);
+      },
+      { signal }
+    );
     dots.forEach(function (dot, i) {
-      dot.addEventListener('click', function () {
-        goToIndex(i);
-      });
+      dot.addEventListener(
+        'click',
+        function () {
+          goToIndex(i);
+        },
+        { signal }
+      );
     });
-    viewport.addEventListener('testimonials-navigate', function (e) {
-      const delta = e.detail.delta;
-      goToIndex(Math.round(getScrollPosition() / getScrollDistance()) + delta);
-    });
-    viewport.addEventListener('scroll', updateFromScroll);
+    viewport.addEventListener(
+      'testimonials-navigate',
+      function (e) {
+        const delta = e.detail.delta;
+        goToIndex(
+          Math.round(getScrollPosition() / getScrollDistance()) + delta
+        );
+      },
+      { signal }
+    );
+    viewport.addEventListener('scroll', updateFromScroll, { signal });
     updateDots(0);
     updateButtons(0);
   }

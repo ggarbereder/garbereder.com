@@ -20,6 +20,7 @@ export default defineConfig([
         Element: 'readonly',
         NodeListOf: 'readonly',
         IntersectionObserver: 'readonly',
+        AbortController: 'readonly',
         setTimeout: 'readonly',
         Event: 'readonly',
         CustomEvent: 'readonly',
