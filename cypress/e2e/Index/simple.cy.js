@@ -14,7 +14,9 @@ describe('Landing Page', () => {
         .and('not.be.empty');
 
       // Name and title
-      cy.get('h1').invoke('text').should('match', /Gerrit\s+Garbereder/);
+      cy.get('h1')
+        .invoke('text')
+        .should('match', /Gerrit\s+Garbereder/);
       cy.get('h1 .text-orange-500')
         .invoke('text')
         .should('match', /Gerrit\s+Garbereder/);
