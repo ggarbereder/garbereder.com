@@ -12,19 +12,10 @@ interface Props {
   extraFontUrl?: string;
   /** Optional LCP image preload for the head. */
   lcpPreload?: { src: string; srcset: string };
-  /** Optional video preload URL for the head. */
-  videoPreload?: string;
 }
 
-const {
-  title,
-  description,
-  canonical,
-  keywords,
-  extraFontUrl,
-  lcpPreload,
-  videoPreload,
-} = Astro.props;
+const { title, description, canonical, keywords, extraFontUrl, lcpPreload } =
+  Astro.props;
 ---
 
 <!doctype html>
@@ -36,7 +27,6 @@ const {
     keywords={keywords}
     extraFontUrl={extraFontUrl}
     lcpPreload={lcpPreload}
-    videoPreload={videoPreload}
   />
   <StructuredData />
   <body>

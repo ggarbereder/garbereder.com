@@ -20,25 +20,22 @@ const { href }: Props = Astro.props;
     loop
     playsinline
     playbackRate="0.5"
+    preload="none"
   >
     <source src="/bg.webm" type="video/webm" />
   </video>
 
   <!-- Content overlay -->
   <div class="relative z-10">
-    <h1 class="sr-only">
-      Gerrit Garbereder - Senior Engineering Manager | Leadership, Innovation,
-      and Project Delivery
-    </h1>
     <div class="flex flex-col-reverse xl:flex-row justify-center">
       <div class="basis-1/4 flex flex-col justify-center">
-        <h2
+        <h1
           class="font-light text-4xl 2xl:text-6xl text-center xl:text-left mx-4 md:mx-0"
         >
           Welcome, I am <br /><span class="text-orange-500"
             >Gerrit&nbsp;Garbereder</span
           >
-        </h2>
+        </h1>
         <div
           class="text-xl 2xl:text-2xl mx-auto mt-4 xl:ml-0 px-4 md:px-0 max-w-2xl"
         >

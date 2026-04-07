@@ -8,8 +8,6 @@ interface Props {
   extraFontUrl?: string;
   /** Optional LCP image preload: { src, srcset } so the image is discoverable from HTML immediately. */
   lcpPreload?: { src: string; srcset: string };
-  /** Optional video preload URL (e.g. background hero video). */
-  videoPreload?: string;
 }
 
 const {
@@ -19,7 +17,6 @@ const {
   keywords = 'Engineering Manager, Project Management, Team Leadership, Software Development, Innovation',
   extraFontUrl,
   lcpPreload,
-  videoPreload,
 } = Astro.props;
 ---
 
@@ -28,11 +25,6 @@ const {
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <link
-    rel="preload"
-    href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap"
-    as="style"
-  />
   {
     lcpPreload && (
       <link
@@ -44,12 +36,6 @@ const {
       />
     )
   }
-  {
-    videoPreload && (
-      <link rel="preload" href={videoPreload} as="video" type="video/webm" />
-    )
-  }
-
   <title>{title}</title>
   <meta name="description" content={description} />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
