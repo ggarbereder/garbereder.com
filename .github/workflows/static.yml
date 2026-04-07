@@ -31,6 +31,7 @@ concurrency:
 env:
   HUSKY: 0 # Disable Husky git hooks during CI/CD
   NODE_ENV: development
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   # Audit job: Runs security audits and linting checks
