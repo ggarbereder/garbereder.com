@@ -34,7 +34,7 @@
     "astro": "^5.17.3",
     "cssnano": "^7.1.2",
     "cypress": "^15.10.0",
-    "eslint": "^9.39.3",
+    "eslint": "^10.0.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.37.5",
