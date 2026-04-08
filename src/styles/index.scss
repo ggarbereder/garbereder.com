@@ -39,3 +39,86 @@
     transition: none;
   }
 }
+
+/* ── Name reveal ─────────────────────────────────────────────────── */
+@keyframes name-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .name-reveal {
+    display: inline-block;
+    animation: name-reveal 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.35s both;
+  }
+}
+
+/* ── Portrait glow pulse (runs 3× on load, then settles) ─────────── */
+@keyframes portrait-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0px transparent);
+  }
+  50% {
+    filter: drop-shadow(0 0 14px rgb(249 115 22 / 0.5));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .portrait-glow-wrapper {
+    animation: portrait-glow 2s ease-in-out 0.6s 3;
+  }
+}
+
+/* ── Section heading underline draw ──────────────────────────────── */
+h2.animate {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background-color: var(--color-orange-500);
+    border-radius: 2px;
+    transition: width 0.5s ease 0.5s;
+  }
+
+  &.opacity-100::after {
+    width: 3rem;
+  }
+}
+
+@media (prefers-reduced-motion) {
+  h2.animate::after {
+    transition: none;
+  }
+}
+
+/* ── Scroll-driven parallax (portrait) ───────────────────────────── */
+@keyframes portrait-parallax {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(70px);
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 1280px) {
+    .parallax-portrait {
+      animation: portrait-parallax linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0vh 100vh;
+    }
+  }
+}
