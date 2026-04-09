@@ -63,5 +63,7 @@ const {
 
   {extraFontUrl && <link rel="stylesheet" href={extraFontUrl} />}
 
-  <script type="module" src="/scripts/nojs.js"></script>
+  <script>
+    document.querySelector('html')?.classList.remove('nojs');
+  </script>
 </head>

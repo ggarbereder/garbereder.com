@@ -6,6 +6,8 @@ dist
 .astro
 public/bg.webm
 cypress/screenshots
+.nyc_output
+coverage
 
 # Security-related files
 .env
