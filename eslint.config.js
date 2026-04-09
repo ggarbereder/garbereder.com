@@ -21,6 +21,7 @@ export default defineConfig([
         IntersectionObserver: 'readonly',
         AbortController: 'readonly',
         setTimeout: 'readonly',
+        requestAnimationFrame: 'readonly',
         Event: 'readonly',
         CustomEvent: 'readonly',
         KeyboardEvent: 'readonly',

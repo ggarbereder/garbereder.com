@@ -9,6 +9,14 @@
 .testimonial-card {
   padding: 2rem 2.5rem 2rem 3.5rem;
   position: relative;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgb(0 0 0 / 0.09);
+  }
 }
 
 @media (min-width: 768px) {
