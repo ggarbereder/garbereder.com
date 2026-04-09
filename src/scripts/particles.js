@@ -1,8 +1,7 @@
-(function () {
-  const canvas = document.getElementById('particle-canvas');
-  if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-    return;
-
+const canvas = document.getElementById('particle-canvas');
+if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  // nothing to do
+} else {
   const ctx = canvas.getContext('2d');
   const COUNT = 100;
   const CONNECT_DIST = 160;
@@ -118,4 +117,4 @@
   resize();
   spawn();
   tick();
-})();
+}

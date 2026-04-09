@@ -1,0 +1,6 @@
+{
+  "report-dir": "coverage",
+  "reporter": ["lcov", "text", "html"],
+  "include": ["src/**/*.{js,ts,jsx,tsx,astro}"],
+  "exclude": ["src/env.d.ts"]
+}
