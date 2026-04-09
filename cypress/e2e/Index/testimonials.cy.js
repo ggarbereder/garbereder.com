@@ -77,7 +77,9 @@ describe('Testimonials Section', () => {
     cy.get('.testimonials-viewport').then(($viewport) => {
       $viewport[0].dispatchEvent(new Event('scroll'));
     });
-    cy.get('.testimonials-dot').first().should('have.attr', 'aria-selected', 'true');
+    cy.get('.testimonials-dot')
+      .first()
+      .should('have.attr', 'aria-selected', 'true');
   });
 
   it('navigates via testimonials-navigate custom event (delta +1)', () => {
@@ -90,7 +92,9 @@ describe('Testimonials Section', () => {
         })
       );
     });
-    cy.get('.testimonials-dot').eq(1).should('have.attr', 'aria-selected', 'true');
+    cy.get('.testimonials-dot')
+      .eq(1)
+      .should('have.attr', 'aria-selected', 'true');
   });
 
   it('navigates via testimonials-navigate custom event (delta -1)', () => {
@@ -104,7 +108,9 @@ describe('Testimonials Section', () => {
         })
       );
     });
-    cy.get('.testimonials-dot').first().should('have.attr', 'aria-selected', 'true');
+    cy.get('.testimonials-dot')
+      .first()
+      .should('have.attr', 'aria-selected', 'true');
   });
 
   it('navigates with ArrowRight key when testimonials are in view', () => {
@@ -115,10 +121,16 @@ describe('Testimonials Section', () => {
     cy.get('.testimonials-prev').click();
     cy.window().then((win) => {
       win.document.dispatchEvent(
-        new win.KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true })
+        new win.KeyboardEvent('keydown', {
+          key: 'ArrowRight',
+          bubbles: true,
+          cancelable: true,
+        })
       );
     });
-    cy.get('.testimonials-dot').eq(1).should('have.attr', 'aria-selected', 'true');
+    cy.get('.testimonials-dot')
+      .eq(1)
+      .should('have.attr', 'aria-selected', 'true');
   });
 
   it('navigates with ArrowLeft key when testimonials are in view', () => {
@@ -126,18 +138,28 @@ describe('Testimonials Section', () => {
     cy.get('.testimonials-next').click();
     cy.window().then((win) => {
       win.document.dispatchEvent(
-        new win.KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true })
+        new win.KeyboardEvent('keydown', {
+          key: 'ArrowLeft',
+          bubbles: true,
+          cancelable: true,
+        })
       );
     });
-    cy.get('.testimonials-dot').first().should('have.attr', 'aria-selected', 'true');
+    cy.get('.testimonials-dot')
+      .first()
+      .should('have.attr', 'aria-selected', 'true');
   });
 
   it('ignores testimonials-navigate event with missing detail', () => {
     // Covers the `if (!e.detail || typeof e.detail.delta !== 'number') return` guard
     cy.get('.testimonials-viewport').then(($viewport) => {
-      $viewport[0].dispatchEvent(new CustomEvent('testimonials-navigate', { bubbles: true }));
+      $viewport[0].dispatchEvent(
+        new CustomEvent('testimonials-navigate', { bubbles: true })
+      );
     });
-    cy.get('.testimonials-dot').first().should('have.attr', 'aria-selected', 'true');
+    cy.get('.testimonials-dot')
+      .first()
+      .should('have.attr', 'aria-selected', 'true');
   });
 
   it('keydown has no effect when testimonials are not in viewport', () => {
@@ -147,7 +169,9 @@ describe('Testimonials Section', () => {
         new win.KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true })
       );
     });
-    cy.get('.testimonials-dot').first().should('have.attr', 'aria-selected', 'true');
+    cy.get('.testimonials-dot')
+      .first()
+      .should('have.attr', 'aria-selected', 'true');
   });
 
   it('ignores non-arrow keydown events', () => {
@@ -160,6 +184,8 @@ describe('Testimonials Section', () => {
       );
     });
     // Dots should be unchanged (Enter doesn't navigate)
-    cy.get('.testimonials-dot').first().should('have.attr', 'aria-selected', 'true');
+    cy.get('.testimonials-dot')
+      .first()
+      .should('have.attr', 'aria-selected', 'true');
   });
 });
