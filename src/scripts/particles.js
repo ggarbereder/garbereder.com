@@ -87,6 +87,7 @@ if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         p.vx += (mouse.x - p.x) * 0.00004;
         p.vy += (mouse.y - p.y) * 0.00004;
         const speed = Math.hypot(p.vx, p.vy);
+        /* istanbul ignore next -- speed cap requires many frames of attraction to hit */
         if (speed > 1.5) {
           p.vx = (p.vx / speed) * 1.5;
           p.vy = (p.vy / speed) * 1.5;

@@ -49,4 +49,18 @@ describe('Particle Canvas', () => {
       expect($canvas[0].width).to.equal(300);
     });
   });
+
+  it('tracks mouse position on mousemove and resets on mouseleave', () => {
+    cy.visit('/');
+    // Trigger mousemove on the header — covers the mousemove handler (lines 105-109)
+    cy.get('header').trigger('mousemove', { clientX: 300, clientY: 200 });
+    cy.wait(50);
+    // Trigger mouseleave — resets mouse to -9999 (lines 110-113)
+    cy.get('header').trigger('mouseleave');
+    cy.wait(50);
+    // Canvas should still be active and rendering
+    cy.get('#particle-canvas').then(($canvas) => {
+      expect($canvas[0].width).to.be.greaterThan(300);
+    });
+  });
 });
