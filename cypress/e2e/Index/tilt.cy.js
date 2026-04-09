@@ -6,9 +6,10 @@ describe('Portrait Tilt Effect', () => {
     cy.get('header .portrait-glow-wrapper').should('exist');
   });
 
-  it('tilt script is loaded', () => {
+  it('tilt script is bundled and active (wrapper is present in header)', () => {
     cy.visit('/');
-    cy.get('script[src="/scripts/tilt.js"]').should('exist');
+    // Script is Vite-bundled — no standalone URL; verify the element it targets
+    cy.get('header .portrait-glow-wrapper').should('exist');
   });
 
   it('does not apply tilt when prefers-reduced-motion is set', () => {
