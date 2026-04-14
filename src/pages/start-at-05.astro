@@ -1,9 +1,6 @@
 ---
 import Main from '../layouts/main.astro';
 
-const FRAUNCES_URL =
-  'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,400&display=swap';
-
 const sectionClass = 'py-8 border-t border-slate-700';
 const summarySectionClass = 'pt-8 pb-8';
 const containerClass = 'max-w-3xl mx-auto px-4 sm:px-6';
@@ -19,7 +16,7 @@ const slotCards = [
   description="Start meetings five minutes after the hour. Fewer late arrivals, calmer transitions, built-in breaks. A simple meeting policy that works."
   canonical="https://start-at-05.com/"
   keywords="meeting policy, meeting times, Start at :05, scheduling, productivity, calendar, back-to-back meetings"
-  extraFontUrl={FRAUNCES_URL}
+  extraFontCssVariable="--font-fraunces"
 >
   <div class="start-at-05 min-h-screen flex flex-col">
     <a
