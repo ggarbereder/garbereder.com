@@ -8,7 +8,6 @@ $start-at-05-font-sans:
   'Segoe UI',
   Roboto,
   sans-serif;
-$start-at-05-font-serif: 'Fraunces', Georgia, serif;
 
 .start-at-05 {
   font-family: $start-at-05-font-sans;
@@ -25,7 +24,7 @@ $start-at-05-font-serif: 'Fraunces', Georgia, serif;
   .start-at-05-h1,
   .start-at-05-h2,
   .start-at-05-h3 {
-    font-family: $start-at-05-font-serif;
+    font-family: var(--font-fraunces);
   }
 
   .start-at-05-h1 {

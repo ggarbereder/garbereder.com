@@ -1,13 +1,28 @@
 // @ts-check
 import preact from '@astrojs/preact';
 import tailwindcss from '@tailwindcss/vite';
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 import { imagetools } from 'vite-imagetools';
 import istanbul from 'vite-plugin-istanbul';
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [preact()],
+
+  fonts: [
+    {
+      name: 'Quicksand',
+      provider: fontProviders.google(),
+      cssVariable: '--font-quicksand',
+    },
+    {
+      name: 'Fraunces',
+      provider: fontProviders.google(),
+      cssVariable: '--font-fraunces',
+      weights: ['300', '400', '600'],
+      styles: ['normal', 'italic'],
+    },
+  ],
 
   server: {
     host: true, // listen on all addresses (helps avoid localhost resolution issues on Windows)
