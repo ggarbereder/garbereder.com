@@ -1,7 +1,7 @@
 {
   "name": "garbereder.com",
   "type": "module",
-  "version": "1.0.35",
+  "version": "1.0.36",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -45,7 +45,7 @@
     "patch-package": "^8.0.1",
     "postcss": "^8.5.9",
     "preact": "^10.29.1",
-    "prettier": "^3.8.2",
+    "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
     "sass": "^1.97.3",
     "start-server-and-test": "^2.1.5",
