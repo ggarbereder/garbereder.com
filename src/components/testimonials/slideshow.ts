@@ -21,7 +21,7 @@ function initTestimonialsSlideshow(container: HTMLElement) {
 
   const total = slides.length;
   let isProgrammaticScroll = false;
-  let fallbackTimerId: ReturnType<typeof window.setTimeout> | undefined;
+  let fallbackTimerId: number | undefined;
 
   function getScrollPosition() {
     return viewport.scrollLeft;
