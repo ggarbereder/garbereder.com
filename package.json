@@ -1,7 +1,7 @@
 {
   "name": "garbereder.com",
   "type": "module",
-  "version": "1.0.37",
+  "version": "1.0.38",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
