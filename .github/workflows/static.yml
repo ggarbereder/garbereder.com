@@ -21,11 +21,11 @@ permissions:
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+# Prevent duplicate runs on the same branch; cancel in-progress for PRs,
+# keep running for main to avoid interrupting deploys.
 concurrency:
-  group: 'pages'
-  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 # Environment variables for the workflow
 env:
@@ -124,7 +124,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Cypress run with coverage
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v7
         with:
           start: npm run dev
           wait-on: 'http://localhost:4321'
@@ -144,9 +144,26 @@ jobs:
           name: cypress-screenshots
           path: cypress/screenshots
           if-no-files-found: ignore
+      - name: Upload visual diff artifacts on failure
+        uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: visual-diffs
+          path: cypress-image-diff-screenshots/diff
+          if-no-files-found: ignore
+      - name: Upload visual comparison screenshots on failure
+        uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: visual-comparison
+          path: cypress-image-diff-screenshots/comparison
+          if-no-files-found: ignore
 
   # Deploy job: Deploys the website to GitHub Pages
   deploy:
+    concurrency:
+      group: pages-deploy
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
