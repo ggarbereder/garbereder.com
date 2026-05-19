@@ -42,7 +42,7 @@ viewports.forEach(({ name, width, height }) => {
       cy.document().then((doc) => {
         const style = doc.createElement('style');
         style.textContent =
-          '*, *::before, *::after { animation: none !important; transition: none !important; }';
+          '*, *::before, *::after { animation: none !important; transition: none !important; } ::-webkit-scrollbar { display: none !important; } * { scrollbar-width: none !important; }';
         doc.head.appendChild(style);
       });
       cy.document().its('fonts.ready').should('exist');
