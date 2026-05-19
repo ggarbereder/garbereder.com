@@ -6,6 +6,9 @@ dist
 .astro
 public/bg.webm
 cypress/screenshots
+cypress-image-diff-screenshots/comparison
+cypress-image-diff-screenshots/diff
+cypress-image-diff-html-report
 .nyc_output
 coverage
 
