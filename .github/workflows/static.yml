@@ -151,6 +151,13 @@ jobs:
           name: visual-diffs
           path: cypress-image-diff-screenshots/diff
           if-no-files-found: ignore
+      - name: Upload visual comparison screenshots on failure
+        uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: visual-comparison
+          path: cypress-image-diff-screenshots/comparison
+          if-no-files-found: ignore
 
   # Deploy job: Deploys the website to GitHub Pages
   deploy:
