@@ -95,7 +95,7 @@ jobs:
       - name: Build website
         run: npm run build
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: dist
           path: dist/
@@ -132,13 +132,13 @@ jobs:
         env:
           CYPRESS_COVERAGE: true
       - name: Upload coverage report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-report
           path: coverage/
           if-no-files-found: warn
       - name: Upload test screenshots on failure
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: cypress-screenshots
@@ -154,14 +154,14 @@ jobs:
     needs: [build, test] # Requires both build artifact and passing tests
     if: github.ref == 'refs/heads/main' # Only deploy from main branch
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: dist
           path: dist/
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: './dist/'
       - name: Deploy to GitHub Pages
