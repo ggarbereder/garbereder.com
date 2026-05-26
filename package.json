@@ -27,7 +27,6 @@
     "version:major": "npm version major --no-git-tag-version"
   },
   "overrides": {
-    "minimatch": ">=10.2.2",
     "qs": ">=6.15.2",
     "uuid": ">=11.1.1"
   },
