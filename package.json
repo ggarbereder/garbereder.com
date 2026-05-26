@@ -1,7 +1,7 @@
 {
   "name": "garbereder.com",
   "type": "module",
-  "version": "1.0.43",
+  "version": "1.0.44",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -53,7 +53,7 @@
     "prettier-plugin-astro": "^0.14.1",
     "sass": "^1.99.0",
     "start-server-and-test": "^3.0.5",
-    "tailwindcss": "^4.2.1",
+    "tailwindcss": "^4.3.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.4",
     "vite": "^8.0.8",
