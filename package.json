@@ -1,7 +1,7 @@
 {
   "name": "garbereder.com",
   "type": "module",
-  "version": "1.0.45",
+  "version": "1.0.46",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -27,7 +27,6 @@
     "version:major": "npm version major --no-git-tag-version"
   },
   "overrides": {
-    "minimatch": ">=10.2.2",
     "qs": ">=6.15.2",
     "uuid": ">=11.1.1"
   },
