@@ -34,7 +34,7 @@
     "@astrojs/preact": "^5.1.4",
     "@cypress/code-coverage": "^4.0.3",
     "@tailwindcss/postcss": "^4.2.2",
-    "@tailwindcss/vite": "^4.2.2",
+    "@tailwindcss/vite": "^4.3.0",
     "@typescript-eslint/eslint-plugin": "^8.59.3",
     "@typescript-eslint/parser": "^8.59.3",
     "astro": "^6.3.7",
