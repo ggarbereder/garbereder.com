@@ -57,6 +57,7 @@ jobs:
             echo "Bumping version as current version ($CURRENT_VERSION) is same or lower than main version ($MAIN_VERSION)"
             git checkout $GITHUB_HEAD_REF
             npm run version:patch
+            npm install
             git add package.json package-lock.json
             git commit -m "chore: bump version"
             git push origin $GITHUB_HEAD_REF
