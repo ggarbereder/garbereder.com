@@ -1,7 +1,11 @@
 {
   "name": "garbereder.com",
   "type": "module",
-  "version": "1.0.51",
+  "version": "1.0.52",
+  "packageManager": "npm@11.6.2",
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -25,6 +29,15 @@
     "version:patch": "npm version patch --no-git-tag-version",
     "version:minor": "npm version minor --no-git-tag-version",
     "version:major": "npm version major --no-git-tag-version"
+  },
+  "lint-staged": {
+    "*.{js,mjs,cjs,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{astro,json,md,yml,yaml,css,scss}": [
+      "prettier --write"
+    ]
   },
   "overrides": {
     "@emnapi/core": "1.11.1",
@@ -52,6 +65,7 @@
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.37.5",
     "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "nyc": "^18.0.0",
     "patch-package": "^8.0.1",
     "postcss": "^8.5.15",
