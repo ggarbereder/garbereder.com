@@ -76,6 +76,12 @@ This project implements several security measures:
 - **TypeScript**: Strict type checking to prevent runtime errors
 - **Responsible Disclosure**: Security vulnerabilities can be reported via [security.txt](/.well-known/security.txt)
 
+## Accessibility
+
+- **Conformance target**: [WCAG 2.2 Level AA](https://www.w3.org/TR/WCAG22/)
+- **Statement**: [Accessibility page](/accessibility/)
+- **Automated checks**: axe-core scans run in CI via Cypress (`npm run test:a11y`)
+
 ### Security Scripts
 
 ```bash

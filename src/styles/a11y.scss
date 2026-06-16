@@ -1,0 +1,23 @@
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+#main-content {
+  scroll-margin-top: 1rem;
+}
+
+@layer base {
+  :where(
+    a,
+    button,
+    input,
+    textarea,
+    select,
+    summary,
+    [tabindex]:not([tabindex='-1'])
+  ):focus-visible {
+    outline: 2px solid var(--color-orange-400, #fb923c);
+    outline-offset: 2px;
+  }
+}

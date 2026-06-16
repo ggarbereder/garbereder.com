@@ -1,6 +1,7 @@
 @use 'tailwindcss';
 @use '../components/cv/cv.scss';
 @use './start-at-05.scss';
+@use './a11y.scss';
 
 @config '../../tailwind.config.js';
 

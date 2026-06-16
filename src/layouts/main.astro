@@ -1,5 +1,6 @@
 ---
 import Head from '../components/head.astro';
+import SkipLink from '../components/skip-link.astro';
 import StructuredData from '../components/structured-data.astro';
 import '../styles/index.scss';
 
@@ -36,6 +37,7 @@ const {
   />
   <StructuredData />
   <body>
+    <SkipLink />
     <slot />
   </body>
 </html>
