@@ -1,5 +1,4 @@
-// Start at :05 page – utility-first; only plain CSS where utilities don't apply (fonts, pseudo-elements, layout hacks)
-// Tailwind best practice: no @apply; use utility classes in templates.
+// Start at :05 — warm linen, charcoal, amber accent
 
 $start-at-05-font-sans:
   system-ui,
@@ -10,7 +9,24 @@ $start-at-05-font-sans:
   sans-serif;
 
 .start-at-05 {
+  --sa05-ink: #2a2520;
+  --sa05-body: #5c5349;
+  --sa05-muted: #6b6156;
+  --sa05-surface: #fffcf8;
+  --sa05-surface-subtle: #f7f2ea;
+  --sa05-hero: #1e1a16;
+  --sa05-hero-text: #f5efe6;
+  --sa05-hero-muted: #b8aa98;
+  --sa05-accent: #b45309;
+  --sa05-accent-bright: #f6ad55;
+  --sa05-line: #e8dfd1;
+  --sa05-timeline-idle: #c4b8a8;
+  --sa05-timeline-active: #b45309;
+  --sa05-timeline-mid: #d97706;
+
   font-family: $start-at-05-font-sans;
+  color: var(--sa05-body);
+  background-color: var(--sa05-surface);
 
   @media (prefers-reduced-motion: reduce) {
     *,
@@ -25,11 +41,13 @@ $start-at-05-font-sans:
   .start-at-05-h2,
   .start-at-05-h3 {
     font-family: var(--font-fraunces);
+    color: var(--sa05-ink);
   }
 
   .start-at-05-h1 {
     font-size: clamp(2.25rem, 5vw, 3.75rem);
     letter-spacing: -0.02em;
+    color: var(--sa05-hero-text);
   }
 
   .start-at-05-h2 {
@@ -39,49 +57,183 @@ $start-at-05-font-sans:
 
   .start-at-05-h3 {
     font-size: 0.8125rem;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     line-height: 1.4;
+    text-transform: uppercase;
+    color: var(--sa05-accent);
+    font-weight: 600;
   }
 
   p {
-    line-height: 1.6;
+    line-height: 1.65;
   }
 
-  .card.highlight::before {
+  .sa05-hero {
+    background-color: var(--sa05-hero);
+    color: var(--sa05-hero-muted);
+  }
+
+  .sa05-hero-glow {
+    background: radial-gradient(
+      ellipse 70% 60% at 100% 0%,
+      rgb(246 173 85 / 0.14),
+      transparent 70%
+    );
+  }
+
+  .sa05-hero-lead {
+    color: var(--sa05-hero-muted);
+  }
+
+  .sa05-accent {
+    color: var(--sa05-accent);
+  }
+
+  .sa05-hero .sa05-accent {
+    color: var(--sa05-accent-bright);
+  }
+
+  .sa05-main {
+    background-color: var(--sa05-surface);
+    color: var(--sa05-body);
+  }
+
+  .sa05-section {
+    border-top: 1px solid var(--sa05-line);
+  }
+
+  .sa05-strong {
+    color: var(--sa05-ink);
+    font-weight: 600;
+  }
+
+  .sa05-card {
+    border: 1px solid var(--sa05-line);
+    background-color: var(--sa05-surface-subtle);
+  }
+
+  .sa05-card.highlight::before {
     content: '';
     position: absolute;
     top: 0;
     right: 0;
     height: 100%;
-    width: 75%;
-    background: linear-gradient(to left, rgba(249, 115, 22, 0.15), transparent);
+    width: 50%;
+    background: linear-gradient(to left, rgb(180 83 9 / 0.07), transparent);
     pointer-events: none;
   }
 
-  .start-at-05-list-li::before {
-    content: '';
-    margin-top: 0.5rem;
-    height: 0.375rem;
-    width: 0.375rem;
-    flex-shrink: 0;
-    border-radius: 9999px;
-    background-color: #ea580c; /* orange-600 */
+  .sa05-slot {
+    border: 1px solid var(--sa05-line);
+    background-color: var(--sa05-surface-subtle);
   }
 
-  .band {
+  .sa05-slot .time {
+    color: var(--sa05-accent);
+    font-family: var(--font-fraunces);
+  }
+
+  .sa05-slot .label {
+    color: var(--sa05-muted);
+  }
+
+  .sa05-list-li {
+    color: var(--sa05-body);
+  }
+
+  .sa05-list-li::before {
+    content: '';
+    margin-top: 0.55rem;
+    height: 0.35rem;
+    width: 0.35rem;
+    flex-shrink: 0;
+    border-radius: 9999px;
+    background-color: var(--sa05-accent);
+  }
+
+  .sa05-footer {
+    border-top: 1px solid var(--sa05-line);
+    background-color: var(--sa05-surface);
+    color: var(--sa05-muted);
+  }
+
+  .sa05-footer a {
+    color: var(--sa05-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .sa05-footer a:hover {
+    color: var(--sa05-ink);
+  }
+
+  .timeline-vertical {
     position: relative;
-    width: 100vw;
-    background-color: #0f172a; /* slate-900 */
-    padding-top: 0;
-    padding-bottom: 0;
-    left: 50%;
-    margin-left: -50vw;
+    margin-left: 0.25rem;
+    padding-left: 1.25rem;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0.5rem;
+      top: 0.375rem;
+      bottom: 0.375rem;
+      width: 2px;
+      background-color: rgb(196 184 168 / 0.55);
+      transform: translateX(-50%);
+    }
+  }
+
+  .timeline-dot-idle {
+    background-color: var(--sa05-timeline-idle);
+  }
+
+  .timeline-dot-active {
+    background-color: var(--sa05-timeline-active);
+    box-shadow: 0 0 0 4px rgb(180 83 9 / 0.22);
+  }
+
+  .timeline-dot-mid {
+    background-color: var(--sa05-timeline-mid);
+    box-shadow: 0 0 0 4px rgb(217 119 6 / 0.2);
+  }
+
+  .timeline-label {
+    color: var(--sa05-hero-text);
+  }
+
+  .timeline-hour {
+    color: var(--sa05-hero-muted);
+    font-weight: 600;
+  }
+
+  .timeline-horizontal {
+    align-items: flex-start;
+
+    .timeline-connector {
+      height: 2px;
+      border-radius: 9999px;
+      margin-top: calc(0.875rem / 2 - 1px);
+    }
+  }
+
+  .timeline-connector-idle {
+    background-color: var(--sa05-timeline-idle);
+    opacity: 0.45;
+  }
+
+  .timeline-connector-active {
+    background: linear-gradient(
+      to right,
+      var(--sa05-timeline-active),
+      var(--sa05-timeline-mid)
+    );
   }
 
   .timeline-vertical .timeline-dot {
     position: absolute;
     top: 50%;
-    left: -6px;
+    left: calc(-1.25rem + 0.5rem);
     transform: translate(-50%, -50%);
   }
 }

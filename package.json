@@ -1,7 +1,7 @@
 {
   "name": "garbereder.com",
   "type": "module",
-  "version": "1.0.57",
+  "version": "1.0.58",
   "packageManager": "npm@11.6.2",
   "engines": {
     "node": ">=24"
@@ -25,7 +25,7 @@
     "test:visual:update": "rm -rf cypress-image-diff-screenshots/baseline && start-server-and-test dev http://localhost:4321 cy:run:visual",
     "test:coverage": "CYPRESS_COVERAGE=true start-server-and-test dev http://localhost:4321 cy:run",
     "test": "npm run lint && npm run test:e2e",
-    "prepare": "npx husky",
+    "prepare": "husky",
     "security:audit": "node scripts/security-audit.mjs",
     "security:outdated": "npm outdated",
     "version:patch": "npm version patch --no-git-tag-version",
