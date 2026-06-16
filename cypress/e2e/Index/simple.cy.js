@@ -113,12 +113,15 @@ describe('Landing Page', () => {
     });
 
     it('displays attribution links correctly', () => {
-      // Icons8 links
-      cy.get('footer div.text-xs a').should('have.length', 4);
+      // Icons8 links and accessibility statement
+      cy.get('footer div.text-xs a').should('have.length', 5);
       cy.get('a[href*="icons8.com/icon/84888/linkedin"]').should('exist');
       cy.get('a[href*="icons8.com/icon/20675/github"]').should('exist');
       cy.get('a[href*="icons8.com/icon/s51tEydjGlsF/key"]').should('exist');
       cy.get('a[href="//icons8.com"]').should('exist');
+      cy.get('a[href="/accessibility/"]')
+        .should('exist')
+        .and('contain.text', 'Accessibility');
     });
   });
 
