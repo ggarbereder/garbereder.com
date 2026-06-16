@@ -1,5 +1,7 @@
 import { spawnSync } from 'node:child_process';
 
+import { npmEnv } from './npm-env.mjs';
+
 const npmExecPath = process.env.npm_execpath;
 if (!npmExecPath) {
   console.error('security:audit must be run via npm run security:audit');
@@ -11,6 +13,7 @@ const result = spawnSync(
   ['--use-system-ca', npmExecPath, 'audit'],
   {
     stdio: 'inherit',
+    env: npmEnv(),
   }
 );
 

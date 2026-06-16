@@ -1,8 +1,7 @@
 ---
 import Main from '../layouts/main.astro';
 
-const sectionClass = 'py-8 border-t border-slate-700';
-const summarySectionClass = 'pt-8 pb-8';
+const sectionClass = 'sa05-section py-8';
 const containerClass = 'max-w-3xl mx-auto px-4 sm:px-6';
 const slotCards = [
   { time: '10:05 – 10:55', label: 'Full hour' },
@@ -21,154 +20,136 @@ const slotCards = [
   <div class="start-at-05 min-h-screen flex flex-col">
     <header
       role="banner"
-      class="relative overflow-hidden px-4 py-8 shadow-xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 sm:py-12"
+      class="sa05-hero relative overflow-hidden px-4 py-8 sm:py-12"
     >
       <div
-        class="absolute top-0 right-0 w-3/4 h-full max-w-xl bg-gradient-to-l from-orange-500/15 to-transparent pointer-events-none"
+        class="sa05-hero-glow absolute inset-0 pointer-events-none"
         aria-hidden="true"
       >
       </div>
       <div class={`${containerClass} relative z-10`}>
-        <h1
-          class="start-at-05-h1 text-slate-300 font-light leading-tight tracking-tight"
-        >
-          Start at <span class="text-orange-400 font-normal italic">:05</span>
+        <h1 class="start-at-05-h1 font-light leading-tight tracking-tight">
+          Start at <span class="sa05-accent font-normal italic">:05</span>
         </h1>
-        <p class="lead text-lg mt-8 max-w-[28ch] text-slate-400">
+        <p class="sa05-hero-lead lead text-lg mt-8 max-w-[28ch]">
           Start meetings five minutes after the hour. Fewer late arrivals,
           calmer transitions, built-in breaks.
         </p>
 
-        <!-- Timeline: vertical on small screens, horizontal on sm+ -->
         <div
           class="mt-8 py-8"
           role="img"
           aria-label="Timeline: 10:00, 10:05 start, 10:55 end, 11:00"
         >
-          <!-- Vertical timeline (mobile) -->
-          <ul
-            class="timeline-vertical sm:hidden border-l-2 border-slate-500 space-y-8 list-none pl-0"
-          >
-            <li class="relative flex items-center min-h-[2rem] pl-8">
+          <ul class="timeline-vertical sm:hidden space-y-8 list-none">
+            <li class="relative flex items-center min-h-[2rem]">
               <span
-                class="timeline-dot absolute w-2.5 h-2.5 rounded-full bg-slate-400"
+                class="timeline-dot timeline-dot-idle absolute w-2.5 h-2.5 rounded-full"
                 aria-hidden="true"></span>
-              <span class="text-sm font-semibold text-slate-400">10:00</span>
+              <span class="text-sm timeline-hour">10:00</span>
             </li>
-            <li class="relative flex items-center min-h-[2rem] pl-8">
+            <li class="relative flex items-center min-h-[2rem]">
               <span
-                class="timeline-dot absolute w-2.5 h-2.5 rounded-full bg-orange-400 ring-4 ring-orange-400/30"
+                class="timeline-dot timeline-dot-active absolute w-2.5 h-2.5 rounded-full"
                 aria-hidden="true"></span>
-              <span class="timeline-label text-sm font-medium text-slate-300"
-                >10:05 Start</span
+              <span class="timeline-label text-sm font-medium">10:05 Start</span
               >
             </li>
-            <li class="relative flex items-center min-h-[2rem] pl-8">
+            <li class="relative flex items-center min-h-[2rem]">
               <span
-                class="timeline-dot absolute w-2.5 h-2.5 rounded-full bg-orange-300 ring-4 ring-orange-300/30"
+                class="timeline-dot timeline-dot-mid absolute w-2.5 h-2.5 rounded-full"
                 aria-hidden="true"></span>
-              <span class="timeline-label text-sm font-medium text-slate-300"
-                >10:55 End</span
-              >
+              <span class="timeline-label text-sm font-medium">10:55 End</span>
             </li>
-            <li class="relative flex items-center min-h-[2rem] pl-8">
+            <li class="relative flex items-center min-h-[2rem]">
               <span
-                class="timeline-dot absolute w-2.5 h-2.5 rounded-full bg-slate-400"
+                class="timeline-dot timeline-dot-idle absolute w-2.5 h-2.5 rounded-full"
                 aria-hidden="true"></span>
-              <span class="text-sm font-semibold text-slate-400">11:00</span>
+              <span class="text-sm timeline-hour">11:00</span>
             </li>
           </ul>
 
-          <!-- Horizontal timeline (sm+) -->
           <div
             class="timeline-horizontal hidden sm:flex items-start justify-center gap-0 flex-nowrap"
           >
             <div class="flex flex-col items-center gap-4 shrink-0">
               <span
-                class="w-3.5 h-3.5 rounded-full bg-slate-400"
+                class="w-3.5 h-3.5 rounded-full timeline-dot-idle"
                 aria-hidden="true"></span>
-              <span class="text-sm font-semibold text-slate-400">10:00</span>
+              <span class="text-sm timeline-hour">10:00</span>
             </div>
             <div
-              class="timeline-connector mt-2 w-6 sm:w-8 h-0.5 rounded bg-slate-500 shrink-0 max-w-[40px]"
+              class="timeline-connector timeline-connector-idle w-6 sm:w-8 shrink-0 max-w-[40px]"
               aria-hidden="true"
             >
             </div>
             <div class="flex flex-col items-center gap-4 shrink-0">
               <span
-                class="w-3.5 h-3.5 rounded-full bg-orange-400 ring-4 ring-orange-400/30"
+                class="w-3.5 h-3.5 rounded-full timeline-dot-active"
                 aria-hidden="true"></span>
-              <span class="timeline-label text-sm font-medium text-slate-300"
-                >10:05 Start</span
+              <span class="timeline-label text-sm font-medium">10:05 Start</span
               >
             </div>
             <div
-              class="timeline-connector mt-2 flex-1 min-w-[24px] h-0.5 rounded bg-gradient-to-r from-orange-400 to-orange-300"
+              class="timeline-connector timeline-connector-active flex-1 min-w-[24px]"
               aria-hidden="true"
             >
             </div>
             <div class="flex flex-col items-center gap-4 shrink-0">
               <span
-                class="w-3.5 h-3.5 rounded-full bg-orange-300 ring-4 ring-orange-300/30"
+                class="w-3.5 h-3.5 rounded-full timeline-dot-mid"
                 aria-hidden="true"></span>
-              <span class="timeline-label text-sm font-medium text-slate-300"
-                >10:55 End</span
-              >
+              <span class="timeline-label text-sm font-medium">10:55 End</span>
             </div>
             <div
-              class="timeline-connector mt-2 w-6 sm:w-8 h-0.5 rounded bg-slate-500 shrink-0 max-w-[40px]"
+              class="timeline-connector timeline-connector-idle w-6 sm:w-8 shrink-0 max-w-[40px]"
               aria-hidden="true"
             >
             </div>
             <div class="flex flex-col items-center gap-4 shrink-0">
               <span
-                class="w-3.5 h-3.5 rounded-full bg-slate-400"
+                class="w-3.5 h-3.5 rounded-full timeline-dot-idle"
                 aria-hidden="true"></span>
-              <span class="text-sm font-semibold text-slate-400">11:00</span>
+              <span class="text-sm timeline-hour">11:00</span>
             </div>
           </div>
         </div>
       </div>
     </header>
 
-    <main id="main-content" class="flex-1 bg-slate-900 text-slate-400">
+    <main id="main-content" class="sa05-main flex-1">
       <article aria-label="Start at :05 meeting policy">
         <section class={sectionClass}>
           <div class={containerClass}>
             <h2
-              class="start-at-05-h2 text-slate-100 mb-8 text-[1.875rem] font-light leading-snug"
+              class="start-at-05-h2 mb-8 text-[1.875rem] font-light leading-snug"
             >
               Why not "on the hour"?
             </h2>
             <p class="lead text-lg mb-8">
-              Meetings usually are about <strong class="text-slate-400"
-                >30</strong
-              > or <strong class="text-slate-400">60 minutes</strong> long. Many teams
-              use 50‑minute slots to create buffers—but that creates friction too.
+              Meetings usually are about <strong class="sa05-strong">30</strong> or
+              <strong class="sa05-strong">60 minutes</strong> long. Many teams use
+              50‑minute slots to create buffers—but that creates friction too.
             </p>
-            <div
-              class="card my-8 rounded-2xl border border-slate-600 bg-slate-800 p-6 text-base shadow-md"
-            >
-              <h3
-                class="start-at-05-h3 text-orange-400 font-semibold uppercase text-[0.8125rem] tracking-widest leading-snug mb-8"
-              >
+            <div class="sa05-card card my-8 rounded-2xl p-6 text-base">
+              <h3 class="start-at-05-h3 mb-8 leading-snug">
                 Problems with 50‑minute blocks
               </h3>
               <ul class="list m-0 flex list-none flex-col gap-4 p-0 text-base">
                 <li
-                  class="start-at-05-list-li flex gap-4 text-slate-400 leading-[1.5]"
+                  class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
                 >
                   Rooms are often booked until the full hour anyway, so you
                   can't get in early.
                 </li>
                 <li
-                  class="start-at-05-list-li flex gap-4 text-slate-400 leading-[1.5]"
+                  class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
                 >
                   People think in round hours. "Meeting at 10:00" means they may
                   show at 10:00—and miss a 10:00 sharp start.
                 </li>
                 <li
-                  class="start-at-05-list-li flex gap-4 text-slate-400 leading-[1.5]"
+                  class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
                 >
                   It's easier to stick to the full 50 minutes by starting late
                   rather than by forcing a hard stop on the hour.
@@ -181,12 +162,12 @@ const slotCards = [
         <section class={sectionClass}>
           <div class={containerClass}>
             <h2
-              class="start-at-05-h2 text-slate-100 mb-8 text-[1.875rem] font-light leading-snug"
+              class="start-at-05-h2 mb-8 text-[1.875rem] font-light leading-snug"
             >
               The fix: Start at :05
             </h2>
             <p class="text-base mb-8">
-              Schedule meetings to <span class="text-orange-400 font-semibold"
+              Schedule meetings to <span class="sa05-accent font-semibold"
                 >start at :05</span
               > (five minutes after the hour)—or at :35 for half-hour slots. You keep
               buffer time between back-to-backs while matching how people think about
@@ -195,80 +176,62 @@ const slotCards = [
               too.
             </p>
           </div>
-          <div class="band">
-            <div class="band-inner mx-auto max-w-3xl px-4 sm:px-6">
-              <div
-                class="card highlight my-0 rounded-2xl relative overflow-hidden border border-slate-600 bg-gradient-to-br from-slate-900 to-slate-800 p-6"
-              >
-                <h3
-                  class="start-at-05-h3 text-orange-400 font-semibold uppercase text-[0.8125rem] tracking-widest leading-snug mb-8"
+          <div class={containerClass}>
+            <div
+              class="sa05-card card highlight my-8 rounded-2xl relative overflow-hidden p-6"
+            >
+              <h3 class="start-at-05-h3 mb-8 leading-snug">Why it works</h3>
+              <ul class="list m-0 flex list-none flex-col gap-4 p-0 text-base">
+                <li
+                  class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
                 >
-                  Why it works
-                </h3>
-                <ul
-                  class="list m-0 flex list-none flex-col gap-4 p-0 text-base"
+                  People still think "on the hour" but you start at :05 (or
+                  :35).
+                </li>
+                <li
+                  class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
                 >
-                  <li
-                    class="start-at-05-list-li flex gap-4 text-slate-400 leading-[1.5]"
-                  >
-                    People still think "on the hour" but you start at :05 (or
-                    :35).
-                  </li>
-                  <li
-                    class="start-at-05-list-li flex gap-4 text-slate-400 leading-[1.5]"
-                  >
-                    Everyone gets at least a 5‑minute break between meetings.
-                  </li>
-                  <li
-                    class="start-at-05-list-li flex gap-4 text-slate-400 leading-[1.5]"
-                  >
-                    "Meeting at 10" still gives a 5‑minute window to reach the
-                    room.
-                  </li>
-                  <li
-                    class="start-at-05-list-li flex gap-4 text-slate-400 leading-[1.5]"
-                  >
-                    Encouraged to end on time by following meetings.
-                  </li>
-                </ul>
-              </div>
+                  Everyone gets at least a 5‑minute break between meetings.
+                </li>
+                <li
+                  class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
+                >
+                  "Meeting at 10" still gives a 5‑minute window to reach the
+                  room.
+                </li>
+                <li
+                  class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
+                >
+                  Encouraged to end on time by following meetings.
+                </li>
+              </ul>
             </div>
           </div>
-          <div class={`${containerClass} pt-8`}>
-            <h3
-              class="start-at-05-h3 text-orange-400 font-semibold uppercase text-[0.8125rem] tracking-widest leading-snug mb-4"
-            >
-              Examples
-            </h3>
+          <div class={containerClass}>
+            <h3 class="start-at-05-h3 mb-4 leading-snug">Examples</h3>
             <p class="text-base mb-4">
-              For <strong class="text-slate-400">60‑minute</strong> meetings, start
-              at :05 and end at :55.
+              For <strong class="sa05-strong">60‑minute</strong> meetings, start at
+              :05 and end at :55.
             </p>
             <div class="grid grid-cols-1 gap-8 mb-8">
-              <div
-                class="slot rounded-xl border border-slate-600 bg-slate-800 p-6 text-center text-base shadow-md"
-              >
-                <div class="time text-orange-400 font-light text-2xl mb-4">
+              <div class="sa05-slot slot rounded-xl p-6 text-center text-base">
+                <div class="time font-light text-2xl mb-4">
                   {slotCards[0].time}
                 </div>
-                <div class="label text-sm text-slate-400">
-                  {slotCards[0].label}
-                </div>
+                <div class="label text-sm">{slotCards[0].label}</div>
               </div>
             </div>
 
             <p class="text-base mb-4">
-              For <strong class="text-slate-400">30‑minute</strong> meetings, start
-              at :05 or :35.
+              For <strong class="sa05-strong">30‑minute</strong> meetings, start at
+              :05 or :35.
             </p>
             <div class="grid grid-cols-1 gap-8 sm:grid-cols-2">
               {
                 slotCards.slice(1).map((slot) => (
-                  <div class="slot rounded-xl border border-slate-600 bg-slate-800 p-6 text-center text-base shadow-md">
-                    <div class="time text-orange-400 font-light text-2xl mb-4">
-                      {slot.time}
-                    </div>
-                    <div class="label text-sm text-slate-400">{slot.label}</div>
+                  <div class="sa05-slot slot rounded-xl p-6 text-center text-base">
+                    <div class="time font-light text-2xl mb-4">{slot.time}</div>
+                    <div class="label text-sm">{slot.label}</div>
                   </div>
                 ))
               }
@@ -276,42 +239,36 @@ const slotCards = [
           </div>
         </section>
 
-        <section class={summarySectionClass}>
-          <div class="band">
-            <div class="band-inner mx-auto max-w-3xl px-4 sm:px-6">
-              <div
-                class="card highlight my-0 rounded-2xl relative overflow-hidden border border-slate-600 bg-gradient-to-br from-slate-900 to-slate-800 p-6"
-              >
-                <h2
-                  class="start-at-05-h2 text-orange-400 font-light text-[1.875rem] leading-snug mb-8"
+        <section class={`${sectionClass} pb-8`}>
+          <div class={containerClass}>
+            <div
+              class="sa05-card card highlight rounded-2xl relative overflow-hidden p-6"
+            >
+              <h2 class="start-at-05-h2 text-[1.875rem] leading-snug mb-8">
+                Summary
+              </h2>
+              <p class="text-base mb-8">
+                By consistently using <span class="sa05-accent font-semibold"
+                  >Start at :05</span
+                > (and :35 for half-hour slots), we:
+              </p>
+              <ul class="list m-0 flex list-none flex-col gap-4 p-0 text-base">
+                <li
+                  class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
                 >
-                  Summary
-                </h2>
-                <p class="text-base mb-8">
-                  By consistently using <span
-                    class="font-semibold text-orange-400">Start at :05</span
-                  > (and :35 for half-hour slots), we:
-                </p>
-                <ul
-                  class="list m-0 flex list-none flex-col gap-4 p-0 text-base"
+                  Reduce lateness from "on-the-hour" mental scheduling
+                </li>
+                <li
+                  class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
                 >
-                  <li
-                    class="start-at-05-list-li flex gap-4 text-slate-400 leading-[1.5]"
-                  >
-                    Reduce lateness from "on-the-hour" mental scheduling
-                  </li>
-                  <li
-                    class="start-at-05-list-li flex gap-4 text-slate-400 leading-[1.5]"
-                  >
-                    Make room transitions easier
-                  </li>
-                  <li
-                    class="start-at-05-list-li flex gap-4 text-slate-400 leading-[1.5]"
-                  >
-                    Build in short but meaningful breaks between sessions
-                  </li>
-                </ul>
-              </div>
+                  Make room transitions easier
+                </li>
+                <li
+                  class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
+                >
+                  Build in short but meaningful breaks between sessions
+                </li>
+              </ul>
             </div>
           </div>
         </section>
@@ -320,18 +277,19 @@ const slotCards = [
 
     <footer
       role="contentinfo"
-      class="border-t border-slate-700 bg-slate-900 pt-8 pb-8 text-center text-xs font-normal text-slate-400"
+      class="sa05-footer pt-8 pb-8 text-center text-xs font-normal"
     >
       <div class={containerClass}>
         <p>
-          Start at <span class="text-orange-400">:05</span> — Smarter meeting times
+          Start at <span class="sa05-accent">:05</span> — Smarter meeting times
         </p>
         <p class="mt-4">
           By <a
             href="https://www.garbereder.com"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-orange-400 hover:text-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 rounded"
+            aria-label="Gerrit Garbereder (opens in new window)"
+            class="rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sa05-accent)]"
             >Gerrit Garbereder</a
           >
         </p>
