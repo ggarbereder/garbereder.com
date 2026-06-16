@@ -33,6 +33,7 @@ const { patents } = Astro.props;
             target="_blank"
             rel="noopener noreferrer"
             class="group block"
+            aria-label={`${patent.number}: ${patent.title} (${patent.year}, opens in new window)`}
           >
             <span class="text-xl font-semibold text-cyan-900 group-hover:text-orange-500 transition-colors duration-300">
               {patent.number}

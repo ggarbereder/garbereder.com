@@ -123,6 +123,12 @@ describe('Landing Page', () => {
   });
 
   describe('Accessibility and SEO', () => {
+    it('has a skip to main content link', () => {
+      cy.get('a[href="#main-content"]')
+        .should('exist')
+        .and('contain.text', 'Skip to main content');
+    });
+
     it('has proper meta tags', () => {
       cy.get('head meta[name="description"]').should('exist');
       cy.get('head meta[property="og:title"]').should('exist');

@@ -17,9 +17,11 @@ const { id, entries = [] }: Props = Astro.props as Props;
 <section
   class="w-full max-w-4xl bg-slate-50/90 backdrop-blur-sm rounded-b-lg shadow-2xl"
   id={id}
+  aria-labelledby="cv-heading"
   data-animate-section
 >
   <h2
+    id="cv-heading"
     class="border-l border-cyan-900/50 text-4xl font-light ml-10 pt-10 pl-4 opacity-0 animate"
   >
     Experience

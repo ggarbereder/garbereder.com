@@ -1,0 +1,83 @@
+---
+import Main from '../layouts/main.astro';
+import Footer from '../components/footer.astro';
+
+const containerClass = 'max-w-3xl mx-auto px-4 sm:px-6';
+const sectionClass = 'py-8 border-t border-slate-700';
+---
+
+<Main
+  title="Accessibility | Gerrit Garbereder"
+  description="Accessibility statement for garbereder.com: conformance target, testing approach, and how to report barriers."
+  canonical="https://www.garbereder.com/accessibility/"
+  keywords="accessibility, WCAG, garbereder.com"
+>
+  <main id="main-content" class="min-h-screen bg-slate-900 text-slate-300">
+    <div class={`${containerClass} py-12`}>
+      <h1 class="text-4xl font-light text-slate-100">
+        Accessibility statement
+      </h1>
+      <p class="mt-6 text-lg text-slate-300 leading-relaxed">
+        I want garbereder.com to be usable by as many people as possible. This
+        page describes our accessibility approach and how to get help if you
+        encounter a barrier.
+      </p>
+
+      <section class={sectionClass}>
+        <h2 class="text-2xl font-light text-slate-100">Conformance target</h2>
+        <p class="mt-4 leading-relaxed">
+          We aim to meet <a
+            href="https://www.w3.org/TR/WCAG22/"
+            class="text-cyan-300 underline underline-offset-2 hover:text-orange-400 transition-colors"
+            >Web Content Accessibility Guidelines (WCAG) 2.2</a
+          > Level AA. Automated checks run in continuous integration, and key interaction
+          patterns are covered by end-to-end tests.
+        </p>
+      </section>
+
+      <section class={sectionClass}>
+        <h2 class="text-2xl font-light text-slate-100">Measures we take</h2>
+        <ul class="mt-4 list-disc pl-6 space-y-2 leading-relaxed">
+          <li>Semantic HTML, landmarks, and descriptive labels where needed</li>
+          <li>Keyboard-accessible navigation and interactive components</li>
+          <li>Visible focus indicators for keyboard users</li>
+          <li>Skip link to main content on every page</li>
+          <li>Respect for <code>prefers-reduced-motion</code></li>
+          <li>Automated accessibility scans with axe-core in Cypress CI</li>
+        </ul>
+      </section>
+
+      <section class={sectionClass}>
+        <h2 class="text-2xl font-light text-slate-100">Known limitations</h2>
+        <p class="mt-4 leading-relaxed">
+          Decorative particle animation is disabled when reduced motion is
+          requested. Some content animates into view on scroll; a
+          <code>nojs</code> fallback keeps headings readable if JavaScript is unavailable.
+          We continue to review contrast, focus order, and carousel behavior as the
+          site evolves.
+        </p>
+      </section>
+
+      <section class={sectionClass}>
+        <h2 class="text-2xl font-light text-slate-100">Feedback and contact</h2>
+        <p class="mt-4 leading-relaxed">
+          If you have trouble accessing any part of this site, please email
+          <a
+            href="mailto:gerrit@garbereder.com?subject=Accessibility%20feedback"
+            class="text-cyan-300 underline underline-offset-2 hover:text-orange-400 transition-colors"
+            >gerrit@garbereder.com</a
+          >. Include the page URL and a short description of the issue so I can
+          investigate and follow up.
+        </p>
+        <p class="mt-4 leading-relaxed">
+          <a
+            href="/"
+            class="text-cyan-300 underline underline-offset-2 hover:text-orange-400 transition-colors"
+            >Back to home</a
+          >
+        </p>
+      </section>
+    </div>
+  </main>
+  <Footer />
+</Main>

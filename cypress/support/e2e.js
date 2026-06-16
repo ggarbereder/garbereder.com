@@ -15,8 +15,10 @@
 
 // Import commands.js using ES2015 syntax:
 import '@cypress/code-coverage/support';
+import 'cypress-axe';
 import compareSnapshotCommand from 'cypress-image-diff-js/command';
 compareSnapshotCommand();
+import './a11y';
 import './commands';
 
 // Alternatively you can use CommonJS syntax:

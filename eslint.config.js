@@ -89,4 +89,17 @@ export default defineConfig([
       'no-console': 'off',
     },
   },
+  {
+    files: ['cypress/**/*.{js,mjs,cjs,ts}'],
+    languageOptions: {
+      globals: {
+        cy: 'readonly',
+        Cypress: 'readonly',
+        describe: 'readonly',
+        it: 'readonly',
+        beforeEach: 'readonly',
+        expect: 'readonly',
+      },
+    },
+  },
 ]);

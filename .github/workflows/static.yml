@@ -96,6 +96,13 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
+      - name: Accessibility checks
+        uses: cypress-io/github-action@v7
+        with:
+          start: npm run dev
+          wait-on: 'http://localhost:4321'
+          command: npm run cy:run:a11y
+          config: baseUrl=http://localhost:4321
       - name: Cypress run with coverage
         uses: cypress-io/github-action@v7
         with:
