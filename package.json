@@ -57,9 +57,9 @@
     "@emnapi/runtime": "1.11.1",
     "@tailwindcss/postcss": "^4.3.1",
     "@tailwindcss/vite": "^4.3.1",
-    "@typescript-eslint/eslint-plugin": "^8.61.0",
-    "@typescript-eslint/parser": "^8.61.0",
-    "astro": "^6.4.6",
+    "@typescript-eslint/eslint-plugin": "^8.61.1",
+    "@typescript-eslint/parser": "^8.61.1",
+    "astro": "^6.4.8",
     "axe-core": "^4.12.1",
     "cssnano": "^8.0.2",
     "cypress": "^15.17.0",
@@ -70,7 +70,7 @@
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.37.5",
     "husky": "^9.1.7",
-    "lint-staged": "^17.0.7",
+    "lint-staged": "^17.0.8",
     "nyc": "^18.0.0",
     "patch-package": "^8.0.1",
     "postcss": "^8.5.15",
@@ -81,9 +81,9 @@
     "start-server-and-test": "^3.0.11",
     "tailwindcss": "^4.3.0",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.61.0",
+    "typescript-eslint": "^8.61.1",
     "vite": "^8.0.16",
-    "vite-imagetools": "^10.0.0",
+    "vite-imagetools": "^10.0.1",
     "vite-plugin-istanbul": "^9.0.1"
   }
 }
