@@ -59,7 +59,7 @@
     "@tailwindcss/vite": "^4.3.1",
     "@typescript-eslint/eslint-plugin": "^8.61.1",
     "@typescript-eslint/parser": "^8.61.1",
-    "astro": "^6.4.8",
+    "astro": "^7.0.3",
     "axe-core": "^4.12.1",
     "cssnano": "^8.0.2",
     "cypress": "^15.17.0",
