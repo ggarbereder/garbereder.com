@@ -1,7 +1,7 @@
 {
   "name": "garbereder.com",
   "type": "module",
-  "version": "1.0.60",
+  "version": "1.0.61",
   "packageManager": "npm@11.6.2",
   "engines": {
     "node": ">=24"
@@ -59,7 +59,7 @@
     "@tailwindcss/vite": "^4.3.1",
     "@typescript-eslint/eslint-plugin": "^8.62.0",
     "@typescript-eslint/parser": "^8.62.0",
-    "astro": "^6.4.8",
+    "astro": "^7.0.3",
     "axe-core": "^4.12.1",
     "cssnano": "^8.0.2",
     "cypress": "^15.18.0",
