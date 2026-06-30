@@ -123,6 +123,13 @@ jobs:
           wait-on: 'http://localhost:4321'
           config: baseUrl=http://localhost:4321
           spec: 'cypress/e2e/visual/**/*.cy.js'
+      # Astro 7 instruments virtual script modules (e.g.
+      # head.astro?astro&type=script), so nyc emits HTML report files whose
+      # names contain "?", which upload-artifact rejects. Drop them; the
+      # lcov/json reports and the rest of the HTML report are unaffected.
+      - name: Strip coverage report files with invalid names
+        if: always()
+        run: find coverage -name '*\?*' -delete || true
       - name: Upload coverage report
         uses: actions/upload-artifact@v7
         with:
