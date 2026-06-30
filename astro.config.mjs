@@ -7,6 +7,11 @@ import istanbul from 'vite-plugin-istanbul';
 
 // https://astro.build/config
 export default defineConfig({
+  // Astro 7 changed the compressHTML default from `true` to `'jsx'`, which
+  // strips whitespace *around* inline elements (JSX rules) and collapsed
+  // meaningful spaces like "30</strong> or <strong>60". Keep the v6
+  // HTML-aware behaviour.
+  compressHTML: true,
   integrations: [preact()],
 
   fonts: [
