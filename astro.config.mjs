@@ -30,6 +30,14 @@ export default defineConfig({
   },
 
   vite: {
+    css: {
+      preprocessorOptions: {
+        // Astro 7 (rolldown-vite) no longer adds node_modules to dart-sass's
+        // load path, so `@use 'tailwindcss'` in src/styles/index.scss can't
+        // resolve. Restore it explicitly.
+        scss: { loadPaths: ['node_modules'] },
+      },
+    },
     // @ts-ignore - Plugin compatibility issues with newer Vite versions
     plugins: [
       tailwindcss(),
