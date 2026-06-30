@@ -45,7 +45,7 @@ viewports.forEach(({ name, width, height }) => {
           '*, *::before, *::after { animation: none !important; transition: none !important; } ::-webkit-scrollbar { display: none !important; } * { scrollbar-width: none !important; }';
         doc.head.appendChild(style);
       });
-      cy.document().then((doc) => cy.wrap(doc.fonts.ready, { timeout: 10000 }));
+      cy.document().its('fonts.ready').should('exist');
     });
 
     it(`initial view [${name}]`, () => {
