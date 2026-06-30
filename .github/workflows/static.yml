@@ -103,14 +103,26 @@ jobs:
           start: npm run dev
           wait-on: 'http://localhost:4321'
           command: npm run cy:run:a11y
-      - name: Cypress run with coverage
+      - name: Cypress run with coverage (functional specs)
         uses: cypress-io/github-action@v7
         with:
           start: npm run dev
           wait-on: 'http://localhost:4321'
           config: baseUrl=http://localhost:4321
+          spec: 'cypress/e2e/Index/**/*.cy.js,cypress/e2e/StartAt05/**/*.cy.js'
         env:
           CYPRESS_COVERAGE: true
+      # Visual regression must run WITHOUT Istanbul instrumentation so the
+      # rendering matches the baselines (generated with coverage off). When
+      # instrumented, the slower JS delays the opacity-reveal and screenshots
+      # capture a half-revealed page.
+      - name: Visual regression (no coverage)
+        uses: cypress-io/github-action@v7
+        with:
+          start: npm run dev
+          wait-on: 'http://localhost:4321'
+          config: baseUrl=http://localhost:4321
+          spec: 'cypress/e2e/visual/**/*.cy.js'
       - name: Upload coverage report
         uses: actions/upload-artifact@v7
         with:
