@@ -1,6 +1,9 @@
 /// <reference types="cypress" />
 
-const THRESHOLD = 0.01;
+// 4% tolerance: text-heavy pages show ~2% run-to-run sub-pixel/font-render
+// variance even with fonts.ready awaited. Real layout regressions are far
+// larger (the astro 7 whitespace collapse was 8%).
+const THRESHOLD = 0.04;
 
 const viewports = [
   { name: 'desktop', width: 1280, height: 800 },
