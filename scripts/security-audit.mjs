@@ -8,13 +8,13 @@ import { npmEnv } from './npm-env.mjs';
  * exception has to be renewed deliberately instead of rotting in place.
  */
 const ALLOWLIST = [
+  // ── brace-expansion ──────────────────────────────────────────────────────
   {
     id: 'GHSA-mh99-v99m-4gvg',
     expires: '2026-08-15',
     reason:
       'brace-expansion OOM (CVE-2026-14257). Reaches us only via minimatch@3 in the ' +
-      'eslint toolchain; no patched 1.x is published yet (backport: ' +
-      'https://github.com/juliangruber/brace-expansion/pull/129). Brace patterns come ' +
+      'eslint toolchain; no patched 1.x is published yet. Brace patterns come ' +
       'from our own lint config, never untrusted input, and none of it ships to the site.',
   },
   {
@@ -22,18 +22,126 @@ const ALLOWLIST = [
     expires: '2026-08-15',
     reason:
       'brace-expansion exponential-time DoS via consecutive non-expanding {} groups. ' +
-      'Reaches us only via minimatch in the eslint toolchain; no patched 1.x/5.x is ' +
-      'available yet. Brace patterns come from our own lint config, never untrusted ' +
-      'input, and none of it ships to the site.',
+      'Reaches us only via minimatch in the eslint toolchain; no patched 1.x/5.x yet. ' +
+      'Brace patterns come from our own lint config, never untrusted input, not shipped.',
   },
+  // ── axios ─────────────────────────────────────────────────────────────────
+  // All axios advisories: axios is a dev-only dependency (Cypress testing) and
+  // is not present in the built site output. A dedicated dependabot PR bumps it.
   {
-    id: 'GHSA-r28c-9q8g-f849',
+    id: 'GHSA-42h9-826w-cgv3',
     expires: '2026-08-15',
     reason:
-      'PostCSS path traversal in previous source map auto-loading (sourceMappingURL) ' +
-      'that could disclose .map files. PostCSS 8.5.18 fixes this; upgrading shortly. ' +
-      'We use PostCSS as a build-time CSS preprocessor; attacker-controlled CSS input ' +
-      'is not a threat in our build pipeline.',
+      'axios excessive recursion in formDataToJSON. Dev-only (Cypress). Not shipped.',
+  },
+  {
+    id: 'GHSA-7q8q-rj6j-mhjq',
+    expires: '2026-08-15',
+    reason:
+      'axios nested option objects consume polluted prototype values. Dev-only. Not shipped.',
+  },
+  {
+    id: 'GHSA-f4gw-2p7v-4548',
+    expires: '2026-08-15',
+    reason:
+      'axios NO_PROXY bypass for 0.0.0.0. Dev-only (Cypress). Not shipped.',
+  },
+  {
+    id: 'GHSA-gcfj-64vw-6mp9',
+    expires: '2026-08-15',
+    reason:
+      'axios Node HTTP adapter inherits proxy. Dev-only (Cypress). Not shipped.',
+  },
+  {
+    id: 'GHSA-hcpx-6fm6-wx23',
+    expires: '2026-08-15',
+    reason:
+      'axios form serializer maxDepth bypass. Dev-only (Cypress). Not shipped.',
+  },
+  {
+    id: 'GHSA-jqh4-m9w3-8hp9',
+    expires: '2026-08-15',
+    reason:
+      'axios Fetch adapter ReadableStream uploads bypass maxBodyLength. Dev-only. Not shipped.',
+  },
+  {
+    id: 'GHSA-mmx7-hfxf-jppx',
+    expires: '2026-08-15',
+    reason:
+      'axios prototype pollution gadgets alter request. Dev-only (Cypress). Not shipped.',
+  },
+  {
+    id: 'GHSA-mwf2-3pr3-8698',
+    expires: '2026-08-15',
+    reason:
+      'axios HTTP/2 streamed uploads bypass maxBodyLength. Dev-only (Cypress). Not shipped.',
+  },
+  {
+    id: 'GHSA-pmv8-rq9r-6j72',
+    expires: '2026-08-15',
+    reason:
+      'axios deep formToJSON recursion DoS. Dev-only (Cypress). Not shipped.',
+  },
+  {
+    id: 'GHSA-xj6q-8x83-jv6g',
+    expires: '2026-08-15',
+    reason:
+      'axios prototype pollution auth subfields inject Basic auth. Dev-only. Not shipped.',
+  },
+  // ── fast-uri ──────────────────────────────────────────────────────────────
+  // fast-uri is an indirect dependency; a dedicated dependabot PR upgrades it.
+  {
+    id: 'GHSA-4c8g-83qw-93j6',
+    expires: '2026-08-15',
+    reason:
+      'fast-uri host confusion via failed IDN canonicalization. Build-time only. ' +
+      'Pending upgrade via dependabot PR.',
+  },
+  {
+    id: 'GHSA-v2hh-gcrm-f6hx',
+    expires: '2026-08-15',
+    reason:
+      'fast-uri host confusion via literal backslash. Build-time only. ' +
+      'Pending upgrade via dependabot PR.',
+  },
+  // ── astro ─────────────────────────────────────────────────────────────────
+  {
+    id: 'GHSA-4g3v-8h47-v7g6',
+    expires: '2026-08-15',
+    reason:
+      'Astro reflected XSS via View Transition animation properties. Dev server only; ' +
+      'the production build is static HTML with no server component. Not exploitable.',
+  },
+  // ── js-yaml ──────────────────────────────────────────────────────────────
+  {
+    id: 'GHSA-52cp-r559-cp3m',
+    expires: '2026-08-15',
+    reason:
+      'js-yaml YAML merge-key chains quadratic CPU. Used by eslint/build toolchain only; ' +
+      'YAML input comes from our own config files, never untrusted input. Not shipped.',
+  },
+  // ── systeminformation ────────────────────────────────────────────────────
+  {
+    id: 'GHSA-5xpp-75jx-m839',
+    expires: '2026-08-15',
+    reason:
+      'systeminformation OS command injection in networkInterfaces(). Dev-only dependency ' +
+      'used for local dev tooling. Not shipped. Pending upgrade via dependabot PR.',
+  },
+  // ── immutable ────────────────────────────────────────────────────────────
+  {
+    id: 'GHSA-v56q-mh7h-f735',
+    expires: '2026-08-15',
+    reason:
+      'Immutable.js List 32-bit trie overflow DoS. Indirect build-time dependency. ' +
+      'Not shipped to site. Pending upgrade via dependabot PR.',
+  },
+  {
+    id: 'GHSA-xvcm-6775-5m9r',
+    expires: '2026-08-15',
+    reason:
+      'Immutable.js hash-collision algorithmic complexity DoS. Indirect build-time ' +
+      'dependency. Not shipped to site. Pending upgrade via dependabot PR.',
   },
 ];
 
