@@ -46,7 +46,7 @@
     "@emnapi/runtime": "1.11.2",
     "@emnapi/wasi-threads": "1.2.2",
     "esbuild": ">=0.28.1",
-    "js-yaml": ">=4.2.0",
+    "js-yaml": ">=4.2.0 <5",
     "qs": ">=6.15.2",
     "uuid": ">=11.1.1"
   },
