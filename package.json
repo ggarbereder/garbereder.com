@@ -1,7 +1,7 @@
 {
   "name": "garbereder.com",
   "type": "module",
-  "version": "1.0.68",
+  "version": "1.0.69",
   "packageManager": "npm@11.6.2",
   "engines": {
     "node": ">=24"
@@ -73,7 +73,7 @@
     "lint-staged": "^17.0.8",
     "nyc": "^18.0.0",
     "patch-package": "^8.0.1",
-    "postcss": "^8.5.16",
+    "postcss": "^8.5.24",
     "preact": "^10.29.4",
     "prettier": "^3.9.4",
     "prettier-plugin-astro": "^0.14.1",
