@@ -17,6 +17,15 @@ const ALLOWLIST = [
       'https://github.com/juliangruber/brace-expansion/pull/129). Brace patterns come ' +
       'from our own lint config, never untrusted input, and none of it ships to the site.',
   },
+  {
+    id: 'GHSA-3jxr-9vmj-r5cp',
+    expires: '2026-08-15',
+    reason:
+      'brace-expansion exponential-time DoS via consecutive non-expanding {} groups. ' +
+      'Reaches us only via minimatch in the eslint toolchain; no patched 1.x/5.x is ' +
+      'available yet. Brace patterns come from our own lint config, never untrusted ' +
+      'input, and none of it ships to the site.',
+  },
 ];
 
 const npmExecPath = process.env.npm_execpath;
