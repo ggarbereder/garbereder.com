@@ -26,6 +26,15 @@ const ALLOWLIST = [
       'available yet. Brace patterns come from our own lint config, never untrusted ' +
       'input, and none of it ships to the site.',
   },
+  {
+    id: 'GHSA-r28c-9q8g-f849',
+    expires: '2026-08-15',
+    reason:
+      'PostCSS path traversal in previous source map auto-loading (sourceMappingURL) ' +
+      'that could disclose .map files. PostCSS 8.5.18 fixes this; upgrading shortly. ' +
+      'We use PostCSS as a build-time CSS preprocessor; attacker-controlled CSS input ' +
+      'is not a threat in our build pipeline.',
+  },
 ];
 
 const npmExecPath = process.env.npm_execpath;
