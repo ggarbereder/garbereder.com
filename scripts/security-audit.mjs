@@ -104,14 +104,6 @@ const ALLOWLIST = [
       'fast-uri host confusion via literal backslash. Build-time only. ' +
       'Pending upgrade via dependabot PR.',
   },
-  // ── astro ─────────────────────────────────────────────────────────────────
-  {
-    id: 'GHSA-4g3v-8h47-v7g6',
-    expires: '2026-08-15',
-    reason:
-      'Astro reflected XSS via View Transition animation properties. Dev server only; ' +
-      'the production build is static HTML with no server component. Not exploitable.',
-  },
   // ── js-yaml ──────────────────────────────────────────────────────────────
   {
     id: 'GHSA-52cp-r559-cp3m',
