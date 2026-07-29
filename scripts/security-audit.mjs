@@ -7,17 +7,7 @@ import { npmEnv } from './npm-env.mjs';
  * passes the entry stops suppressing and the audit fails again, so an
  * exception has to be renewed deliberately instead of rotting in place.
  */
-const ALLOWLIST = [
-  // ── brace-expansion ──────────────────────────────────────────────────────
-  {
-    id: 'GHSA-mh99-v99m-4gvg',
-    expires: '2026-08-15',
-    reason:
-      'brace-expansion OOM (CVE-2026-14257). Affects all 1.x versions; no patched 1.x ' +
-      'is published yet. Reaches us via minimatch@3 in the eslint toolchain only — ' +
-      'brace patterns come from our own lint config, never untrusted input, not shipped.',
-  },
-];
+const ALLOWLIST = [];
 
 const npmExecPath = process.env.npm_execpath;
 if (!npmExecPath) {
