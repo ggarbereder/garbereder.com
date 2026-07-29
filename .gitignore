@@ -23,3 +23,7 @@ coverage
 *.pfx
 secrets.json
 config/secrets.json
+
+# OS / editor
+.DS_Store
+.claude/
