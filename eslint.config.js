@@ -1,6 +1,6 @@
 // eslint.config.js
 import { defineConfig, globalIgnores } from 'eslint/config';
-import importPlugin from 'eslint-plugin-import';
+import importXPlugin from 'eslint-plugin-import-x';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig([
@@ -33,7 +33,7 @@ export default defineConfig([
       },
     },
     plugins: {
-      import: importPlugin,
+      'import-x': importXPlugin,
     },
     rules: {
       // Security-focused rules
@@ -55,12 +55,12 @@ export default defineConfig([
       'no-duplicate-case': 'error',
 
       // Import security
-      'import/no-unresolved': 'off', // Disabled due to module resolution issues
-      'import/no-absolute-path': 'error',
-      'import/no-self-import': 'error',
-      'import/no-cycle': 'warn',
-      'import/no-useless-path-segments': 'error',
-      'import/order': [
+      'import-x/no-unresolved': 'off', // Disabled due to module resolution issues
+      'import-x/no-absolute-path': 'error',
+      'import-x/no-self-import': 'error',
+      'import-x/no-cycle': 'warn',
+      'import-x/no-useless-path-segments': 'error',
+      'import-x/order': [
         'error',
         {
           groups: [

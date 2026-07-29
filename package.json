@@ -1,7 +1,7 @@
 {
   "name": "garbereder.com",
   "type": "module",
-  "version": "1.0.70",
+  "version": "1.0.71",
   "packageManager": "npm@11.6.2",
   "engines": {
     "node": ">=24"
@@ -66,10 +66,10 @@
     "cypress": "^15.19.0",
     "cypress-axe": "^1.7.0",
     "cypress-image-diff-js": "^2.8.0",
-    "eslint": "^9.39.5",
+    "eslint": "^10.8.0",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-react": "^7.37.5",
+    "eslint-import-resolver-node": "^0.4.0",
+    "eslint-plugin-import-x": "^4.17.1",
     "husky": "^9.1.7",
     "lint-staged": "^17.2.0",
     "nyc": "^18.0.0",
