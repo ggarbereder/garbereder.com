@@ -15,34 +15,65 @@ if (!npmExecPath) {
   process.exit(1);
 }
 
-const result = spawnSync(
-  process.execPath,
-  ['--use-system-ca', npmExecPath, 'audit', '--json'],
-  {
-    encoding: 'utf8',
-    env: npmEnv(),
-  }
-);
+/**
+ * The registry audit endpoint intermittently stalls until npm's own retries
+ * give up, which surfaces as an `error` object with blank fields. A single
+ * attempt therefore fails the whole job on a transient network fault, so cap
+ * each call and retry before giving up.
+ */
+const ATTEMPTS = 3;
+const ATTEMPT_TIMEOUT_MS = 120_000;
 
-if (result.error) {
-  console.error('npm audit failed to run:', result.error.message);
-  process.exit(1);
-}
+const describeError = (error) =>
+  [error?.summary, error?.detail, error?.code]
+    .map((part) => part?.trim())
+    .filter(Boolean)
+    .join(' - ') || JSON.stringify(error);
+
+const attemptAudit = () => {
+  const result = spawnSync(
+    process.execPath,
+    ['--use-system-ca', npmExecPath, 'audit', '--json'],
+    {
+      encoding: 'utf8',
+      env: npmEnv(),
+      timeout: ATTEMPT_TIMEOUT_MS,
+      maxBuffer: 32 * 1024 * 1024,
+    }
+  );
+
+  if (result.error) {
+    return { error: result.error.message };
+  }
+
+  let parsed;
+  try {
+    parsed = JSON.parse(result.stdout);
+  } catch {
+    return { error: result.stdout || result.stderr || 'no audit output' };
+  }
+
+  return parsed.error
+    ? { error: describeError(parsed.error) }
+    : { report: parsed };
+};
 
 let report;
-try {
-  report = JSON.parse(result.stdout);
-} catch {
-  console.error('Could not parse npm audit output:');
-  console.error(result.stdout || result.stderr);
-  process.exit(1);
+let lastError;
+for (let attempt = 1; attempt <= ATTEMPTS; attempt += 1) {
+  const outcome = attemptAudit();
+  if (outcome.report) {
+    report = outcome.report;
+    break;
+  }
+  lastError = outcome.error;
+  console.error(
+    `npm audit attempt ${attempt}/${ATTEMPTS} failed: ${lastError}`
+  );
 }
 
-if (report.error) {
-  console.error(
-    'npm audit reported an error:',
-    report.error.summary ?? report.error
-  );
+if (!report) {
+  console.error(`\nnpm audit could not be completed: ${lastError}`);
   process.exit(1);
 }
 
