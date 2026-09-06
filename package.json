@@ -1,7 +1,7 @@
 {
   "name": "garbereder.com",
   "type": "module",
-  "version": "1.0.74",
+  "version": "1.0.75",
   "packageManager": "npm@11.6.2",
   "engines": {
     "node": ">=24"
@@ -48,6 +48,9 @@
     "@humanfs/node": ">=0.16.8 <0.17",
     "brace-expansion": ">=5.0.9 <6",
     "browserslist": ">=4.28.8 <5",
+    "cypress-axe": {
+      "cypress": "$cypress"
+    },
     "esbuild": ">=0.28.1",
     "fast-uri": ">=3.1.7 <4",
     "js-yaml": ">=4.3.2 <5",
@@ -68,7 +71,7 @@
     "astro": "^7.3.1",
     "axe-core": "^4.13.0",
     "cssnano": "^9.0.2",
-    "cypress": "^15.21.1",
+    "cypress": "^16.0.0",
     "cypress-axe": "^1.7.0",
     "cypress-image-diff-js": "^2.8.0",
     "eslint": "^10.9.1",
