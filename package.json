@@ -2,7 +2,7 @@
   "name": "garbereder.com",
   "type": "module",
   "version": "1.0.76",
-  "packageManager": "npm@11.6.2",
+  "packageManager": "npm@12.0.2",
   "engines": {
     "node": ">=24"
   },
@@ -88,5 +88,12 @@
     "vite": "^8.2.2",
     "vite-imagetools": "^12.0.1",
     "vite-plugin-istanbul": "^9.0.1"
+  },
+  "allowScripts": {
+    "@parcel/watcher@2.6.0": true,
+    "cypress@16.0.0": true,
+    "esbuild@0.28.2": true,
+    "fsevents@2.3.3": true,
+    "unrs-resolver@1.12.2": true
   }
 }

@@ -39,6 +39,8 @@ jobs:
         with:
           node-version: '24'
           cache: 'npm'
+      - name: Install npm from packageManager
+        run: npm install -g "$(node -p "require('./package.json').packageManager")"
       - name: Fetch main branch
         run: git fetch origin main:refs/remotes/origin/main
       - name: Fetch feature branch
