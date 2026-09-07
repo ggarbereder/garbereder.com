@@ -1,7 +1,27 @@
-// eslint.config.js
 import { defineConfig, globalIgnores } from 'eslint/config';
+import eslintConfigPrettier from 'eslint-config-prettier';
 import importXPlugin from 'eslint-plugin-import-x';
 import tseslint from 'typescript-eslint';
+
+const browser = {
+  window: 'readonly',
+  document: 'readonly',
+  IntersectionObserver: 'readonly',
+  AbortController: 'readonly',
+  CustomEvent: 'readonly',
+  Event: 'readonly',
+  setTimeout: 'readonly',
+  requestAnimationFrame: 'readonly',
+};
+
+const cypress = {
+  cy: 'readonly',
+  Cypress: 'readonly',
+  describe: 'readonly',
+  it: 'readonly',
+  beforeEach: 'readonly',
+  expect: 'readonly',
+};
 
 export default defineConfig([
   globalIgnores(['**/dist/**', '**/.astro/**', '**/workers/**']),
@@ -11,32 +31,12 @@ export default defineConfig([
       ecmaVersion: 'latest',
       sourceType: 'module',
       parser: tseslint.parser,
-      globals: {
-        window: 'readonly',
-        document: 'readonly',
-        HTMLElement: 'readonly',
-        HTMLButtonElement: 'readonly',
-        Element: 'readonly',
-        NodeListOf: 'readonly',
-        IntersectionObserver: 'readonly',
-        AbortController: 'readonly',
-        setTimeout: 'readonly',
-        requestAnimationFrame: 'readonly',
-        Event: 'readonly',
-        CustomEvent: 'readonly',
-        KeyboardEvent: 'readonly',
-        cy: 'readonly',
-        describe: 'readonly',
-        it: 'readonly',
-        beforeEach: 'readonly',
-        expect: 'readonly',
-      },
+      globals: browser,
     },
     plugins: {
       'import-x': importXPlugin,
     },
     rules: {
-      // Security-focused rules
       'no-eval': 'error',
       'no-implied-eval': 'error',
       'no-new-func': 'error',
@@ -44,8 +44,6 @@ export default defineConfig([
       'no-alert': 'warn',
       'no-console': 'warn',
       'no-debugger': 'warn',
-
-      // General code quality
       'no-unused-vars': 'warn',
       'prefer-const': 'error',
       'no-var': 'error',
@@ -53,9 +51,7 @@ export default defineConfig([
       'no-unreachable': 'error',
       'no-dupe-keys': 'error',
       'no-duplicate-case': 'error',
-
-      // Import security
-      'import-x/no-unresolved': 'off', // Disabled due to module resolution issues
+      'import-x/no-unresolved': 'off',
       'import-x/no-absolute-path': 'error',
       'import-x/no-self-import': 'error',
       'import-x/no-cycle': 'warn',
@@ -78,28 +74,19 @@ export default defineConfig([
     },
   },
   {
+    files: ['**/*.{ts,tsx}'],
+    rules: { 'no-undef': 'off' },
+  },
+  {
     files: ['scripts/**/*.{js,mjs,cjs}'],
     languageOptions: {
-      globals: {
-        console: 'readonly',
-        process: 'readonly',
-      },
+      globals: { console: 'readonly', process: 'readonly' },
     },
-    rules: {
-      'no-console': 'off',
-    },
+    rules: { 'no-console': 'off' },
   },
   {
     files: ['cypress/**/*.{js,mjs,cjs,ts}'],
-    languageOptions: {
-      globals: {
-        cy: 'readonly',
-        Cypress: 'readonly',
-        describe: 'readonly',
-        it: 'readonly',
-        beforeEach: 'readonly',
-        expect: 'readonly',
-      },
-    },
+    languageOptions: { globals: cypress },
   },
+  eslintConfigPrettier,
 ]);
