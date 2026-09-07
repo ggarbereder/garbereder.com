@@ -7,10 +7,7 @@ import istanbul from 'vite-plugin-istanbul';
 
 // https://astro.build/config
 export default defineConfig({
-  // Astro 7 changed the compressHTML default from `true` to `'jsx'`, which
-  // strips whitespace *around* inline elements (JSX rules) and collapsed
-  // meaningful spaces like "30</strong> or <strong>60". Keep the v6
-  // HTML-aware behaviour.
+  // Astro 7 default is 'jsx', which collapses "30</strong> or <strong>60".
   compressHTML: true,
   integrations: [preact()],
 
@@ -29,35 +26,24 @@ export default defineConfig({
     },
   ],
 
-  server: {
-    host: true, // listen on all addresses (helps avoid localhost resolution issues on Windows)
-    port: 4321,
-  },
+  server: { host: true, port: 4321 },
 
   vite: {
     css: {
       preprocessorOptions: {
-        // Astro 7 (rolldown-vite) no longer adds node_modules to dart-sass's
-        // load path, so `@use 'tailwindcss'` in src/styles/index.scss can't
-        // resolve. Restore it explicitly.
+        // rolldown-vite dropped node_modules from the Sass load path.
         scss: { loadPaths: ['node_modules'] },
       },
     },
-    // Vite 8's dependency scanner uses Rolldown's default React JSX runtime
-    // and does not run Babel. @astrojs/preact always passes a babel cwd, so
-    // @preact/preset-vite skips oxc/rolldown jsx.importSource and the scan
-    // looks for react/jsx-dev-runtime. Point it at Preact explicitly.
+    // Vite 8's dep scanner defaults to React JSX and skips Babel.
     optimizeDeps: {
       rolldownOptions: {
         transform: {
-          jsx: {
-            runtime: 'automatic',
-            importSource: 'preact',
-          },
+          jsx: { runtime: 'automatic', importSource: 'preact' },
         },
       },
     },
-    // @ts-ignore - Plugin compatibility issues with newer Vite versions
+    // @ts-ignore Vite plugin type mismatch
     plugins: [
       tailwindcss(),
       imagetools(),
@@ -67,7 +53,6 @@ export default defineConfig({
         extension: ['.js', '.ts', '.jsx', '.tsx', '.astro'],
         cypress: true,
         requireEnv: true,
-        forceBuildInstrument: false,
       }),
     ],
   },

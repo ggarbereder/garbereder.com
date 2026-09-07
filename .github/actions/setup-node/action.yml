@@ -1,0 +1,24 @@
+name: Setup Node
+description: Install Node 24, npm from packageManager, and optionally npm ci
+inputs:
+  ci:
+    description: Run npm ci
+    default: 'true'
+  scripts:
+    description: Run dependency install scripts (Cypress, esbuild, …)
+    default: 'false'
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v5
+      with:
+        node-version: '24'
+        cache: npm
+    - shell: bash
+      run: npm install -g "$(node -p "require('./package.json').packageManager")"
+    - if: ${{ inputs.ci == 'true' && inputs.scripts == 'true' }}
+      shell: bash
+      run: npm ci
+    - if: ${{ inputs.ci == 'true' && inputs.scripts != 'true' }}
+      shell: bash
+      run: npm ci --ignore-scripts

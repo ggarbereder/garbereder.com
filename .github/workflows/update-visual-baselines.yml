@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: 'Branch to update baselines on'
+        description: Branch to update baselines on
         required: false
         default: ''
 
@@ -14,35 +14,26 @@ permissions:
 env:
   HUSKY: 0
   NODE_ENV: development
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   update-baselines:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.event.inputs.branch || github.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Setup Node.js
-        uses: actions/setup-node@v5
+      - uses: ./.github/actions/setup-node
         with:
-          node-version: '24'
-          cache: 'npm'
-      - name: Install npm from packageManager
-        run: npm install -g "$(node -p "require('./package.json').packageManager")"
-      - name: Install dependencies
-        run: npm ci
-      - name: Clear existing baselines
-        run: rm -rf cypress-image-diff-screenshots/baseline
-      - name: Run visual tests to generate new baselines
-        uses: cypress-io/github-action@v7
+          scripts: true
+      - run: rm -rf cypress-image-diff-screenshots/baseline
+      - uses: cypress-io/github-action@v7
         with:
+          install: false
           start: npm run dev
-          wait-on: 'http://localhost:4321'
+          wait-on: http://localhost:4321
           config: baseUrl=http://localhost:4321
-          spec: 'cypress/e2e/visual/**/*.cy.js'
+          spec: cypress/e2e/visual/**/*.cy.js
         env:
           CYPRESS_COVERAGE: false
       - name: Commit and push updated baselines

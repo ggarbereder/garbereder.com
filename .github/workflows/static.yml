@@ -1,169 +1,101 @@
-# This workflow builds, tests, and deploys the website to GitHub Pages
 name: Build and Deploy (main only) content to Pages
 
 on:
-  # Runs on pushes targeting the default branch (main)
   push:
-    branches: ['main']
-
-  # Runs when pull request is opened or reopened or when the head branch of the pull request is updated
+    branches: [main]
   pull_request:
-    branches:
-      - main
-
-  # Allows you to run this workflow manually from the Actions tab
+    branches: [main]
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-# These permissions are required for GitHub Pages deployment
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Prevent duplicate runs on the same branch; cancel in-progress for PRs,
-# keep running for main to avoid interrupting deploys.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
-# Environment variables for the workflow
 env:
-  HUSKY: 0 # Disable Husky git hooks during CI/CD
+  HUSKY: 0
   NODE_ENV: development
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
-  # Audit job: Runs security audits and linting checks
   audit:
     runs-on: ubuntu-latest
-    continue-on-error: false
     steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Setup Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: '24'
-          cache: 'npm'
-      - name: Install npm from packageManager
-        run: npm install -g "$(node -p "require('./package.json').packageManager")"
-      - name: Install dependencies
-        run: npm ci --ignore-scripts
-      - name: Update browser compatibility database
-        run: npx update-browserslist-db@latest
-      - name: Security audit
-        run: npm run security:audit
-      - name: Lint code
-        run: npm run lint
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/setup-node
+      - run: npx update-browserslist-db@latest
+      - run: npm run security:audit
+      - run: npm run lint
 
-  # Build job: Compiles the website and creates the distribution files
   build:
     runs-on: ubuntu-latest
-    needs: audit # Requires audit job to pass first
-    continue-on-error: false
+    needs: audit
     steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Setup Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: '24'
-          cache: 'npm'
-      - name: Install npm from packageManager
-        run: npm install -g "$(node -p "require('./package.json').packageManager")"
-      - name: Install dependencies
-        run: npm ci --ignore-scripts
-      - name: Build website
-        run: npm run build
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v7
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/setup-node
+      - run: npm run build
+      - uses: actions/upload-artifact@v7
         with:
           name: dist
           path: dist/
 
-  # Test job: Runs Cypress against the dev server with Istanbul instrumentation
   test:
     runs-on: ubuntu-latest
     needs: audit
     steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-      - name: Setup Node.js
-        uses: actions/setup-node@v5
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/setup-node
         with:
-          node-version: '24'
-          cache: 'npm'
-      - name: Install npm from packageManager
-        run: npm install -g "$(node -p "require('./package.json').packageManager")"
-      - name: Install dependencies
-        run: npm ci
+          scripts: true
       - name: Accessibility checks
         uses: cypress-io/github-action@v7
         with:
+          install: false
           start: npm run dev
-          wait-on: 'http://localhost:4321'
+          wait-on: http://localhost:4321
           command: npm run cy:run:a11y
       - name: Cypress run with coverage (functional specs)
         uses: cypress-io/github-action@v7
         with:
+          install: false
           start: npm run dev
-          wait-on: 'http://localhost:4321'
+          wait-on: http://localhost:4321
           config: baseUrl=http://localhost:4321
-          spec: 'cypress/e2e/Index/**/*.cy.js,cypress/e2e/StartAt05/**/*.cy.js'
+          spec: cypress/e2e/Index/**/*.cy.js,cypress/e2e/StartAt05/**/*.cy.js
         env:
           CYPRESS_COVERAGE: true
-      # Visual regression must run WITHOUT Istanbul instrumentation so the
-      # rendering matches the baselines (generated with coverage off). When
-      # instrumented, the slower JS delays the opacity-reveal and screenshots
-      # capture a half-revealed page.
+      # Visual baselines are captured without Istanbul; coverage slows the
+      # opacity-reveal and screenshots catch a half-revealed page.
       - name: Visual regression (no coverage)
         uses: cypress-io/github-action@v7
         with:
+          install: false
           start: npm run dev
-          wait-on: 'http://localhost:4321'
+          wait-on: http://localhost:4321
           config: baseUrl=http://localhost:4321
-          spec: 'cypress/e2e/visual/**/*.cy.js'
-      # Astro 7 instruments virtual script modules (e.g.
-      # head.astro?astro&type=script), so nyc emits HTML report files whose
-      # names contain "?", which upload-artifact rejects. Drop them; the
-      # lcov/json reports and the rest of the HTML report are unaffected.
+          spec: cypress/e2e/visual/**/*.cy.js
+      # Astro 7 coverage HTML uses "?" in filenames; upload-artifact rejects them.
       - name: Strip coverage report files with invalid names
         if: always()
         run: find coverage -name '*\?*' -delete || true
-      - name: Upload coverage report
-        uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@v7
         with:
           name: coverage-report
           path: coverage/
           if-no-files-found: warn
-      - name: Upload test screenshots on failure
-        uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
-          name: cypress-screenshots
-          path: cypress/screenshots
-          if-no-files-found: ignore
-      - name: Upload visual diff artifacts on failure
-        uses: actions/upload-artifact@v7
-        if: failure()
-        with:
-          name: visual-diffs
-          path: cypress-image-diff-screenshots/diff
-          if-no-files-found: ignore
-      - name: Upload visual comparison screenshots on failure
-        uses: actions/upload-artifact@v7
-        if: failure()
-        with:
-          name: visual-comparison
-          path: cypress-image-diff-screenshots/comparison
+          name: cypress-failures
+          path: |
+            cypress/screenshots
+            cypress-image-diff-screenshots/diff
+            cypress-image-diff-screenshots/comparison
           if-no-files-found: ignore
 
-  # Deploy job: Deploys the website to GitHub Pages
   deploy:
     concurrency:
       group: pages-deploy
@@ -172,19 +104,16 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: [build, test] # Requires both build artifact and passing tests
-    if: github.ref == 'refs/heads/main' # Only deploy from main branch
+    needs: [build, test]
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/download-artifact@v8
         with:
           name: dist
           path: dist/
-      - name: Setup Pages
-        uses: actions/configure-pages@v6
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v5
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
         with:
-          path: './dist/'
-      - name: Deploy to GitHub Pages
-        id: deployment
+          path: ./dist/
+      - id: deployment
         uses: actions/deploy-pages@v5
