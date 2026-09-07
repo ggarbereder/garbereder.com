@@ -43,6 +43,20 @@ export default defineConfig({
         scss: { loadPaths: ['node_modules'] },
       },
     },
+    // Vite 8's dependency scanner uses Rolldown's default React JSX runtime
+    // and does not run Babel. @astrojs/preact always passes a babel cwd, so
+    // @preact/preset-vite skips oxc/rolldown jsx.importSource and the scan
+    // looks for react/jsx-dev-runtime. Point it at Preact explicitly.
+    optimizeDeps: {
+      rolldownOptions: {
+        transform: {
+          jsx: {
+            runtime: 'automatic',
+            importSource: 'preact',
+          },
+        },
+      },
+    },
     // @ts-ignore - Plugin compatibility issues with newer Vite versions
     plugins: [
       tailwindcss(),
