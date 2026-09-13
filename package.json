@@ -1,7 +1,7 @@
 {
   "name": "garbereder.com",
   "type": "module",
-  "version": "1.0.77",
+  "version": "1.0.78",
   "packageManager": "npm@12.0.2",
   "engines": {
     "node": ">=24.15.0"
@@ -79,7 +79,7 @@
     "postcss": "^8.5.28",
     "preact": "^10.29.8",
     "prettier": "^3.9.6",
-    "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-astro": "^1.0.0",
     "sass": "^1.104.0",
     "start-server-and-test": "^3.0.12",
     "tailwindcss": "^4.3.3",
