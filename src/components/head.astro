@@ -26,17 +26,15 @@ const {
   <meta charset="utf-8" />
   <Font cssVariable="--font-quicksand" preload />
 
-  {
-    lcpPreload && (
-      <link
-        rel="preload"
-        as="image"
-        href={lcpPreload.src}
-        imagesrcset={lcpPreload.srcset}
-        imagesizes="(max-width: 1024px) 256px, (max-width: 1280px) 320px, 400px"
-      />
-    )
-  }
+  {lcpPreload && (
+    <link
+      rel="preload"
+      as="image"
+      href={lcpPreload.src}
+      imagesrcset={lcpPreload.srcset}
+      imagesizes="(max-width: 1024px) 256px, (max-width: 1280px) 320px, 400px"
+    />
+  )}
   <title>{title}</title>
   <meta name="description" content={description} />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
