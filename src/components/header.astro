@@ -16,7 +16,8 @@ const { href }: Props = Astro.props;
   <canvas
     id="particle-canvas"
     class="absolute inset-0 w-full h-full z-1 pointer-events-none"
-    aria-hidden="true"></canvas>
+    aria-hidden="true"
+  ></canvas>
 
   <!-- Content overlay -->
   <div class="relative z-10">
@@ -25,7 +26,8 @@ const { href }: Props = Astro.props;
         <h1
           class="font-light text-4xl 2xl:text-6xl text-center xl:text-left mx-4 md:mx-0"
         >
-          Welcome, I am <br /><span class="text-orange-500 name-reveal"
+          Welcome, I am
+          <br /><span class="text-orange-500 name-reveal"
             >Gerrit&nbsp;Garbereder</span
           >
         </h1>
@@ -44,7 +46,8 @@ const { href }: Props = Astro.props;
             <a
               href={`#${href}`}
               class="rounded-full bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 transition-colors duration-300 px-6 py-2 text-slate-900"
-              aria-label="View my resume">Resumé</a
+              aria-label="View my resume"
+              >Resumé</a
             >
             <a
               href="//start-at-05.com/"
