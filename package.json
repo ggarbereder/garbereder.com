@@ -77,7 +77,7 @@
     "lint-staged": "^17.6.0",
     "nyc": "^18.0.0",
     "postcss": "^8.5.28",
-    "preact": "^10.29.8",
+    "preact": "^11.0.0",
     "prettier": "^3.9.9",
     "prettier-plugin-astro": "^1.1.0",
     "sass": "^1.105.1",
