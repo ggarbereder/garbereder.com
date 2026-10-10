@@ -255,21 +255,55 @@ const slotCards = [
               Copy this short version into a team handbook, calendar
               description, or meeting invite.
             </p>
-            <div class="sa05-copy-panel rounded-2xl p-6">
-              <p id="sa05-policy-text" class="mb-4">
-                Schedule 50-minute meetings from :05 to :55 within each
-                60-minute calendar block. For 30-minute blocks, schedule
-                25-minute meetings from :05 to :30 or :35 to :00. Keep the
-                surrounding transition buffers clear.
-              </p>
-              <button
-                id="sa05-copy-policy"
-                type="button"
-                class="sa05-copy-button rounded-lg px-4 py-2 font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                aria-describedby="sa05-copy-status"
+            <div
+              class="sa05-copy-panel rounded-2xl p-6 sm:p-8"
+              role="group"
+              aria-label="Copyable meeting policy"
+            >
+              <div class="sa05-policy-heading mb-6 flex items-center gap-3">
+                <span class="sa05-policy-mark" aria-hidden="true"></span>
+                <h3 class="start-at-05-h3 m-0">The team standard</h3>
+              </div>
+              <div class="sa05-policy-rules grid gap-3 sm:grid-cols-2">
+                <div class="sa05-policy-rule rounded-xl p-5">
+                  <p class="sa05-policy-block mb-2 text-xs font-semibold">
+                    60-minute calendar block
+                  </p>
+                  <p class="sa05-policy-time mb-2 font-semibold">
+                    50-minute meeting
+                  </p>
+                  <p class="sa05-policy-detail m-0 text-sm">
+                    Start :05 <span aria-hidden="true">·</span> End :55
+                  </p>
+                </div>
+                <div class="sa05-policy-rule rounded-xl p-5">
+                  <p class="sa05-policy-block mb-2 text-xs font-semibold">
+                    30-minute calendar block
+                  </p>
+                  <p class="sa05-policy-time mb-2 font-semibold">
+                    25-minute meeting
+                  </p>
+                  <p class="sa05-policy-detail m-0 text-sm">
+                    Start :05 or :35 <span aria-hidden="true">·</span> End :30
+                    or :00
+                  </p>
+                </div>
+              </div>
+              <div
+                class="sa05-policy-footer mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
               >
-                Copy policy
-              </button>
+                <p class="sa05-policy-buffer m-0 text-sm">
+                  Keep the transition time between meetings clear.
+                </p>
+                <button
+                  id="sa05-copy-policy"
+                  type="button"
+                  class="sa05-copy-button rounded-lg px-4 py-2 font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                  aria-describedby="sa05-copy-status"
+                >
+                  Copy policy
+                </button>
+              </div>
               <p
                 id="sa05-copy-status"
                 class="mt-3 text-sm"
@@ -343,14 +377,22 @@ const slotCards = [
 <script>
   const copyButton =
     document.querySelector<HTMLButtonElement>('#sa05-copy-policy');
-  const policyText = document.querySelector<HTMLElement>('#sa05-policy-text');
   const copyStatus = document.querySelector<HTMLElement>('#sa05-copy-status');
 
   copyButton?.addEventListener('click', async () => {
-    if (!policyText || !copyStatus) return;
+    if (!copyStatus) return;
 
     try {
-      await navigator.clipboard.writeText(policyText.innerText);
+      await navigator.clipboard.writeText(
+        [
+          'START AT :05 | TEAM MEETING STANDARD',
+          '',
+          '60-minute calendar block: 50-minute meeting, :05 to :55.',
+          '30-minute calendar block: 25-minute meeting, :05 to :30 or :35 to :00.',
+          '',
+          'Keep the transition time between meetings clear.',
+        ].join('\n')
+      );
       copyStatus.textContent = 'Policy copied to clipboard.';
     } catch {
       copyStatus.textContent =

@@ -135,6 +135,20 @@ describe('Start at :05 — Content', () => {
   });
 
   describe('Shareable policy', () => {
+    it('presents the policy as separate rules for each calendar block', () => {
+      cy.get('[aria-label="Copyable meeting policy"]').within(() => {
+        cy.contains('h3', 'The team standard').should('exist');
+        cy.contains('60-minute calendar block').should('exist');
+        cy.contains('50-minute meeting').should('exist');
+        cy.contains('Start :05').should('exist');
+        cy.contains('30-minute calendar block').should('exist');
+        cy.contains('25-minute meeting').should('exist');
+        cy.contains('Keep the transition time between meetings clear.').should(
+          'exist'
+        );
+      });
+    });
+
     it('copies the policy and announces success', () => {
       let writeText;
       cy.window().then((win) => {
@@ -153,7 +167,10 @@ describe('Start at :05 — Content', () => {
       cy.then(() => {
         expect(writeText).to.have.been.calledOnce;
         expect(writeText.firstCall.args[0]).to.include(
-          '50-minute meetings from :05 to :55'
+          '60-minute calendar block: 50-minute meeting, :05 to :55.'
+        );
+        expect(writeText.firstCall.args[0]).to.include(
+          '30-minute calendar block: 25-minute meeting, :05 to :30 or :35 to :00.'
         );
       });
     });

@@ -142,7 +142,36 @@ $start-at-05-font-sans:
     background-color: var(--sa05-surface-subtle);
   }
 
+  .sa05-policy-mark {
+    height: 1px;
+    width: 1.75rem;
+    background-color: var(--sa05-accent);
+  }
+
+  .sa05-policy-rule {
+    border: 1px solid var(--sa05-line);
+    background-color: var(--sa05-surface);
+  }
+
+  .sa05-policy-block {
+    color: var(--sa05-muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .sa05-policy-time {
+    color: var(--sa05-ink);
+    font-family: var(--font-fraunces);
+    font-size: 1.25rem;
+  }
+
+  .sa05-policy-detail,
+  .sa05-policy-buffer {
+    color: var(--sa05-body);
+  }
+
   .sa05-copy-button {
+    flex-shrink: 0;
     border: 1px solid var(--sa05-accent);
     background-color: var(--sa05-accent);
     color: #fff;
