@@ -137,6 +137,30 @@ $start-at-05-font-sans:
     color: var(--sa05-muted);
   }
 
+  .sa05-copy-panel {
+    border: 1px solid var(--sa05-line);
+    background-color: var(--sa05-surface-subtle);
+  }
+
+  .sa05-copy-button {
+    border: 1px solid var(--sa05-accent);
+    background-color: var(--sa05-accent);
+    color: #fff;
+
+    &:hover {
+      background-color: var(--sa05-ink);
+      border-color: var(--sa05-ink);
+    }
+
+    &:focus-visible {
+      outline-color: var(--sa05-accent);
+    }
+  }
+
+  #sa05-copy-status:empty {
+    display: none;
+  }
+
   .sa05-list-li {
     color: var(--sa05-body);
   }
