@@ -30,8 +30,8 @@ describe('Start at :05 — Content', () => {
     });
 
     it('has timeline with correct aria-label', () => {
-      cy.get('[role="img"][aria-label*="Timeline"]').should('exist');
-      cy.get('[role="img"][aria-label*="Timeline"]')
+      cy.get('[role="img"][aria-label*="50-minute meeting"]').should('exist');
+      cy.get('[role="img"][aria-label*="50-minute meeting"]')
         .invoke('attr', 'aria-label')
         .should('include', '10:00')
         .and('include', '10:05')
@@ -59,20 +59,18 @@ describe('Start at :05 — Content', () => {
       });
     });
 
-    it('mentions 30 and 60 minutes and 50‑minute slots', () => {
-      cy.get('main').should('contain.text', '30');
-      cy.get('main').should('contain.text', '60 minutes');
-      cy.get('main')
-        .invoke('text')
-        .should('match', /50.*minute/);
+    it('distinguishes calendar block lengths from meeting durations', () => {
+      cy.get('main').should('contain.text', '30- or 60-minute blocks');
+      cy.get('main').should('contain.text', '50-minute meeting');
+      cy.get('main').should('contain.text', '25-minute meeting');
     });
 
-    it('displays Problems with 50‑minute blocks card', () => {
+    it('displays the reasons on-the-hour starts cause friction', () => {
       cy.get('main').within(() => {
         cy.get('h3')
           .first()
           .invoke('text')
-          .should('match', /Problems.*50.*minute.*blocks/);
+          .should('match', /starting on the hour.*friction/i);
       });
       cy.get('.card .list li').should('have.length.at.least', 3);
     });
@@ -84,7 +82,7 @@ describe('Start at :05 — Content', () => {
     });
 
     it('mentions start at :05 and :35 for half-hour', () => {
-      cy.get('main').should('contain.text', 'start at :05');
+      cy.get('main').should('contain.text', ':05');
       cy.get('main').should('contain.text', ':35');
     });
 
@@ -103,26 +101,95 @@ describe('Start at :05 — Content', () => {
       });
     });
 
-    it('shows 60‑minute example: start at :05, end at :55', () => {
-      cy.get('main')
-        .invoke('text')
-        .should('match', /60.*minute/);
-      cy.get('main').should('contain.text', ':55');
+    it('shows a 50-minute meeting inside a 60-minute calendar block', () => {
+      cy.get('main').should(
+        'contain.text',
+        '60-minute calendar block, schedule a 50-minute meeting'
+      );
       cy.get('.slot .time').first().should('contain.text', '10:05');
       cy.get('.slot .time').first().should('contain.text', '10:55');
     });
 
-    it('shows 30‑minute examples with :05 and :35', () => {
+    it('shows 25-minute meetings in both half-hour blocks', () => {
       cy.get('main')
         .invoke('text')
-        .should('match', /30.*minute/);
-      cy.get('.slot').should('have.length.at.least', 2);
+        .then((content) => {
+          const normalizedContent = content.replace(/\s+/g, ' ');
+          expect(normalizedContent).to.include(
+            '30-minute calendar block, schedule a 25-minute meeting'
+          );
+        });
+      cy.get('.slot').should('have.length', 3);
+      cy.get('.slot .time').eq(1).should('contain.text', '10:05');
+      cy.get('.slot .time').eq(1).should('contain.text', '10:30');
+      cy.get('.slot .time').eq(2).should('contain.text', '10:35');
+      cy.get('.slot .time').eq(2).should('contain.text', '11:00');
     });
 
-    it('displays Full hour and half-hour slot labels', () => {
-      cy.get('.slot .label').first().should('contain.text', 'Full hour');
-      cy.get('.slot .label').should('contain.text', 'First half');
-      cy.get('.slot .label').should('contain.text', 'Second half');
+    it('labels each slot by its meeting duration and calendar block', () => {
+      cy.get('.slot .label').eq(0).should('contain.text', '50-minute meeting');
+      cy.get('.slot .label').eq(0).should('contain.text', '60-minute block');
+      cy.get('.slot .label').eq(1).should('contain.text', '25-minute meeting');
+      cy.get('.slot .label').eq(2).should('contain.text', '25-minute meeting');
+    });
+  });
+
+  describe('Shareable policy', () => {
+    it('presents the policy as separate rules for each calendar block', () => {
+      cy.get('[aria-label="Copyable meeting policy"]').within(() => {
+        cy.contains('h3', 'The team standard').should('exist');
+        cy.contains('60-minute calendar block').should('exist');
+        cy.contains('50-minute meeting').should('exist');
+        cy.contains('Start :05').should('exist');
+        cy.contains('30-minute calendar block').should('exist');
+        cy.contains('25-minute meeting').should('exist');
+        cy.contains('Keep the transition time between meetings clear.').should(
+          'exist'
+        );
+      });
+    });
+
+    it('copies the policy and announces success', () => {
+      let writeText;
+      cy.window().then((win) => {
+        writeText = cy.stub().resolves();
+        Object.defineProperty(win.navigator, 'clipboard', {
+          configurable: true,
+          value: { writeText },
+        });
+      });
+
+      cy.get('#sa05-copy-policy').click();
+      cy.get('#sa05-copy-status').should(
+        'have.text',
+        'Policy copied to clipboard.'
+      );
+      cy.then(() => {
+        expect(writeText).to.have.been.calledOnce;
+        expect(writeText.firstCall.args[0]).to.include(
+          '60-minute calendar block: 50-minute meeting, :05 to :55.'
+        );
+        expect(writeText.firstCall.args[0]).to.include(
+          '30-minute calendar block: 25-minute meeting, :05 to :30 or :35 to :00.'
+        );
+      });
+    });
+
+    it('explains how to copy the text manually when clipboard access fails', () => {
+      cy.window().then((win) => {
+        Object.defineProperty(win.navigator, 'clipboard', {
+          configurable: true,
+          value: {
+            writeText: cy.stub().rejects(new Error('Clipboard unavailable')),
+          },
+        });
+      });
+
+      cy.get('#sa05-copy-policy').click();
+      cy.get('#sa05-copy-status').should(
+        'have.text',
+        'Could not copy automatically. Select the policy text above and copy it.'
+      );
     });
   });
 

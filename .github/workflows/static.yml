@@ -53,6 +53,7 @@ jobs:
       - name: Accessibility checks
         uses: cypress-io/github-action@v7
         with:
+          browser: chrome
           install: false
           start: npm run dev
           wait-on: http://localhost:4321
@@ -72,6 +73,7 @@ jobs:
       - name: Visual regression (no coverage)
         uses: cypress-io/github-action@v7
         with:
+          browser: chrome
           install: false
           start: npm run dev
           wait-on: http://localhost:4321

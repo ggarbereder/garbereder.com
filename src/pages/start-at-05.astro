@@ -4,9 +4,9 @@ import Main from '../layouts/main.astro';
 const sectionClass = 'sa05-section py-8';
 const containerClass = 'max-w-3xl mx-auto px-4 sm:px-6';
 const slotCards = [
-  { time: '10:05 – 10:55', label: 'Full hour' },
-  { time: '10:05 – 10:30', label: 'First half of the hour' },
-  { time: '10:35 – 11:00', label: 'Second half of the hour' },
+  { time: '10:05 – 10:55', label: '50-minute meeting in a 60-minute block' },
+  { time: '10:05 – 10:30', label: '25-minute meeting in the first half-hour' },
+  { time: '10:35 – 11:00', label: '25-minute meeting in the second half-hour' },
 ];
 ---
 
@@ -38,7 +38,7 @@ const slotCards = [
         <div
           class="mt-8 py-8"
           role="img"
-          aria-label="Timeline: 10:00, 10:05 start, 10:55 end, 11:00"
+          aria-label="A 50-minute meeting runs from 10:05 to 10:55 inside the 10:00 to 11:00 calendar hour."
         >
           <ul class="timeline-vertical sm:hidden space-y-8 list-none">
             <li class="relative flex items-center min-h-[2rem]">
@@ -133,14 +133,14 @@ const slotCards = [
               Why not "on the hour"?
             </h2>
             <p class="lead text-lg mb-8">
-              Meetings usually are about <strong class="sa05-strong">30</strong>
-              or <strong class="sa05-strong">60 minutes</strong> long. Many
-              teams use 50‑minute slots to create buffers—but that creates
-              friction too.
+              Calendars commonly reserve
+              <strong class="sa05-strong">30- or 60-minute blocks</strong>. If a
+              meeting starts right on the hour, even a short delay can consume
+              the transition time people need between rooms or calls.
             </p>
             <div class="sa05-card card my-8 rounded-2xl p-6 text-base">
               <h3 class="start-at-05-h3 mb-8 leading-snug">
-                Problems with 50‑minute blocks
+                Why starting on the hour still causes friction
               </h3>
               <ul class="list m-0 flex list-none flex-col gap-4 p-0 text-base">
                 <li
@@ -158,8 +158,8 @@ const slotCards = [
                 <li
                   class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
                 >
-                  It's easier to stick to the full 50 minutes by starting late
-                  rather than by forcing a hard stop on the hour.
+                  A meeting that starts at :00 can consume its transition buffer
+                  when it runs late.
                 </li>
               </ul>
             </div>
@@ -174,13 +174,12 @@ const slotCards = [
               The fix: Start at :05
             </h2>
             <p class="text-base mb-8">
-              Schedule meetings to
-              <span class="sa05-accent font-semibold">start at :05</span> (five
-              minutes after the hour)—or at :35 for half-hour slots. You keep
-              buffer time between back-to-backs while matching how people think
-              about times: "meeting at 10" still gives a few minutes to get
-              there, and you're done before the next round hour so the next
-              meeting can start at :05 too.
+              Fit a <strong class="sa05-strong">50-minute meeting</strong> into
+              a 60-minute calendar block by starting at
+              <span class="sa05-accent font-semibold">:05</span> and ending at
+              :55. For 30-minute blocks, schedule a 25-minute meeting at :05 or
+              :35. The shorter meeting leaves a five-minute transition at each
+              end of its calendar block.
             </p>
           </div>
           <div class={containerClass}>
@@ -192,8 +191,7 @@ const slotCards = [
                 <li
                   class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
                 >
-                  People still think "on the hour" but you start at :05 (or
-                  :35).
+                  The calendar still uses familiar 30- and 60-minute blocks.
                 </li>
                 <li
                   class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
@@ -203,8 +201,9 @@ const slotCards = [
                 <li
                   class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
                 >
-                  "Meeting at 10" still gives a 5‑minute window to reach the
-                  room.
+                  Invitations show the real start time, so attendees know when
+                  to join while the earlier buffer stays available for setup and
+                  transitions.
                 </li>
                 <li
                   class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
@@ -217,8 +216,8 @@ const slotCards = [
           <div class={containerClass}>
             <h3 class="start-at-05-h3 mb-4 leading-snug">Examples</h3>
             <p class="text-base mb-4">
-              For <strong class="sa05-strong">60‑minute</strong> meetings, start
-              at :05 and end at :55.
+              In a <strong class="sa05-strong">60-minute calendar block</strong
+              >, schedule a 50-minute meeting from :05 to :55.
             </p>
             <div class="grid grid-cols-1 gap-8 mb-8">
               <div class="sa05-slot slot rounded-xl p-6 text-center text-base">
@@ -230,8 +229,9 @@ const slotCards = [
             </div>
 
             <p class="text-base mb-4">
-              For <strong class="sa05-strong">30‑minute</strong> meetings, start
-              at :05 or :35.
+              In each
+              <strong class="sa05-strong">30-minute calendar block</strong>,
+              schedule a 25-minute meeting at :05 or :35.
             </p>
             <div class="grid grid-cols-1 gap-8 sm:grid-cols-2">
               {slotCards.slice(1).map((slot) => <div
@@ -240,6 +240,76 @@ const slotCards = [
                 <div class="time font-light text-2xl mb-4">{slot.time}</div>
                 <div class="label text-sm">{slot.label}</div>
               </div>)}
+            </div>
+          </div>
+        </section>
+
+        <section class={sectionClass}>
+          <div class={containerClass}>
+            <h2
+              class="start-at-05-h2 mb-4 text-[1.875rem] font-light leading-snug"
+            >
+              Share the policy with your team
+            </h2>
+            <p class="text-base mb-4">
+              Copy this short version into a team handbook, calendar
+              description, or meeting invite.
+            </p>
+            <div
+              class="sa05-copy-panel rounded-2xl p-6 sm:p-8"
+              role="group"
+              aria-label="Copyable meeting policy"
+            >
+              <div class="sa05-policy-heading mb-6 flex items-center gap-3">
+                <span class="sa05-policy-mark" aria-hidden="true"></span>
+                <h3 class="start-at-05-h3 m-0">The team standard</h3>
+              </div>
+              <div class="sa05-policy-rules grid gap-3 sm:grid-cols-2">
+                <div class="sa05-policy-rule rounded-xl p-5">
+                  <p class="sa05-policy-block mb-2 text-xs font-semibold">
+                    60-minute calendar block
+                  </p>
+                  <p class="sa05-policy-time mb-2 font-semibold">
+                    50-minute meeting
+                  </p>
+                  <p class="sa05-policy-detail m-0 text-sm">
+                    Start :05 <span aria-hidden="true">·</span> End :55
+                  </p>
+                </div>
+                <div class="sa05-policy-rule rounded-xl p-5">
+                  <p class="sa05-policy-block mb-2 text-xs font-semibold">
+                    30-minute calendar block
+                  </p>
+                  <p class="sa05-policy-time mb-2 font-semibold">
+                    25-minute meeting
+                  </p>
+                  <p class="sa05-policy-detail m-0 text-sm">
+                    Start :05 or :35 <span aria-hidden="true">·</span> End :30
+                    or :00
+                  </p>
+                </div>
+              </div>
+              <div
+                class="sa05-policy-footer mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+              >
+                <p class="sa05-policy-buffer m-0 text-sm">
+                  Keep the transition time between meetings clear.
+                </p>
+                <button
+                  id="sa05-copy-policy"
+                  type="button"
+                  class="sa05-copy-button rounded-lg px-4 py-2 font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                  aria-describedby="sa05-copy-status"
+                >
+                  Copy policy
+                </button>
+              </div>
+              <p
+                id="sa05-copy-status"
+                class="mt-3 text-sm"
+                role="status"
+                aria-live="polite"
+              ></p>
             </div>
           </div>
         </section>
@@ -303,3 +373,30 @@ const slotCards = [
     </footer>
   </div>
 </Main>
+
+<script>
+  const copyButton =
+    document.querySelector<HTMLButtonElement>('#sa05-copy-policy');
+  const copyStatus = document.querySelector<HTMLElement>('#sa05-copy-status');
+
+  copyButton?.addEventListener('click', async () => {
+    if (!copyStatus) return;
+
+    try {
+      await navigator.clipboard.writeText(
+        [
+          'START AT :05 | TEAM MEETING STANDARD',
+          '',
+          '60-minute calendar block: 50-minute meeting, :05 to :55.',
+          '30-minute calendar block: 25-minute meeting, :05 to :30 or :35 to :00.',
+          '',
+          'Keep the transition time between meetings clear.',
+        ].join('\n')
+      );
+      copyStatus.textContent = 'Policy copied to clipboard.';
+    } catch {
+      copyStatus.textContent =
+        'Could not copy automatically. Select the policy text above and copy it.';
+    }
+  });
+</script>
