@@ -1,0 +1,20 @@
+// Deploys the built Astro site (dist/) as a Cloudflare Worker with static assets.
+// Deploy: npm run build && npx wrangler deploy
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "garbereder-com",
+  "compatibility_date": "2025-02-01",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none",
+  },
+  // Parallel run: reachable on workers.dev only. To cut over, remove the
+  // GitHub Pages DNS records, set workers_dev to false and add:
+  // "routes": [
+  //   { "pattern": "garbereder.com", "custom_domain": true },
+  //   { "pattern": "www.garbereder.com", "custom_domain": true },
+  // ],
+  "workers_dev": true,
+  "preview_urls": false,
+}

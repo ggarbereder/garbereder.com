@@ -1,4 +1,4 @@
-name: Build and Deploy (main only) content to Pages
+name: Build and Deploy (main only) to Pages and Cloudflare Workers
 
 on:
   push:
@@ -120,3 +120,22 @@ jobs:
           path: ./dist/
       - id: deployment
         uses: actions/deploy-pages@v5
+
+  deploy-worker:
+    concurrency:
+      group: cloudflare-deploy
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    needs: [build, test]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist/
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy
