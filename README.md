@@ -14,6 +14,7 @@ flowchart LR
     end
 
     GP[GitHub Pages]
+    CW[Cloudflare Worker]
     UD[United Domains]
     CF[Cloudflare]
     BS[BetterStack]
@@ -23,6 +24,7 @@ flowchart LR
     SC --> GA
     CT --> GA
     GA -->|publish site| GP
+    GA -.->|deploy site in parallel| CW
     UD -->|domain delegation| CF
     CF -->|DNS points to site| GP
     BS -.->|monitor uptime| GP
