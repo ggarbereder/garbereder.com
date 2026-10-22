@@ -3,17 +3,32 @@
 [![Build and Deploy (main only) content to Pages](https://github.com/ggarbereder/garbereder.com/actions/workflows/static.yml/badge.svg?branch=main)](https://github.com/ggarbereder/garbereder.com/actions/workflows/static.yml)
 [![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/24fip.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
 
-<!-- eraser-additional-content -->
-
 ## Architecture
 
-<!-- eraser-additional-files -->
+```mermaid
+flowchart LR
+    subgraph GH[GitHub Repository]
+        SC[Source Code]
+        CT[Content]
+        GA[GitHub Actions]
+    end
 
-<a href="/architecture.eraserdiagram" data-element-id="iCwAF-Hf-3PkRkqWnDDsh"><img src="/.eraser/13CWfCo0qAe1BLFjrEXT___zyEvvzgyoedHnT9WaAfDjOScVsT2___---diagram----23f49d818a1d847e98286ae21c4ea9c6-Static-Website-Architecture-with-GitHub--Cloudflare--and-BetterStack.png" alt="" data-element-id="iCwAF-Hf-3PkRkqWnDDsh" /></a>
+    GP[GitHub Pages]
+    UD[United Domains]
+    CF[Cloudflare]
+    BS[BetterStack]
+    U([User])
+    A([Admin])
 
-<!-- end-eraser-additional-files -->
-<!-- end-eraser-additional-content -->
-<!--- Eraser file: https://app.eraser.io/workspace/13CWfCo0qAe1BLFjrEXT --->
+    SC --> GA
+    CT --> GA
+    GA -->|publish site| GP
+    UD -->|domain delegation| CF
+    CF -->|DNS points to site| GP
+    BS -.->|monitor uptime| GP
+    U -->|requests website| CF
+    BS -->|alerts| A
+```
 
 ## Prerequisites
 
