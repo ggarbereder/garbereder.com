@@ -130,6 +130,9 @@ jobs:
     if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v5
+      - uses: ./.github/actions/setup-node
+        with:
+          ci: 'false'
       - uses: actions/download-artifact@v8
         with:
           name: dist
@@ -138,4 +141,5 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: '4'
           command: deploy
