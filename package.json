@@ -1,7 +1,7 @@
 {
   "name": "garbereder.com",
   "type": "module",
-  "version": "1.0.90",
+  "version": "1.0.91",
   "packageManager": "npm@12.0.2",
   "engines": {
     "node": ">=24.15.0"
@@ -87,13 +87,15 @@
     "typescript-eslint": "^8.71.2",
     "vite": "^8.3.4",
     "vite-imagetools": "^12.0.1",
-    "vite-plugin-istanbul": "^9.0.1"
+    "vite-plugin-istanbul": "^9.0.1",
+    "wrangler": "^4.152.0"
   },
   "allowScripts": {
     "@parcel/watcher": true,
     "cypress": true,
     "esbuild": true,
     "fsevents": true,
-    "unrs-resolver": true
+    "unrs-resolver": true,
+    "workerd": false
   }
 }
