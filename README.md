@@ -1,6 +1,6 @@
 # Garbereder.com
 
-[![Build and Deploy (main only) content to Pages](https://github.com/ggarbereder/garbereder.com/actions/workflows/static.yml/badge.svg?branch=main)](https://github.com/ggarbereder/garbereder.com/actions/workflows/static.yml)
+[![Build and Deploy (main only) to Cloudflare Workers](https://github.com/ggarbereder/garbereder.com/actions/workflows/static.yml/badge.svg?branch=main)](https://github.com/ggarbereder/garbereder.com/actions/workflows/static.yml)
 [![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/24fip.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
 
 ## Architecture
@@ -13,19 +13,19 @@ flowchart LR
         GA[GitHub Actions]
     end
 
-    GP[GitHub Pages]
+    CW[Cloudflare Worker]
     UD[United Domains]
-    CF[Cloudflare]
+    CF[Cloudflare DNS]
     BS[BetterStack]
     U([User])
     A([Admin])
 
     SC --> GA
     CT --> GA
-    GA -->|publish site| GP
+    GA -->|deploy site| CW
     UD -->|domain delegation| CF
-    CF -->|DNS points to site| GP
-    BS -.->|monitor uptime| GP
+    CF -->|custom domain| CW
+    BS -.->|monitor uptime| CW
     U -->|requests website| CF
     BS -->|alerts| A
 ```
@@ -79,7 +79,7 @@ Github Actions handle continuous integration and deployment:
 
 - Runs on pull requests and main branch
 - Executes full test suite before deployment
-- Deploys to GitHub Pages on successful main branch builds
+- Deploys the built site to a Cloudflare Worker (static assets) on successful main branch builds
 - Runs post-deployment verification tests
 
 ## Security

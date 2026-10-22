@@ -1,4 +1,4 @@
-name: Build and Deploy (main only) content to Pages
+name: Build and Deploy (main only) to Cloudflare Workers
 
 on:
   push:
@@ -101,22 +101,22 @@ jobs:
 
   deploy:
     concurrency:
-      group: pages-deploy
+      group: cloudflare-deploy
       cancel-in-progress: false
     environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      name: production
+      url: https://www.garbereder.com
     runs-on: ubuntu-latest
     needs: [build, test]
     if: github.ref == 'refs/heads/main'
     steps:
+      - uses: actions/checkout@v5
       - uses: actions/download-artifact@v8
         with:
           name: dist
           path: dist/
-      - uses: actions/configure-pages@v6
-      - uses: actions/upload-pages-artifact@v5
+      - uses: cloudflare/wrangler-action@v3
         with:
-          path: ./dist/
-      - id: deployment
-        uses: actions/deploy-pages@v5
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy
