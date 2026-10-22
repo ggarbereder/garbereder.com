@@ -1,7 +1,7 @@
 {
   "name": "garbereder.com",
   "type": "module",
-  "version": "1.0.90",
+  "version": "1.0.91",
   "packageManager": "npm@12.0.2",
   "engines": {
     "node": ">=24.15.0"
@@ -95,6 +95,7 @@
     "cypress": true,
     "esbuild": true,
     "fsevents": true,
-    "unrs-resolver": true
+    "unrs-resolver": true,
+    "workerd": false
   }
 }
