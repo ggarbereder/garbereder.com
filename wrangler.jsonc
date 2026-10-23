@@ -7,14 +7,12 @@
   "assets": {
     "directory": "./dist",
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "none",
+    "not_found_handling": "none"
   },
-  // Parallel run: reachable on workers.dev only. To cut over, remove the
-  // GitHub Pages DNS records, set workers_dev to false and add:
-  // "routes": [
-  //   { "pattern": "garbereder.com", "custom_domain": true },
-  //   { "pattern": "www.garbereder.com", "custom_domain": true },
-  // ],
-  "workers_dev": true,
-  "preview_urls": false,
+ "routes": [
+   { "pattern": "garbereder.com", "custom_domain": true },
+   { "pattern": "www.garbereder.com", "custom_domain": true }
+  ],
+  "workers_dev": false,
+  "preview_urls": false
 }

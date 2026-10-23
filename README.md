@@ -13,7 +13,6 @@ flowchart LR
         GA[GitHub Actions]
     end
 
-    GP[GitHub Pages]
     CW[Cloudflare Worker]
     UD[United Domains]
     CF[Cloudflare]
@@ -23,11 +22,10 @@ flowchart LR
 
     SC --> GA
     CT --> GA
-    GA -->|publish site| GP
-    GA -.->|deploy site in parallel| CW
+    GA -.->|deploy site| CW
     UD -->|domain delegation| CF
-    CF -->|DNS points to site| GP
-    BS -.->|monitor uptime| GP
+    CF -->|DNS points to site| CW
+    BS -.->|monitor uptime| CW
     U -->|requests website| CF
     BS -->|alerts| A
 ```
@@ -81,8 +79,7 @@ Github Actions handle continuous integration and deployment:
 
 - Runs on pull requests and main branch
 - Executes full test suite before deployment
-- Deploys to GitHub Pages on successful main branch builds
-- Also deploys the same build to a Cloudflare Worker (static assets), running in parallel until DNS is cut over
+- Deploys on successful main branch build to a Cloudflare Worker (static assets)
 - Runs post-deployment verification tests
 
 ## Security
