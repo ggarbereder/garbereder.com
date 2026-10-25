@@ -63,3 +63,4 @@ Intentional visual changes require updating the Linux baseline screenshots in `t
 - Do not commit directly to `main`; work on a branch and open a pull request.
 - Use Conventional Commit prefixes (`feat:`, `fix:`, `chore:`, `ci:`, …).
 - The version in `package.json` is bumped automatically by the `version-bump` workflow on pull requests; do not bump it manually unless asked.
+- Each pull request gets a Cloudflare Preview (`preview.yml`) at `https://pr-<number>-garbereder-com.<subdomain>.workers.dev`, linked in a PR comment. It is deleted when the PR is merged or closed. Dependabot PRs get no preview.

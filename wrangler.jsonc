@@ -15,5 +15,8 @@
     { "pattern": "www.garbereder.com", "custom_domain": true },
   ],
   "workers_dev": false,
-  "preview_urls": false,
+  // workers.dev URLs for Previews (one per pull request, see preview.yml); applied by `wrangler deploy`, not by `wrangler preview`
+  "preview_urls": true,
+  // Enables `wrangler preview`; assets stay configured above
+  "previews": {},
 }

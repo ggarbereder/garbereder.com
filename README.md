@@ -79,6 +79,7 @@ Github Actions handle continuous integration and deployment:
 - Runs on pull requests and main branch
 - Builds once, validates the HTML and runs the Playwright suite against that build
 - Deploys the tested build on main to a Cloudflare Worker (static assets)
+- Every pull request gets a Cloudflare Preview at `https://pr-<number>-garbereder-com.<subdomain>.workers.dev` (`preview.yml`), linked in a PR comment and deleted on merge or close. It needs `preview_urls: true` and a `previews` block in `wrangler.jsonc`; `preview_urls` only takes effect on a production deploy (or in the dashboard). Dependabot PRs get no preview, as they can't read the Cloudflare secrets.
 
 ## Security
 
