@@ -44,9 +44,28 @@ jobs:
           path: dist/
 
   # Tests run against the same dist/ that gets deployed, served by astro preview.
-  test:
+  # One job per browser engine (plus visual), so each installs only its own browser and they run in parallel.
+  e2e:
     runs-on: ubuntu-latest
     needs: build
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: chromium
+            browser: chromium
+            run: npm run test:e2e -- --project=desktop --project=mobile --project=reflow
+          - name: firefox
+            browser: firefox
+            run: npm run test:e2e -- --project=firefox
+          - name: webkit
+            browser: webkit
+            run: npm run test:e2e -- --project=iphone
+          - name: visual
+            browser: chromium
+            run: npm run test:visual
+    name: e2e (${{ matrix.name }})
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup-node
@@ -54,19 +73,24 @@ jobs:
         with:
           name: dist
           path: dist/
-      - run: npx playwright install --with-deps chromium firefox webkit
-      - name: End-to-end, accessibility, SEO and CSP
-        run: npm run test:e2e
-      - name: Visual regression
-        run: npm run test:visual
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - run: ${{ matrix.run }}
       - uses: actions/upload-artifact@v7
         if: failure()
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.name }}
           path: |
             playwright-report/
             test-results/
           if-no-files-found: ignore
+
+  # Required status check for main; passes only if every e2e job passed
+  test:
+    runs-on: ubuntu-latest
+    needs: e2e
+    if: always()
+    steps:
+      - run: test "${{ needs.e2e.result }}" = success
 
   deploy:
     concurrency:
