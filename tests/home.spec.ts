@@ -44,17 +44,31 @@ test.describe('portrait', () => {
     );
     await expect(portrait).toHaveAttribute('loading', 'eager');
     await expect(portrait).toHaveAttribute('fetchpriority', 'high');
-    await expect(portrait).toHaveAttribute('srcset', /1x.*2x/);
+    await expect(portrait).toHaveAttribute('srcset', /256w.*845w/);
+    await expect(portrait).toHaveAttribute('sizes', /256px/);
     expect(
       await portrait.evaluate((img: HTMLImageElement) => img.naturalWidth)
     ).toBeGreaterThan(0);
   });
 
-  test('is preloaded from the head', async ({ page }) => {
-    const src = await page.locator('img#portrait').getAttribute('src');
-    await expect(
-      page.locator(`link[rel="preload"][as="image"][href="${src}"]`)
-    ).toHaveCount(1);
+  test('loads the AVIF version', async ({ page }) => {
+    const current = await page
+      .locator('img#portrait')
+      .evaluate((img: HTMLImageElement) => img.currentSrc);
+    expect(current).toMatch(/\.avif$/);
+  });
+
+  test('is preloaded from the head with the same AVIF srcset', async ({
+    page,
+  }) => {
+    const srcset = await page
+      .locator('picture source[type="image/avif"]')
+      .getAttribute('srcset');
+    const preload = page.locator(
+      'link[rel="preload"][as="image"][type="image/avif"]'
+    );
+    await expect(preload).toHaveCount(1);
+    await expect(preload).toHaveAttribute('imagesrcset', srcset ?? '');
   });
 });
 

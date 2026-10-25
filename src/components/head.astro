@@ -11,8 +11,8 @@ interface Props {
   keywords?: string;
   /** Keep the page out of search results (no canonical, robots noindex). */
   noindex?: boolean;
-  /** Optional LCP image preload: { src, srcset } so the image is discoverable from HTML immediately. */
-  lcpPreload?: { src: string; srcset: string };
+  /** Optional LCP image preload, so the image is discoverable from HTML immediately. Must match the image's srcset and sizes. */
+  lcpPreload?: { srcset: string; sizes: string; type: string };
 }
 
 const {
@@ -39,9 +39,9 @@ const {
     <link
       rel="preload"
       as="image"
-      href={lcpPreload.src}
+      type={lcpPreload.type}
       imagesrcset={lcpPreload.srcset}
-      imagesizes="(max-width: 1024px) 256px, (max-width: 1280px) 320px, 400px"
+      imagesizes={lcpPreload.sizes}
     />
   )}
   <title>{title}</title>

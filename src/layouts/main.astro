@@ -11,7 +11,7 @@ interface Props {
   /** Keep the page out of search results. */
   noindex?: boolean;
   /** Optional LCP image preload for the head. */
-  lcpPreload?: { src: string; srcset: string };
+  lcpPreload?: { srcset: string; sizes: string; type: string };
 }
 
 const { title, description, canonical, keywords, noindex, lcpPreload } =
