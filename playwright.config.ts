@@ -12,13 +12,14 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: [['list'], ['html', { open: 'never' }]],
-  // Run against the production build (npm run build first), not the dev server
+  // Run against the production build (npm run build first), not the dev server.
+  // Its own port, so a running `astro dev` on 4321 is never reused by mistake.
   webServer: {
-    command: 'npm run preview -- --port 4321',
-    url: 'http://localhost:4321',
+    command: 'npm run preview -- --port 4329',
+    url: 'http://localhost:4329',
     reuseExistingServer: !process.env.CI,
   },
-  use: { baseURL: 'http://localhost:4321' },
+  use: { baseURL: 'http://localhost:4329' },
   expect: {
     // Real layout regressions are far larger (the Astro 7 whitespace collapse was 8%)
     toHaveScreenshot: { maxDiffPixelRatio: 0.01, animations: 'disabled' },
