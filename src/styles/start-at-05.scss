@@ -1,6 +1,8 @@
 // Start at :05 — cool neutrals, midnight ink, and restrained teal
 
+// Self-hosted Inter first, so the page (and its visual baselines) look the same on every OS
 $start-at-05-font-sans:
+  'Inter Variable',
   system-ui,
   -apple-system,
   BlinkMacSystemFont,
