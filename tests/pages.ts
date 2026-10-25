@@ -14,16 +14,21 @@ export const pages: SitePage[] = [
 /** Any unknown URL renders the 404 page */
 export const notFound = { path: '/does-not-exist/' };
 
-/** Scroll down one screen at a time so every scroll-triggered reveal runs, ending at the bottom */
+/** Scroll down half a screen at a time so every scroll-triggered reveal runs, ending at the bottom */
 export async function scrollThrough(page: Page) {
-  const height = await page.evaluate(() => document.body.scrollHeight);
-  const step = page.viewportSize()!.height;
-  for (let y = 0; y < height; y += step) {
-    await page.evaluate(
-      (top) => window.scrollTo({ top, behavior: 'instant' }),
-      y
-    );
-    await page.waitForTimeout(50);
+  // The page's own innerHeight, which can be smaller than the emulated viewport on phones
+  const { height, step } = await page.evaluate(() => ({
+    height: document.body.scrollHeight,
+    step: Math.floor(window.innerHeight / 2),
+  }));
+  for (let y = 0; y <= height; y += step) {
+    await page.evaluate(async (top) => {
+      window.scrollTo({ top, behavior: 'instant' });
+      // IntersectionObserver callbacks run with rendering; wait two frames for them
+      await new Promise((r) =>
+        requestAnimationFrame(() => requestAnimationFrame(r))
+      );
+    }, y);
   }
   await page.evaluate(() =>
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' })
