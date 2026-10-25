@@ -1,7 +1,7 @@
 {
   "name": "garbereder.com",
   "type": "module",
-  "version": "1.0.96",
+  "version": "1.0.97",
   "packageManager": "npm@12.0.2",
   "engines": {
     "node": ">=24.15.0"
@@ -63,7 +63,7 @@
     "@playwright/test": "^1.64.1",
     "@tailwindcss/postcss": "^4.3.3",
     "@tailwindcss/vite": "^4.3.3",
-    "@types/node": "^24.19.2",
+    "@types/node": "^26.6.5",
     "@typescript/native": "npm:typescript@^7.0.2",
     "astro": "^7.3.8",
     "cssnano": "^9.8.0",
