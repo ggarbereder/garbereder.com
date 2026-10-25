@@ -1,4 +1,7 @@
 ---
+import '@fontsource-variable/fraunces/wght.css';
+import '@fontsource-variable/fraunces/wght-italic.css';
+
 import Main from '../layouts/main.astro';
 
 const sectionClass = 'sa05-section py-8';
@@ -15,13 +18,9 @@ const slotCards = [
   description="Start meetings five minutes after the hour. Fewer late arrivals, calmer transitions, built-in breaks. A simple meeting policy that works."
   canonical="https://start-at-05.com/"
   keywords="meeting policy, meeting times, Start at :05, scheduling, productivity, calendar, back-to-back meetings"
-  extraFontCssVariable="--font-fraunces"
 >
   <div class="start-at-05 min-h-screen flex flex-col">
-    <header
-      role="banner"
-      class="sa05-hero relative overflow-hidden px-4 py-8 sm:py-12"
-    >
+    <header class="sa05-hero relative overflow-hidden px-4 py-8 sm:py-12">
       <div
         class="sa05-hero-glow absolute inset-0 pointer-events-none"
         aria-hidden="true"
@@ -350,10 +349,7 @@ const slotCards = [
       </article>
     </main>
 
-    <footer
-      role="contentinfo"
-      class="sa05-footer pt-8 pb-8 text-center text-xs font-normal"
-    >
+    <footer class="sa05-footer pt-8 pb-8 text-center text-xs font-normal">
       <div class={containerClass}>
         <p>
           Start at <span class="sa05-accent">:05</span> — Smarter meeting times

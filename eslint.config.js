@@ -14,17 +14,14 @@ const browser = {
   requestAnimationFrame: 'readonly',
 };
 
-const cypress = {
-  cy: 'readonly',
-  Cypress: 'readonly',
-  describe: 'readonly',
-  it: 'readonly',
-  beforeEach: 'readonly',
-  expect: 'readonly',
-};
-
 export default defineConfig([
-  globalIgnores(['**/dist/**', '**/.astro/**', '**/workers/**']),
+  globalIgnores([
+    '**/dist/**',
+    '**/.astro/**',
+    '**/workers/**',
+    'playwright-report/**',
+    'test-results/**',
+  ]),
   {
     files: ['**/*.{js,mjs,cjs,ts,tsx}'],
     languageOptions: {
@@ -83,10 +80,6 @@ export default defineConfig([
       globals: { console: 'readonly', process: 'readonly' },
     },
     rules: { 'no-console': 'off' },
-  },
-  {
-    files: ['cypress/**/*.{js,mjs,cjs,ts}'],
-    languageOptions: { globals: cypress },
   },
   eslintConfigPrettier,
 ]);

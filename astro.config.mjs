@@ -1,34 +1,30 @@
 // @ts-check
 import preact from '@astrojs/preact';
+import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
-import { defineConfig, fontProviders } from 'astro/config';
+import { defineConfig } from 'astro/config';
 import { imagetools } from 'vite-imagetools';
-import istanbul from 'vite-plugin-istanbul';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://www.garbereder.com',
   // Astro 7 default is 'jsx', which collapses "30</strong> or <strong>60".
   compressHTML: true,
-  integrations: [preact()],
-
-  fonts: [
-    {
-      name: 'Quicksand',
-      provider: fontProviders.google(),
-      cssVariable: '--font-quicksand',
-    },
-    {
-      name: 'Fraunces',
-      provider: fontProviders.google(),
-      cssVariable: '--font-fraunces',
-      weights: ['300', '400', '600'],
-      styles: ['normal', 'italic'],
-    },
+  integrations: [
+    preact(),
+    // /start-at-05/ is canonical on start-at-05.com, so it is not listed here.
+    sitemap({ filter: (page) => !page.includes('/start-at-05/') }),
   ],
+
+  build: {
+    // Never inline styles or scripts, so the Content-Security-Policy can stay at 'self'
+    inlineStylesheets: 'never',
+  },
 
   server: { host: true, port: 4321 },
 
   vite: {
+    build: { assetsInlineLimit: 0 },
     css: {
       preprocessorOptions: {
         // rolldown-vite dropped node_modules from the Sass load path.
@@ -44,16 +40,6 @@ export default defineConfig({
       },
     },
     // @ts-ignore Vite plugin type mismatch
-    plugins: [
-      tailwindcss(),
-      imagetools(),
-      istanbul({
-        include: 'src/**/*',
-        exclude: ['node_modules', 'cypress'],
-        extension: ['.js', '.ts', '.jsx', '.tsx', '.astro'],
-        cypress: true,
-        requireEnv: true,
-      }),
-    ],
+    plugins: [tailwindcss(), imagetools()],
   },
 });

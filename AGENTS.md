@@ -16,7 +16,7 @@ Personal website for garbereder.com: a static Astro site with Preact islands, st
 - `src/styles/` – global SCSS
 - `public/` – static files copied as-is
 - `workers/` – standalone Cloudflare Workers (own `package.json` and `wrangler.toml`)
-- `cypress/e2e/` – end-to-end, accessibility and visual regression tests
+- `tests/` – Playwright end-to-end, accessibility, SEO, CSP and visual regression tests (`tests/pages.ts` lists every page)
 - `scripts/` – Node helper scripts (security audit, npm env)
 
 ## Commands
@@ -26,13 +26,14 @@ npm install            # Node >= 24.15 required (engine-strict)
 npm run dev            # dev server on http://localhost:4321
 npm run build          # output in dist/
 npm run lint           # ESLint + Prettier check + typecheck
-npm run test:e2e       # Cypress against the dev server
-npm run test:a11y      # axe-core accessibility checks
+npm run test:html      # html-validate on dist/
+npm run test:e2e       # Playwright against the build (run npm run build first)
+npm run test:a11y      # axe-core and keyboard accessibility checks
 npm run test:visual    # visual regression tests
 npm run security:audit
 ```
 
-Run `npm run lint` and `npm run build` before considering a change done. Run the relevant Cypress suite when changing markup, styles or behavior.
+Run `npm run lint` and `npm run build` before considering a change done. Run `npm run build` and the relevant Playwright specs when changing markup, styles or behavior; they test `dist/`, not the dev server.
 
 ## Conventions
 
@@ -41,6 +42,7 @@ Run `npm run lint` and `npm run build` before considering a change done. Run the
 - Use Tailwind utility classes; follow the existing SCSS files for patterns already established there.
 - Formatting is enforced by Prettier and ESLint (lint-staged runs on commit). Do not hand-format against them.
 - Match the style, naming and comment density of surrounding code.
+- No inline scripts, styles or `style=""` attributes: the Content-Security-Policy in `public/_headers` only allows `'self'`, and `tests/csp.spec.ts` fails on violations.
 
 ## Accessibility
 
@@ -48,7 +50,7 @@ The site targets WCAG 2.2 Level AA. Use semantic HTML, keep keyboard navigation 
 
 ## Visual baselines
 
-Intentional visual changes require updating the baseline screenshots in `cypress-image-diff-screenshots/` (`npm run test:visual:update`, or the `update-visual-baselines` workflow). Do not update baselines to hide unintended regressions.
+Intentional visual changes require updating the Linux baseline screenshots in `tests/visual.spec.ts-snapshots/` with the `update-visual-baselines` workflow. `npm run test:visual:update` makes local baselines for your own platform, which are gitignored. Do not update baselines to hide unintended regressions.
 
 ## Dependencies and security
 

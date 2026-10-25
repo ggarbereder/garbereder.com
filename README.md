@@ -60,17 +60,16 @@ npm run build
 
 ### Testing
 
-#### Run Unit Tests
+Tests use [Playwright](https://playwright.dev/) against the production build (`astro preview`), in Chromium, Firefox and WebKit, on desktop, phone and 320px viewports.
 
 ```bash
-npm run test
-```
-
-#### Run E2E Tests (Cypress)
-
-```bash
-# Run tests in headless mode
-npm run test:e2e
+npx playwright install    # once, downloads the browsers
+npm run build             # the tests serve dist/
+npm run test:html         # html-validate on dist/
+npm run test:e2e          # end-to-end, accessibility, SEO and CSP tests
+npm run test:a11y         # accessibility tests only
+npm run test:visual       # visual regression (baselines are per platform)
+npm run test              # lint, build, html-validate and end-to-end
 ```
 
 ## CI/CD
@@ -78,15 +77,15 @@ npm run test:e2e
 Github Actions handle continuous integration and deployment:
 
 - Runs on pull requests and main branch
-- Executes full test suite before deployment
-- Deploys on successful main branch build to a Cloudflare Worker (static assets)
-- Runs post-deployment verification tests
+- Builds once, validates the HTML and runs the Playwright suite against that build
+- Deploys the tested build on main to a Cloudflare Worker (static assets)
 
 ## Security
 
 This project implements several security measures:
 
 - **Dependency Scanning**: Automated vulnerability scanning with `npm audit`
+- **Security headers**: strict Content-Security-Policy and related headers in `public/_headers`, verified in every browser engine by `tests/csp.spec.ts`
 - **Code Quality**: ESLint with security-focused rules
 - **TypeScript**: Strict type checking to prevent runtime errors
 - **Responsible Disclosure**: Security vulnerabilities can be reported via [security.txt](/.well-known/security.txt)
@@ -95,7 +94,7 @@ This project implements several security measures:
 
 - **Conformance target**: [WCAG 2.2 Level AA](https://www.w3.org/TR/WCAG22/)
 - **Statement**: [Accessibility page](/accessibility/)
-- **Automated checks**: axe-core scans run in CI via Cypress (`npm run test:a11y`)
+- **Automated checks**: axe-core (WCAG 2.2 AA and best practices) and keyboard tests run in CI via Playwright (`npm run test:a11y`)
 
 ### Security Scripts
 

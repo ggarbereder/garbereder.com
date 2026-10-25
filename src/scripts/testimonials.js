@@ -6,11 +6,9 @@ function initTestimonialsSlideshow(container) {
   const nextBtn = container.querySelector('.testimonials-next');
   const dots = container.querySelectorAll('.testimonials-dot');
   const slides = container.querySelectorAll('.testimonial-slide');
-  /* istanbul ignore next -- guard for malformed HTML; not reachable in normal use */
   if (!viewport || !prevBtn || !nextBtn || !slides.length) return;
 
   const previousController = container._testimonialsAbortController;
-  /* istanbul ignore next -- only reachable if module re-inits on the same container */
   if (previousController) {
     previousController.abort();
   }
@@ -22,6 +20,9 @@ function initTestimonialsSlideshow(container) {
   const total = slides.length;
   let isProgrammaticScroll = false;
   let fallbackTimerId = undefined;
+  // Tracked rather than read from scrollLeft, so a second click during a smooth scroll still advances
+  let current = 0;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   function getScrollPosition() {
     return viewport.scrollLeft;
@@ -30,7 +31,6 @@ function initTestimonialsSlideshow(container) {
   function getScrollDistance() {
     const first = slides[0];
     if (first) return first.offsetWidth + GAP_PX;
-    /* istanbul ignore next -- fallback when no slides present */
     return viewport.clientWidth + GAP_PX;
   }
   function goToIndex(index) {
@@ -38,8 +38,12 @@ function initTestimonialsSlideshow(container) {
     fallbackTimerId = undefined;
     const i = Math.max(0, Math.min(index, total - 1));
     const step = getScrollDistance();
+    current = i;
     isProgrammaticScroll = true;
-    viewport.scrollTo({ left: i * step, behavior: 'smooth' });
+    viewport.scrollTo({
+      left: i * step,
+      behavior: reducedMotion.matches ? 'instant' : 'smooth',
+    });
     updateDots(i);
     updateButtons(i);
     function onScrollEnd() {
@@ -49,7 +53,6 @@ function initTestimonialsSlideshow(container) {
     fallbackTimerId = myFallbackId;
     viewport.addEventListener(
       'scrollend',
-      /* istanbul ignore next -- scrollend availability varies across browsers/headless */
       function () {
         window.clearTimeout(myFallbackId);
         onScrollEnd();
@@ -60,8 +63,6 @@ function initTestimonialsSlideshow(container) {
   function updateDots(current) {
     dots.forEach(function (dot, i) {
       dot.setAttribute('aria-selected', String(i === current));
-      dot.classList.toggle('!bg-cyan-900', i === current);
-      dot.classList.toggle('scale-125', i === current);
     });
   }
   function updateButtons(current) {
@@ -74,20 +75,21 @@ function initTestimonialsSlideshow(container) {
     const scroll = getScrollPosition();
     const index = Math.round(scroll / step);
     const clamped = Math.max(0, Math.min(index, total - 1));
+    current = clamped;
     updateDots(clamped);
     updateButtons(clamped);
   }
   prevBtn.addEventListener(
     'click',
     function () {
-      goToIndex(Math.round(getScrollPosition() / getScrollDistance()) - 1);
+      goToIndex(current - 1);
     },
     { signal }
   );
   nextBtn.addEventListener(
     'click',
     function () {
-      goToIndex(Math.round(getScrollPosition() / getScrollDistance()) + 1);
+      goToIndex(current + 1);
     },
     { signal }
   );
@@ -105,7 +107,7 @@ function initTestimonialsSlideshow(container) {
     function (e) {
       if (!e.detail || typeof e.detail.delta !== 'number') return;
       const delta = e.detail.delta;
-      goToIndex(Math.round(getScrollPosition() / getScrollDistance()) + delta);
+      goToIndex(current + delta);
     },
     { signal }
   );
@@ -116,7 +118,6 @@ function initTestimonialsSlideshow(container) {
 
 let keydownController = null;
 function setupKeydown() {
-  /* istanbul ignore next -- only reachable if module reinitialises in same page lifetime */
   if (keydownController) {
     keydownController.abort();
   }

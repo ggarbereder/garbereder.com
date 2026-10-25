@@ -5,7 +5,7 @@ inputs:
     description: Run npm ci
     default: 'true'
   scripts:
-    description: Run dependency install scripts (Cypress, esbuild, …)
+    description: Run dependency install scripts (esbuild, …)
     default: 'false'
 runs:
   using: composite
