@@ -1,0 +1,57 @@
+name: Preview
+
+# Each pull request gets a Cloudflare Preview of the Worker; it is deleted when the PR is merged or closed
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+# One run at a time per PR; a newer push or closing the PR cancels a running deploy
+concurrency:
+  group: preview-${{ github.event.number }}
+  cancel-in-progress: true
+
+env:
+  HUSKY: 0
+  NODE_ENV: development
+  PREVIEW: pr-${{ github.event.number }}
+
+jobs:
+  deploy:
+    # Dependabot PRs can't read Actions secrets
+    if: github.event.action != 'closed' && github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/setup-node
+      - run: npm run build
+
+      - id: wrangler
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: preview --name ${{ env.PREVIEW }}
+
+      - name: Comment the preview URL on the PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OUTPUT: ${{ steps.wrangler.outputs.command-output }}
+        run: |
+          url=$(grep -o "https://$PREVIEW-[a-z0-9.-]*\.workers\.dev" <<< "$OUTPUT" | head -1)
+          gh pr comment ${{ github.event.number }} --repo ${{ github.repository }} --edit-last --create-if-none \
+            --body "Preview: ${url:-see the Preview workflow log} (latest push: ${{ github.event.pull_request.head.sha }})"
+
+  destroy:
+    if: github.event.action == 'closed' && github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/setup-node
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: preview delete --name ${{ env.PREVIEW }} --skip-confirmation
