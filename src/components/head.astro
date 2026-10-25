@@ -1,30 +1,39 @@
 ---
-import { Font } from 'astro:assets';
+import '@fontsource-variable/quicksand';
+import quicksandLatin from '@fontsource-variable/quicksand/files/quicksand-latin-wght-normal.woff2?url';
+
+import StructuredData from './structured-data.astro';
 
 interface Props {
   title?: string;
   description?: string;
   canonical?: string;
   keywords?: string;
-  /** Optional extra font CSS variable (e.g. '--font-fraunces') to inject a Font component. */
-  extraFontCssVariable?: string;
+  /** Keep the page out of search results (no canonical, robots noindex). */
+  noindex?: boolean;
   /** Optional LCP image preload: { src, srcset } so the image is discoverable from HTML immediately. */
   lcpPreload?: { src: string; srcset: string };
 }
 
 const {
   title = 'Gerrit Garbereder | Senior Engineering Manager',
-  description = 'Senior Engineering Manager with expertise in leading cross-functional teams, project delivery, and fostering innovation. View my professional experience and contact information.',
-  canonical = 'https://www.garbereder.com',
+  description = 'Senior Engineering Manager with expertise in leading cross-functional teams, project delivery, and fostering innovation.',
+  canonical = 'https://www.garbereder.com/',
   keywords = 'Engineering Manager, Project Management, Team Leadership, Software Development, Innovation',
-  extraFontCssVariable,
+  noindex = false,
   lcpPreload,
 } = Astro.props;
 ---
 
 <head>
   <meta charset="utf-8" />
-  <Font cssVariable="--font-quicksand" preload />
+  <link
+    rel="preload"
+    href={quicksandLatin}
+    as="font"
+    type="font/woff2"
+    crossorigin
+  />
 
   {lcpPreload && (
     <link
@@ -40,11 +49,11 @@ const {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="keywords" content={keywords} />
   <meta name="author" content="Gerrit Garbereder" />
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content={noindex ? 'noindex' : 'index, follow'} />
 
   <meta property="og:title" content={title} />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content={canonical} />
+  {!noindex && <meta property="og:url" content={canonical} />}
   <meta
     property="og:image"
     content="https://www.garbereder.com/img/portrait.jpg"
@@ -52,10 +61,11 @@ const {
   <meta property="og:description" content={description} />
   <meta property="og:site_name" content="Gerrit Garbereder" />
 
-  <link rel="canonical" href={canonical} />
-  <link rel="icon" type="image/x-icon" href="favicon.ico" />
-
-  {extraFontCssVariable && <Font cssVariable={extraFontCssVariable} />}
+  {!noindex && <link rel="canonical" href={canonical} />}
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <StructuredData />
 
   <script>
     document.querySelector('html')?.classList.remove('nojs');

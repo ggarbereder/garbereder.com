@@ -2,12 +2,11 @@ node_modules
 dist
 .astro
 public/bg.webm
-cypress/screenshots
-cypress-image-diff-screenshots/comparison
-cypress-image-diff-screenshots/diff
-cypress-image-diff-html-report
-.nyc_output
-coverage
+playwright-report
+test-results
+# Visual baselines are kept for Linux (CI) only; local ones are per machine
+tests/**/*-snapshots/*-win32.png
+tests/**/*-snapshots/*-darwin.png
 .env
 .env.local
 .env.production

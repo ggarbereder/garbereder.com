@@ -6,6 +6,44 @@
   display: none;
 }
 
+// Each slide is as wide as the viewport's content box; container units keep
+// this out of inline style attributes, which the CSP blocks.
+.testimonials-viewport {
+  container-type: inline-size;
+}
+.testimonials-track {
+  width: max-content;
+}
+.testimonial-slide {
+  flex: 0 0 100cqi;
+}
+
+// 24px touch target (WCAG 2.5.8) around a 10px dot
+.testimonials-dot {
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+
+  &::before {
+    content: '';
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 9999px;
+    background-color: rgb(22 78 99 / 0.4);
+    transition: all 150ms;
+  }
+
+  &:hover::before {
+    background-color: rgb(22 78 99 / 0.7);
+  }
+
+  &[aria-selected='true']::before {
+    background-color: var(--color-cyan-900, #164e63);
+    transform: scale(1.25);
+  }
+}
+
 .testimonial-card {
   padding: 2rem 2.5rem 2rem 3.5rem;
   position: relative;

@@ -1,7 +1,6 @@
 ---
 import Head from '../components/head.astro';
 import SkipLink from '../components/skip-link.astro';
-import StructuredData from '../components/structured-data.astro';
 import '../styles/index.scss';
 
 interface Props {
@@ -9,33 +8,26 @@ interface Props {
   description?: string;
   canonical?: string;
   keywords?: string;
-  /** Optional extra font CSS variable (e.g. '--font-fraunces') injected into head. */
-  extraFontCssVariable?: string;
+  /** Keep the page out of search results. */
+  noindex?: boolean;
   /** Optional LCP image preload for the head. */
   lcpPreload?: { src: string; srcset: string };
 }
 
-const {
-  title,
-  description,
-  canonical,
-  keywords,
-  extraFontCssVariable,
-  lcpPreload,
-} = Astro.props;
+const { title, description, canonical, keywords, noindex, lcpPreload } =
+  Astro.props;
 ---
 
 <!doctype html>
-<html class="scroll-smooth nojs" lang="en">
+<html class="motion-safe:scroll-smooth nojs" lang="en">
   <Head
     title={title}
     description={description}
     canonical={canonical}
     keywords={keywords}
-    extraFontCssVariable={extraFontCssVariable}
+    noindex={noindex}
     lcpPreload={lcpPreload}
   />
-  <StructuredData />
   <body>
     <SkipLink />
     <slot />

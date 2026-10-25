@@ -5,6 +5,12 @@
 
 @config '../../tailwind.config.js';
 
+// Self-hosted variable fonts from @fontsource-variable (imported in head.astro and start-at-05.astro)
+:root {
+  --font-quicksand: 'Quicksand Variable';
+  --font-fraunces: 'Fraunces Variable', Georgia, serif;
+}
+
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still

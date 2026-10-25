@@ -7,7 +7,8 @@
   "assets": {
     "directory": "./dist",
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "none",
+    // Serve dist/404.html with status 404 for unknown URLs
+    "not_found_handling": "404-page",
   },
   "routes": [
     { "pattern": "garbereder.com", "custom_domain": true },
