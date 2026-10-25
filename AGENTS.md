@@ -8,30 +8,10 @@ Personal website for garbereder.com: a static Astro site with Preact islands, st
 
 ## Layout
 
-- `src/pages/` – routes (file-based routing)
-- `src/layouts/` – page layouts
-- `src/components/` – `.astro` components and Preact (`.jsx`) islands
-- `src/data/` – JSON content (CV entries, patents, testimonials)
-- `src/scripts/` – small client-side scripts
-- `src/styles/` – global SCSS
-- `public/` – static files copied as-is
-- `workers/` – standalone Cloudflare Workers (own `package.json` and `wrangler.toml`)
-- `tests/` – Playwright end-to-end, accessibility, SEO, CSP and visual regression tests (`tests/pages.ts` lists every page)
-- `scripts/` – Node helper scripts (security audit, npm env)
+- `workers/` – standalone Cloudflare Workers with their own `package.json` and `wrangler.toml`
+- `tests/pages.ts` lists every page the Playwright suites visit
 
 ## Commands
-
-```bash
-npm install            # Node >= 24.15 required (engine-strict)
-npm run dev            # dev server on http://localhost:4321
-npm run build          # output in dist/
-npm run lint           # ESLint + Prettier check + typecheck
-npm run test:html      # html-validate on dist/
-npm run test:e2e       # Playwright against the build (run npm run build first)
-npm run test:a11y      # axe-core and keyboard accessibility checks
-npm run test:visual    # visual regression tests
-npm run security:audit
-```
 
 Run `npm run lint` and `npm run build` before considering a change done. Run `npm run build` and the relevant Playwright specs when changing markup, styles or behavior; they test `dist/`, not the dev server.
 
