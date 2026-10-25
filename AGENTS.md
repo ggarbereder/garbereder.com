@@ -42,5 +42,5 @@ Intentional visual changes require updating the Linux baseline screenshots in `t
 
 - Do not commit directly to `main`; work on a branch and open a pull request.
 - Use Conventional Commit prefixes (`feat:`, `fix:`, `chore:`, `ci:`, …).
-- The version in `package.json` is bumped automatically by the `version-bump` workflow on pull requests; do not bump it manually unless asked.
+- Bump the version before opening a pull request: `npm run version:patch` (or `version:minor`/`version:major`), and commit `package.json` and `package-lock.json` with the change. The `version-bump` workflow only bumps when the PR's version isn't higher than `main`'s, and its bot commit re-triggers CI, which then has to be approved. If `main` moves past your version before merging, bump again.
 - Each pull request gets a Cloudflare Preview (`preview.yml`) at `https://pr-<number>-garbereder-com.<subdomain>.workers.dev`, linked in a PR comment. It is deleted when the PR is merged or closed. Dependabot PRs get no preview.
