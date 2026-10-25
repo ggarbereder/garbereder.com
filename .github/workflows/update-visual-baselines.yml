@@ -18,6 +18,10 @@ env:
 jobs:
   update-baselines:
     runs-on: ubuntu-latest
+    # Same image as the visual job in static.yml, so baselines match what CI renders
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      options: --user 1001
     steps:
       - uses: actions/checkout@v5
         with:
@@ -25,7 +29,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - uses: ./.github/actions/setup-node
       - run: npm run build
-      - run: npx playwright install --with-deps chromium
+      - run: npx playwright install chromium
       - run: npm run test:visual:update
       - name: Commit and push updated baselines
         run: |

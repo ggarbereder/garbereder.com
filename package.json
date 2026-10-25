@@ -1,7 +1,7 @@
 {
   "name": "garbereder.com",
   "type": "module",
-  "version": "1.0.98",
+  "version": "1.0.99",
   "packageManager": "npm@12.0.2",
   "engines": {
     "node": ">=24.15.0"
@@ -59,6 +59,7 @@
     "@astrojs/sitemap": "^3.7.4",
     "@axe-core/playwright": "^4.14.0",
     "@fontsource-variable/fraunces": "^5.3.0",
+    "@fontsource-variable/inter": "^5.3.0",
     "@fontsource-variable/quicksand": "^5.3.0",
     "@playwright/test": "^1.64.1",
     "@tailwindcss/postcss": "^4.3.3",
