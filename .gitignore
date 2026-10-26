@@ -1,6 +1,8 @@
 node_modules
 dist
 .astro
+# wrangler dev/deploy state
+.wrangler
 **/public/bg.webm
 playwright-report
 test-results

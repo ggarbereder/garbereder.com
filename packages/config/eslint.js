@@ -18,6 +18,7 @@ export default defineConfig([
   globalIgnores([
     '**/dist/**',
     '**/.astro/**',
+    '**/.wrangler/**',
     '**/playwright-report/**',
     '**/test-results/**',
   ]),
