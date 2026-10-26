@@ -10,7 +10,10 @@
     // Serve dist/404.html with status 404 for unknown URLs
     "not_found_handling": "404-page",
   },
-  // No custom domains yet: start-at-05.com is still served by workers/start-at-05-proxy until the cutover
+  "routes": [
+    { "pattern": "start-at-05.com", "custom_domain": true },
+    { "pattern": "www.start-at-05.com", "custom_domain": true },
+  ],
   "workers_dev": false,
   // workers.dev URLs for Previews (one per pull request, see preview.yml); applied by `wrangler deploy`, not by `wrangler preview`
   "preview_urls": true,

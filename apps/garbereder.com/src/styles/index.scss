@@ -1,14 +1,12 @@
 @use 'tailwindcss';
 @use '../components/cv/cv.scss';
-@use './start-at-05.scss';
 @use './a11y.scss';
 
 @config '../../tailwind.config.js';
 
-// Self-hosted variable fonts from @fontsource-variable (imported in head.astro and start-at-05.astro)
+// Self-hosted variable font from @fontsource-variable (imported in head.astro)
 :root {
   --font-quicksand: 'Quicksand Variable';
-  --font-fraunces: 'Fraunces Variable', Georgia, serif;
 }
 
 /*

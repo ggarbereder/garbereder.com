@@ -42,7 +42,7 @@ An [npm workspaces](https://docs.npmjs.com/cli/using-npm/workspaces) monorepo: o
 ├── packages/
 │   └── config/           # shared tsconfig, ESLint, Prettier, Playwright and html-validate config
 ├── workers/
-│   └── start-at-05-proxy/  # serves start-at-05.com from garbereder.com/start-at-05/
+│   └── start-at-05-proxy/  # retired: served start-at-05.com from garbereder.com/start-at-05/ before apps/start-at-05
 ├── scripts/              # security audit, npm env helpers
 └── package.json          # workspaces, overrides, allowScripts, lint-staged
 ```

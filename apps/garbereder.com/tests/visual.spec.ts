@@ -24,10 +24,7 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
-for (const [name, path] of [
-  ['index', '/'],
-  ['start-at-05', '/start-at-05/'],
-] as const) {
+for (const [name, path] of [['index', '/']] as const) {
   test(`${name} initial view`, { tag: '@visual' }, async ({ page }) => {
     await page.goto(path);
     await page.evaluate(() => document.fonts.ready);

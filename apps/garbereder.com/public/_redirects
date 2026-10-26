@@ -1,0 +1,3 @@
+# Start at :05 moved to its own site (apps/start-at-05)
+/start-at-05 https://start-at-05.com/ 301
+/start-at-05/* https://start-at-05.com/ 301
