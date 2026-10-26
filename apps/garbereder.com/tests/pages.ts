@@ -4,11 +4,10 @@ export const site = 'https://www.garbereder.com';
 
 type SitePage = { path: string; canonical: string };
 
-/** Every page; /start-at-05/ is served on start-at-05.com by workers/start-at-05-proxy */
+/** Every page (start-at-05.com is its own app, apps/start-at-05) */
 export const pages: SitePage[] = [
   { path: '/', canonical: `${site}/` },
   { path: '/accessibility/', canonical: `${site}/accessibility/` },
-  { path: '/start-at-05/', canonical: 'https://start-at-05.com/' },
 ];
 
 /** Any unknown URL renders the 404 page */

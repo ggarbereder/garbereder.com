@@ -12,11 +12,7 @@ export default defineConfig({
   site: 'https://www.garbereder.com',
   // Astro 7 default is 'jsx', which collapses "30</strong> or <strong>60".
   compressHTML: true,
-  integrations: [
-    preact(),
-    // /start-at-05/ is canonical on start-at-05.com, so it is not listed here.
-    sitemap({ filter: (page) => !page.includes('/start-at-05/') }),
-  ],
+  integrations: [preact(), sitemap()],
 
   build: {
     // Never inline styles or scripts, so the Content-Security-Policy can stay at 'self'
