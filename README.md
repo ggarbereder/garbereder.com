@@ -30,6 +30,22 @@ flowchart LR
     BS -->|alerts| A
 ```
 
+## Repository layout
+
+An [npm workspaces](https://docs.npmjs.com/cli/using-npm/workspaces) monorepo: one `npm install`, one `package-lock.json`.
+
+```text
+/
+├── apps/
+│   └── garbereder.com/   # Astro site, its tests and wrangler.jsonc (Cloudflare Worker)
+├── packages/
+│   └── config/           # shared tsconfig, ESLint, Prettier, Playwright and html-validate config
+├── workers/
+│   └── start-at-05-proxy/  # serves start-at-05.com from garbereder.com/start-at-05/
+├── scripts/              # security audit, npm env helpers
+└── package.json          # workspaces, overrides, allowScripts, lint-staged
+```
+
 ## Prerequisites
 
 - Node.js (LTS version recommended)
@@ -37,25 +53,13 @@ flowchart LR
 
 ## Development
 
-### Local Development
+Run commands from the repository root. Repo-wide tasks run across all workspaces; app tasks take `-w apps/<name>`.
 
 ```bash
-# Install dependencies
-npm install
-
-# Update browserslist database
-npx browserslist@latest --update-db
-
-# Start development server
-npm run dev
-```
-
-### Build
-
-The compiled page is published into the `dist` directory:
-
-```bash
-npm run build
+npm install                               # all workspaces
+npm run dev -w apps/garbereder.com        # dev server on http://localhost:4321
+npm run build                             # builds every app into apps/<name>/dist
+npm run lint                              # ESLint, Prettier and typecheck for the whole repo
 ```
 
 ### Testing
@@ -63,13 +67,13 @@ npm run build
 Tests use [Playwright](https://playwright.dev/) against the production build (`astro preview`), in Chromium, Firefox and WebKit, on desktop, phone and 320px viewports.
 
 ```bash
-npx playwright install    # once, downloads the browsers
-npm run build             # the tests serve dist/
-npm run test:html         # html-validate on dist/
-npm run test:e2e          # end-to-end, accessibility, SEO and CSP tests
-npm run test:a11y         # accessibility tests only
-npm run test:visual       # visual regression (baselines are per platform)
-npm run test              # lint, build, html-validate and end-to-end
+npx playwright install                         # once, downloads the browsers
+npm run build -w apps/garbereder.com           # the tests serve dist/
+npm run test:html -w apps/garbereder.com       # html-validate on dist/
+npm run test:e2e -w apps/garbereder.com        # end-to-end, accessibility, SEO and CSP tests
+npm run test:a11y -w apps/garbereder.com       # accessibility tests only
+npm run test:visual -w apps/garbereder.com     # visual regression (baselines are per platform)
+npm run test                                   # lint, build, html-validate and end-to-end for every app
 ```
 
 ## CI/CD
@@ -79,14 +83,14 @@ Github Actions handle continuous integration and deployment:
 - Runs on pull requests and main branch
 - Builds once, validates the HTML and runs the Playwright suite against that build
 - Deploys the tested build on main to a Cloudflare Worker (static assets)
-- Every pull request gets a Cloudflare Preview at `https://pr-<number>-garbereder-com.<subdomain>.workers.dev` (`preview.yml`), linked in a PR comment and deleted on merge or close. It needs `preview_urls: true` and a `previews` block in `wrangler.jsonc`; `preview_urls` only takes effect on a production deploy (or in the dashboard). Dependabot PRs get no preview, as they can't read the Cloudflare secrets.
+- Every pull request gets a Cloudflare Preview at `https://pr-<number>-garbereder-com.<subdomain>.workers.dev` (`preview.yml`), linked in a PR comment and deleted on merge or close. It needs `preview_urls: true` and a `previews` block in `apps/garbereder.com/wrangler.jsonc`; `preview_urls` only takes effect on a production deploy (or in the dashboard). Dependabot PRs get no preview, as they can't read the Cloudflare secrets.
 
 ## Security
 
 This project implements several security measures:
 
 - **Dependency Scanning**: Automated vulnerability scanning with `npm audit`
-- **Security headers**: strict Content-Security-Policy and related headers in `public/_headers`, verified in every browser engine by `tests/csp.spec.ts`
+- **Security headers**: strict Content-Security-Policy and related headers in each app's `public/_headers`, verified in every browser engine by its `tests/csp.spec.ts`
 - **Code Quality**: ESLint with security-focused rules
 - **TypeScript**: Strict type checking to prevent runtime errors
 - **Responsible Disclosure**: Security vulnerabilities can be reported via [security.txt](/.well-known/security.txt)

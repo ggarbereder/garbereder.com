@@ -1,7 +1,7 @@
 // Deploys the built Astro site (dist/) as a Cloudflare Worker with static assets.
 // Deploy: npm run build && npx wrangler deploy
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
+  "$schema": "../../node_modules/wrangler/config-schema.json",
   "name": "garbereder-com",
   "compatibility_date": "2025-02-01",
   "assets": {

@@ -4,16 +4,21 @@ Instructions for AI coding agents working in this repository.
 
 ## Project
 
-Personal website for garbereder.com: a static Astro site with Preact islands, styled with Tailwind CSS v4 and Sass. It is deployed to GitHub Pages and, in parallel, to a Cloudflare Worker serving static assets (`wrangler.jsonc`).
+An npm workspaces monorepo. `apps/garbereder.com` is the personal website: a static Astro site with Preact islands, styled with Tailwind CSS v4 and Sass, deployed to a Cloudflare Worker serving static assets (`apps/garbereder.com/wrangler.jsonc`).
 
 ## Layout
 
+- `apps/<name>/` – one Astro site each, with its own `src/`, `public/`, `tests/`, `package.json` and `wrangler.jsonc`. Paths below are relative to the app.
+- `packages/config/` – shared tsconfig, ESLint, Prettier, Playwright (`defineSiteConfig`) and html-validate config. Change it once for every app.
+- Root `package.json` – `workspaces`, `overrides`, `allowScripts` and lint-staged for the whole repo. App dependencies go in the app's `package.json` (`npm install <pkg> -w apps/<name>`); there is one `package-lock.json`.
 - `workers/` – standalone Cloudflare Workers with their own `package.json` and `wrangler.toml`
 - `tests/pages.ts` lists every page the Playwright suites visit
 
 ## Commands
 
-Run `npm run lint` and `npm run build` before considering a change done. Run `npm run build` and the relevant Playwright specs when changing markup, styles or behavior; they test `dist/`, not the dev server.
+Run commands from the repository root. App tasks take `-w apps/<name>` (`npm run dev -w apps/garbereder.com`); `npm run build` and `npm run lint` cover every workspace. npm 12 rejects the `-ws` shorthand, use `--workspaces`.
+
+Run `npm run lint` and `npm run build` before considering a change done. Run `npm run build -w apps/<name>` and the relevant Playwright specs (`npm run test:e2e -w apps/<name>`) when changing markup, styles or behavior; they test `dist/`, not the dev server.
 
 ## Conventions
 
