@@ -60,6 +60,8 @@ jobs:
         with:
           name: dist-${{ matrix.app }}
           path: apps/${{ matrix.app }}/dist/
+          # dist/.well-known/security.txt is a hidden file, which upload-artifact skips by default
+          include-hidden-files: true
 
   # Tests run against the same dist/ that gets deployed, served by astro preview.
   # One job per app and browser engine, in parallel with visual.

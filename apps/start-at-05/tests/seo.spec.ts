@@ -72,6 +72,19 @@ test('robots.txt points to the sitemap index', async ({ request }) => {
   );
 });
 
+// Hidden in dist/, so CI must carry it through the build artifact (include-hidden-files)
+test('security.txt is served, canonical to this site and not about to expire', async ({
+  request,
+}) => {
+  const response = await request.get('/.well-known/security.txt');
+  expect(response.ok()).toBe(true);
+  const text = await response.text();
+  expect(text).toContain(`Canonical: ${site}/.well-known/security.txt`);
+  const expires = Date.parse(text.match(/^Expires: (.+)$/m)![1]!);
+  // RFC 9116 wants it renewed before it lapses; fail a month early to leave time for that
+  expect(expires - Date.now()).toBeGreaterThan(30 * 24 * 60 * 60 * 1000);
+});
+
 test('unknown URLs get the 404 page, kept out of search results', async ({
   page,
 }) => {
