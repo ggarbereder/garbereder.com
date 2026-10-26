@@ -1,0 +1,19 @@
+// Deploys the built Astro site (dist/) as a Cloudflare Worker with static assets.
+// Deploy (CI does this on main): npm run build -w apps/start-at-05 && cd apps/start-at-05 && npx wrangler deploy
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "start-at-05",
+  "compatibility_date": "2025-02-01",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    // Serve dist/404.html with status 404 for unknown URLs
+    "not_found_handling": "404-page",
+  },
+  // No custom domains yet: start-at-05.com is still served by workers/start-at-05-proxy until the cutover
+  "workers_dev": false,
+  // workers.dev URLs for Previews (one per pull request, see preview.yml); applied by `wrangler deploy`, not by `wrangler preview`
+  "preview_urls": true,
+  // Enables `wrangler preview`; assets stay configured above
+  "previews": {},
+}

@@ -1,4 +1,4 @@
-name: Build and Deploy (main only) to Pages and Cloudflare Workers
+name: Build, test and deploy (main only) to Cloudflare Workers
 
 on:
   push:
@@ -9,8 +9,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -19,10 +17,21 @@ concurrency:
 env:
   HUSKY: 0
   NODE_ENV: development
-  # The workspace this workflow builds, tests and deploys
-  APP: apps/garbereder.com
 
 jobs:
+  # Which apps/<name> to build, test and deploy (see .github/actions/changed-apps)
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      apps: ${{ steps.changed.outputs.apps }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - id: changed
+        uses: ./.github/actions/changed-apps
+
+  # Repo-wide: one ESLint, Prettier and security audit run, typecheck in every workspace
   audit:
     runs-on: ubuntu-latest
     steps:
@@ -32,25 +41,32 @@ jobs:
       - run: npm run security:audit
       - run: npm run lint
 
-  build:
+  # Matrix job id differs from the required 'build' check, which is the gate below
+  build-app:
     runs-on: ubuntu-latest
-    needs: audit
+    needs: [changes, audit]
+    if: needs.changes.outputs.apps != '[]'
+    strategy:
+      fail-fast: false
+      matrix:
+        app: ${{ fromJSON(needs.changes.outputs.apps) }}
+    name: build (${{ matrix.app }})
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup-node
-      - run: npm run build -w $APP
-      - run: npm run test:html -w $APP
+      - run: npm run build -w apps/${{ matrix.app }}
+      - run: npm run test:html -w apps/${{ matrix.app }}
       - uses: actions/upload-artifact@v7
         with:
-          name: dist
-          path: ${{ env.APP }}/dist/
+          name: dist-${{ matrix.app }}
+          path: apps/${{ matrix.app }}/dist/
 
   # Tests run against the same dist/ that gets deployed, served by astro preview.
-  # One job per browser engine, in parallel with visual.
+  # One job per app and browser engine, in parallel with visual.
   # The Playwright image has the browsers' system libraries; installing them with apt took 10+ minutes for WebKit.
   e2e:
     runs-on: ubuntu-latest
-    needs: build
+    needs: [changes, build-app]
     timeout-minutes: 15
     container:
       image: mcr.microsoft.com/playwright:v1.64.1-noble
@@ -58,87 +74,124 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        app: ${{ fromJSON(needs.changes.outputs.apps) }}
+        engine: [chromium, firefox, webkit]
+        # Playwright projects per engine, from packages/config/playwright.js
         include:
-          - name: chromium
-            browser: chromium
-            run: npm run test:e2e -w $APP -- --project=desktop --project=mobile --project=reflow
-          - name: firefox
-            browser: firefox
-            run: npm run test:e2e -w $APP -- --project=firefox
-          - name: webkit
-            browser: webkit
-            run: npm run test:e2e -w $APP -- --project=iphone
-    name: e2e (${{ matrix.name }})
+          - engine: chromium
+            projects: --project=desktop --project=mobile --project=reflow
+          - engine: firefox
+            projects: --project=firefox
+          - engine: webkit
+            projects: --project=iphone
+    name: e2e (${{ matrix.app }}, ${{ matrix.engine }})
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup-node
       - uses: actions/download-artifact@v8
         with:
-          name: dist
-          path: ${{ env.APP }}/dist/
+          name: dist-${{ matrix.app }}
+          path: apps/${{ matrix.app }}/dist/
       # No-op while the image matches @playwright/test; fetches only the browser if they drift apart
-      - run: npx playwright install ${{ matrix.browser }}
-      - run: ${{ matrix.run }}
+      - run: npx playwright install ${{ matrix.engine }}
+      - run: npm run test:e2e -w apps/${{ matrix.app }} -- ${{ matrix.projects }}
       - uses: actions/upload-artifact@v7
         if: failure()
         with:
-          name: playwright-report-${{ matrix.name }}
+          name: playwright-report-${{ matrix.app }}-${{ matrix.engine }}
           path: |
-            ${{ env.APP }}/playwright-report/
-            ${{ env.APP }}/test-results/
+            apps/${{ matrix.app }}/playwright-report/
+            apps/${{ matrix.app }}/test-results/
           if-no-files-found: ignore
 
   # Same image as update-visual-baselines.yml, so screenshots render identically to the baselines
   visual:
     runs-on: ubuntu-latest
-    needs: build
+    needs: [changes, build-app]
     timeout-minutes: 15
     container:
       image: mcr.microsoft.com/playwright:v1.64.1-noble
       options: --user 1001
+    strategy:
+      fail-fast: false
+      matrix:
+        app: ${{ fromJSON(needs.changes.outputs.apps) }}
+    name: visual (${{ matrix.app }})
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup-node
       - uses: actions/download-artifact@v8
         with:
-          name: dist
-          path: ${{ env.APP }}/dist/
+          name: dist-${{ matrix.app }}
+          path: apps/${{ matrix.app }}/dist/
       - run: npx playwright install chromium
-      - run: npm run test:visual -w $APP
+      - run: npm run test:visual -w apps/${{ matrix.app }}
       - uses: actions/upload-artifact@v7
         if: failure()
         with:
-          name: playwright-report-visual
+          name: playwright-report-${{ matrix.app }}-visual
           path: |
-            ${{ env.APP }}/playwright-report/
-            ${{ env.APP }}/test-results/
+            apps/${{ matrix.app }}/playwright-report/
+            apps/${{ matrix.app }}/test-results/
           if-no-files-found: ignore
 
-  # Required status check for main; passes only if every e2e job and visual passed
-  test:
+  # Required status check for main: every app built and passed html-validate, or no app was affected
+  build:
     runs-on: ubuntu-latest
-    needs: [e2e, visual]
+    needs: [changes, build-app]
     if: always()
     steps:
-      - run: test "${{ needs.e2e.result }}" = success && test "${{ needs.visual.result }}" = success
+      - env:
+          APPS: ${{ needs.changes.outputs.apps }}
+          RESULTS: ${{ needs.changes.result }} ${{ needs.build-app.result }}
+        run: |
+          echo "apps=$APPS results=$RESULTS"
+          if [ "$APPS" = '[]' ]; then
+            test "$RESULTS" = "success skipped"
+          else
+            test "$RESULTS" = "success success"
+          fi
+
+  # Required status check for main: the audit and every build, e2e and visual job passed,
+  # or no app was affected (those jobs are skipped then)
+  test:
+    runs-on: ubuntu-latest
+    needs: [changes, audit, build-app, e2e, visual]
+    if: always()
+    steps:
+      - env:
+          APPS: ${{ needs.changes.outputs.apps }}
+          RESULTS: ${{ needs.changes.result }} ${{ needs.audit.result }} ${{ needs.build-app.result }} ${{ needs.e2e.result }} ${{ needs.visual.result }}
+        run: |
+          echo "apps=$APPS results=$RESULTS"
+          if [ "$APPS" = '[]' ]; then
+            test "$RESULTS" = "success success skipped skipped skipped"
+          else
+            test "$RESULTS" = "success success success success success"
+          fi
 
   deploy:
-    concurrency:
-      group: cloudflare-deploy
-      cancel-in-progress: false
     runs-on: ubuntu-latest
-    needs: [build, test]
-    if: github.ref == 'refs/heads/main'
+    needs: [changes, build, test]
+    if: github.ref == 'refs/heads/main' && needs.changes.outputs.apps != '[]'
+    strategy:
+      fail-fast: false
+      matrix:
+        app: ${{ fromJSON(needs.changes.outputs.apps) }}
+    name: deploy (${{ matrix.app }})
+    concurrency:
+      group: cloudflare-deploy-${{ matrix.app }}
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup-node
       - uses: actions/download-artifact@v8
         with:
-          name: dist
-          path: ${{ env.APP }}/dist/
+          name: dist-${{ matrix.app }}
+          path: apps/${{ matrix.app }}/dist/
       - uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          workingDirectory: ${{ env.APP }}
+          workingDirectory: apps/${{ matrix.app }}
           command: deploy

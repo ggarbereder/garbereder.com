@@ -37,7 +37,8 @@ An [npm workspaces](https://docs.npmjs.com/cli/using-npm/workspaces) monorepo: o
 ```text
 /
 ├── apps/
-│   └── garbereder.com/   # Astro site, its tests and wrangler.jsonc (Cloudflare Worker)
+│   ├── garbereder.com/   # personal site: Astro, its tests and wrangler.jsonc (Cloudflare Worker garbereder-com)
+│   └── start-at-05/      # start-at-05.com: Astro, its tests and wrangler.jsonc (Cloudflare Worker start-at-05)
 ├── packages/
 │   └── config/           # shared tsconfig, ESLint, Prettier, Playwright and html-validate config
 ├── workers/
@@ -80,10 +81,11 @@ npm run test                                   # lint, build, html-validate and 
 
 Github Actions handle continuous integration and deployment:
 
-- Runs on pull requests and main branch
-- Builds once, validates the HTML and runs the Playwright suite against that build
-- Deploys the tested build on main to a Cloudflare Worker (static assets)
-- Every pull request gets a Cloudflare Preview at `https://pr-<number>-garbereder-com.<subdomain>.workers.dev` (`preview.yml`), linked in a PR comment and deleted on merge or close. It needs `preview_urls: true` and a `previews` block in `apps/garbereder.com/wrangler.jsonc`; `preview_urls` only takes effect on a production deploy (or in the dashboard). Dependabot PRs get no preview, as they can't read the Cloudflare secrets.
+- Runs on pull requests and main branch, per app: a change under `apps/<name>/` builds, tests and deploys only that app; changes to `packages/`, root config, the lockfile or workflows run every app (`.github/actions/changed-apps`)
+- Lints the whole repo once, then builds each app once, validates its HTML and runs its Playwright suite against that build (one job per browser engine, plus visual, in the Playwright image)
+- Required checks are `audit`, `build` (every app built and passed html-validate) and `test` (the audit and every app's build, e2e and visual jobs passed); `build` and `test` are gate jobs over the per-app matrix
+- Deploys each tested app on main to its own Cloudflare Worker (static assets)
+- Every pull request gets a Cloudflare Preview of each app it touches at `https://pr-<number>-<worker>.<subdomain>.workers.dev` (`preview.yml`), linked in one PR comment per app and deleted on merge or close. Each app needs `preview_urls: true` and a `previews` block in its `wrangler.jsonc`; `preview_urls` only takes effect on a production deploy (or in the dashboard). Dependabot PRs get no preview, as they can't read the Cloudflare secrets.
 
 ## Security
 

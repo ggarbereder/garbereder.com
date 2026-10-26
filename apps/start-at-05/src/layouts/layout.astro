@@ -1,0 +1,74 @@
+---
+import '@fontsource-variable/fraunces/wght.css';
+import '@fontsource-variable/fraunces/wght-italic.css';
+import '@fontsource-variable/inter/wght.css';
+import '../styles/global.scss';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Keep the page out of search results (no canonical, robots noindex). */
+  noindex?: boolean;
+}
+
+const { title, description, noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL('/og.png', Astro.site).href;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Start at :05',
+  url: Astro.site?.href,
+  description,
+  inLanguage: 'en',
+  author: {
+    '@type': 'Person',
+    name: 'Gerrit Garbereder',
+    url: 'https://www.garbereder.com/',
+  },
+};
+---
+
+<!doctype html>
+<html class="motion-safe:scroll-smooth" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Gerrit Garbereder" />
+    <meta name="robots" content={noindex ? 'noindex' : 'index, follow'} />
+    <meta name="theme-color" content="#17232e" />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:type" content="website" />
+    {!noindex && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="Start at :05" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {!noindex && <link rel="canonical" href={canonical} />}
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    {!noindex && (
+      <script
+        type="application/ld+json"
+        set:html={JSON.stringify(structuredData)}
+      />
+    )}
+  </head>
+  <body>
+    <a
+      href="#main-content"
+      class="skip-link absolute left-4 top-4 z-[100] -translate-y-[200%] rounded bg-[#17232e] px-4 py-2 text-white outline-2 outline-offset-2 outline-[#a8d4c9] focus:translate-y-0"
+    >
+      Skip to main content
+    </a>
+    <slot />
+  </body>
+</html>
