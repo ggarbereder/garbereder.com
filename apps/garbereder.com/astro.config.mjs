@@ -1,4 +1,6 @@
 // @ts-check
+import { fileURLToPath } from 'node:url';
+
 import preact from '@astrojs/preact';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
@@ -27,8 +29,12 @@ export default defineConfig({
     build: { assetsInlineLimit: 0 },
     css: {
       preprocessorOptions: {
-        // rolldown-vite dropped node_modules from the Sass load path.
-        scss: { loadPaths: ['node_modules'] },
+        // rolldown-vite dropped node_modules from the Sass load path; workspaces hoist packages to the repo root.
+        scss: {
+          loadPaths: [
+            fileURLToPath(new URL('../../node_modules', import.meta.url)),
+          ],
+        },
       },
     },
     // Vite 8's dep scanner defaults to React JSX and skips Babel.

@@ -14,6 +14,8 @@ env:
   HUSKY: 0
   NODE_ENV: development
   PREVIEW: pr-${{ github.event.number }}
+  # The workspace this workflow previews
+  APP: apps/garbereder.com
 
 jobs:
   deploy:
@@ -26,13 +28,14 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup-node
-      - run: npm run build
+      - run: npm run build -w $APP
 
       - id: wrangler
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: ${{ env.APP }}
           command: preview --name ${{ env.PREVIEW }}
 
       - name: Comment the preview URL on the PR
@@ -54,4 +57,5 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: ${{ env.APP }}
           command: preview delete --name ${{ env.PREVIEW }} --skip-confirmation

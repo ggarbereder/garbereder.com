@@ -1,12 +1,12 @@
 node_modules
 dist
 .astro
-public/bg.webm
+**/public/bg.webm
 playwright-report
 test-results
 # Visual baselines are kept for Linux (CI) only; local ones are per machine
-tests/**/*-snapshots/*-win32.png
-tests/**/*-snapshots/*-darwin.png
+**/tests/**/*-snapshots/*-win32.png
+**/tests/**/*-snapshots/*-darwin.png
 .env
 .env.local
 .env.production

@@ -19,6 +19,8 @@ concurrency:
 env:
   HUSKY: 0
   NODE_ENV: development
+  # The workspace this workflow builds, tests and deploys
+  APP: apps/garbereder.com
 
 jobs:
   audit:
@@ -36,12 +38,12 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup-node
-      - run: npm run build
-      - run: npm run test:html
+      - run: npm run build -w $APP
+      - run: npm run test:html -w $APP
       - uses: actions/upload-artifact@v7
         with:
           name: dist
-          path: dist/
+          path: ${{ env.APP }}/dist/
 
   # Tests run against the same dist/ that gets deployed, served by astro preview.
   # One job per browser engine, in parallel with visual.
@@ -59,13 +61,13 @@ jobs:
         include:
           - name: chromium
             browser: chromium
-            run: npm run test:e2e -- --project=desktop --project=mobile --project=reflow
+            run: npm run test:e2e -w $APP -- --project=desktop --project=mobile --project=reflow
           - name: firefox
             browser: firefox
-            run: npm run test:e2e -- --project=firefox
+            run: npm run test:e2e -w $APP -- --project=firefox
           - name: webkit
             browser: webkit
-            run: npm run test:e2e -- --project=iphone
+            run: npm run test:e2e -w $APP -- --project=iphone
     name: e2e (${{ matrix.name }})
     steps:
       - uses: actions/checkout@v5
@@ -73,7 +75,7 @@ jobs:
       - uses: actions/download-artifact@v8
         with:
           name: dist
-          path: dist/
+          path: ${{ env.APP }}/dist/
       # No-op while the image matches @playwright/test; fetches only the browser if they drift apart
       - run: npx playwright install ${{ matrix.browser }}
       - run: ${{ matrix.run }}
@@ -82,8 +84,8 @@ jobs:
         with:
           name: playwright-report-${{ matrix.name }}
           path: |
-            playwright-report/
-            test-results/
+            ${{ env.APP }}/playwright-report/
+            ${{ env.APP }}/test-results/
           if-no-files-found: ignore
 
   # Same image as update-visual-baselines.yml, so screenshots render identically to the baselines
@@ -100,16 +102,16 @@ jobs:
       - uses: actions/download-artifact@v8
         with:
           name: dist
-          path: dist/
+          path: ${{ env.APP }}/dist/
       - run: npx playwright install chromium
-      - run: npm run test:visual
+      - run: npm run test:visual -w $APP
       - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: playwright-report-visual
           path: |
-            playwright-report/
-            test-results/
+            ${{ env.APP }}/playwright-report/
+            ${{ env.APP }}/test-results/
           if-no-files-found: ignore
 
   # Required status check for main; passes only if every e2e job and visual passed
@@ -133,9 +135,10 @@ jobs:
       - uses: actions/download-artifact@v8
         with:
           name: dist
-          path: dist/
+          path: ${{ env.APP }}/dist/
       - uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: ${{ env.APP }}
           command: deploy
