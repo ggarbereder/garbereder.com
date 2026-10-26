@@ -1,0 +1,42 @@
+name: Changed apps
+description: >
+  JSON list of app names under apps/ that a push or pull request touches.
+  Changes outside apps/ (packages/, root config, lockfile, workflows) affect every app.
+  Needs a checkout with full history (fetch-depth: 0).
+outputs:
+  apps:
+    description: JSON array of app directory names, e.g. ["garbereder.com","start-at-05"]
+    value: ${{ steps.apps.outputs.apps }}
+  all:
+    description: JSON array of every app directory name
+    value: ${{ steps.apps.outputs.all }}
+runs:
+  using: composite
+  steps:
+    - id: apps
+      shell: bash
+      env:
+        EVENT: ${{ github.event_name }}
+        BASE_REF: ${{ github.base_ref }}
+        BEFORE: ${{ github.event.before }}
+      run: |
+        all=$(ls -d apps/*/ | xargs -n1 basename | jq -R . | jq -sc .)
+        if [ "$EVENT" = pull_request ]; then
+          files=$(git diff --name-only "origin/$BASE_REF"...HEAD)
+        elif [ "$EVENT" = push ] && [ -n "$BEFORE" ] && ! [[ "$BEFORE" =~ ^0+$ ]]; then
+          files=$(git diff --name-only "$BEFORE" HEAD)
+        else
+          files=""; outside=yes
+        fi
+        if [ -z "${outside:-}" ] && grep -qv '^apps/' <<< "$files"; then outside=yes; fi
+        if [ -n "${outside:-}" ]; then
+          apps=$all
+        else
+          # Only apps that still exist, so a deleted app isn't built
+          apps=$(grep -o '^apps/[^/]*' <<< "$files" | cut -d/ -f2 | sort -u \
+            | while read -r a; do [ -d "apps/$a" ] && echo "$a"; done | jq -R . | jq -sc .)
+        fi
+        echo "Changed files:"; echo "$files"
+        echo "Apps: $apps"
+        echo "apps=$apps" >> "$GITHUB_OUTPUT"
+        echo "all=$all" >> "$GITHUB_OUTPUT"

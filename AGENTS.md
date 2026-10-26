@@ -4,7 +4,10 @@ Instructions for AI coding agents working in this repository.
 
 ## Project
 
-An npm workspaces monorepo. `apps/garbereder.com` is the personal website: a static Astro site with Preact islands, styled with Tailwind CSS v4 and Sass, deployed to a Cloudflare Worker serving static assets (`apps/garbereder.com/wrangler.jsonc`).
+An npm workspaces monorepo of static Astro sites, each deployed to its own Cloudflare Worker serving static assets (`apps/<name>/wrangler.jsonc`):
+
+- `apps/garbereder.com` – the personal website, with Preact islands, Tailwind CSS v4 and Sass.
+- `apps/start-at-05` – start-at-05.com, a one-page meeting-policy site (Tailwind CSS v4, Sass, self-hosted Fraunces and Inter). It shares no code with garbereder.com.
 
 ## Layout
 
@@ -35,7 +38,7 @@ The site targets WCAG 2.2 Level AA. Use semantic HTML, keep keyboard navigation 
 
 ## Visual baselines
 
-Intentional visual changes require updating the Linux baseline screenshots in `tests/visual.spec.ts-snapshots/` with the `update-visual-baselines` workflow. `npm run test:visual:update` makes local baselines for your own platform, which are gitignored. Do not update baselines to hide unintended regressions.
+Intentional visual changes require updating the Linux baseline screenshots in `apps/<name>/tests/visual.spec.ts-snapshots/` with the `update-visual-baselines` workflow (pick the app and the branch). `npm run test:visual:update` makes local baselines for your own platform, which are gitignored. Do not update baselines to hide unintended regressions.
 
 ## Dependencies and security
 
@@ -48,4 +51,5 @@ Intentional visual changes require updating the Linux baseline screenshots in `t
 - Do not commit directly to `main`; work on a branch and open a pull request.
 - Use Conventional Commit prefixes (`feat:`, `fix:`, `chore:`, `ci:`, …).
 - Bump the version before opening a pull request: `npm run version:patch` (or `version:minor`/`version:major`), and commit `package.json` and `package-lock.json` with the change. The `version-bump` workflow only bumps when the PR's version isn't higher than `main`'s, and its bot commit re-triggers CI, which then has to be approved. If `main` moves past your version before merging, bump again.
-- Each pull request gets a Cloudflare Preview (`preview.yml`) at `https://pr-<number>-garbereder-com.<subdomain>.workers.dev`, linked in a PR comment. It is deleted when the PR is merged or closed. Dependabot PRs get no preview.
+- CI runs per app: a change under `apps/<name>/` only builds, tests and deploys that app; anything outside `apps/` runs every app. `test` is the required check.
+- Each pull request gets a Cloudflare Preview (`preview.yml`) of every app it touches at `https://pr-<number>-<worker>.<subdomain>.workers.dev`, linked in one PR comment per app. They are deleted when the PR is merged or closed. Dependabot PRs get no preview.

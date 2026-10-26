@@ -1,0 +1,7 @@
+/* Applied only while taking visual baselines */
+::-webkit-scrollbar {
+  display: none !important;
+}
+* {
+  scrollbar-width: none !important;
+}

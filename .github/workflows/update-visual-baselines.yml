@@ -7,6 +7,13 @@ on:
         description: Branch to update baselines on
         required: false
         default: ''
+      app:
+        description: App whose baselines are updated (directory under apps/)
+        required: true
+        type: choice
+        options:
+          - garbereder.com
+          - start-at-05
 
 permissions:
   contents: write
@@ -14,8 +21,7 @@ permissions:
 env:
   HUSKY: 0
   NODE_ENV: development
-  # The workspace whose baselines are updated
-  APP: apps/garbereder.com
+  APP: apps/${{ github.event.inputs.app }}
 
 jobs:
   update-baselines:

@@ -1,0 +1,42 @@
+@use 'tailwindcss';
+@use './start-at-05.scss';
+
+// Self-hosted variable fonts from @fontsource-variable (imported in layout.astro)
+:root {
+  --font-fraunces: 'Fraunces Variable', Georgia, serif;
+}
+
+// Tailwind v4 defaults borders to currentColor; keep the v3 gray the design was made with
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+#main-content {
+  scroll-margin-top: 1rem;
+}
+
+@layer base {
+  :where(
+    a,
+    button,
+    input,
+    textarea,
+    select,
+    summary,
+    [tabindex]:not([tabindex='-1'])
+  ):focus-visible {
+    outline: 2px solid #28645e;
+    outline-offset: 2px;
+  }
+}

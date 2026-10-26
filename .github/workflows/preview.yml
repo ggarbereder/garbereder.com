@@ -1,6 +1,6 @@
 name: Preview
 
-# Each pull request gets a Cloudflare Preview of the Worker; it is deleted when the PR is merged or closed
+# Each pull request gets a Cloudflare Preview of every app it touches; they are deleted when the PR is merged or closed
 on:
   pull_request:
     types: [opened, synchronize, reopened, closed]
@@ -14,48 +14,86 @@ env:
   HUSKY: 0
   NODE_ENV: development
   PREVIEW: pr-${{ github.event.number }}
-  # The workspace this workflow previews
-  APP: apps/garbereder.com
 
 jobs:
+  changes:
+    if: github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    outputs:
+      apps: ${{ steps.changed.outputs.apps }}
+      all: ${{ steps.changed.outputs.all }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - id: changed
+        uses: ./.github/actions/changed-apps
+
   deploy:
     # Dependabot PRs can't read Actions secrets
-    if: github.event.action != 'closed' && github.actor != 'dependabot[bot]'
+    needs: changes
+    if: github.event.action != 'closed' && needs.changes.outputs.apps != '[]'
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
+    strategy:
+      fail-fast: false
+      matrix:
+        app: ${{ fromJSON(needs.changes.outputs.apps) }}
+    name: deploy (${{ matrix.app }})
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup-node
-      - run: npm run build -w $APP
+      - run: npm run build -w apps/${{ matrix.app }}
 
       - id: wrangler
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          workingDirectory: ${{ env.APP }}
+          workingDirectory: apps/${{ matrix.app }}
           command: preview --name ${{ env.PREVIEW }}
 
+      # One comment per app, found by a hidden marker and edited on later pushes
       - name: Comment the preview URL on the PR
         env:
           GH_TOKEN: ${{ github.token }}
           OUTPUT: ${{ steps.wrangler.outputs.command-output }}
+          APP: ${{ matrix.app }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.number }}
+          SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           url=$(grep -o "https://$PREVIEW-[a-z0-9.-]*\.workers\.dev" <<< "$OUTPUT" | head -1)
-          gh pr comment ${{ github.event.number }} --repo ${{ github.repository }} --edit-last --create-if-none \
-            --body "Preview: ${url:-see the Preview workflow log} (latest push: ${{ github.event.pull_request.head.sha }})"
+          marker="<!-- preview:$APP -->"
+          body="$marker
+          Preview of **$APP**: ${url:-see the Preview workflow log} (latest push: $SHA)"
+          id=$(gh api "repos/$REPO/issues/$PR/comments" --paginate \
+            --jq ".[] | select(.body | startswith(\"$marker\")) | .id" | head -1)
+          if [ -n "$id" ]; then
+            gh api -X PATCH "repos/$REPO/issues/comments/$id" -f body="$body" > /dev/null
+          else
+            gh pr comment "$PR" --repo "$REPO" --body "$body"
+          fi
 
+  # Deletes every app's preview; apps the PR didn't touch have none, so their delete may fail harmlessly
   destroy:
-    if: github.event.action == 'closed' && github.actor != 'dependabot[bot]'
+    needs: changes
+    if: github.event.action == 'closed'
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        app: ${{ fromJSON(needs.changes.outputs.all) }}
+    name: destroy (${{ matrix.app }})
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup-node
       - uses: cloudflare/wrangler-action@v4
+        continue-on-error: true
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          workingDirectory: ${{ env.APP }}
+          workingDirectory: apps/${{ matrix.app }}
           command: preview delete --name ${{ env.PREVIEW }} --skip-confirmation

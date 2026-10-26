@@ -1,0 +1,393 @@
+---
+import Layout from '../layouts/layout.astro';
+
+const sectionClass = 'sa05-section py-8';
+const containerClass = 'max-w-3xl mx-auto px-4 sm:px-6';
+const slotCards = [
+  { time: '10:05 – 10:55', label: '50-minute meeting in a 60-minute block' },
+  { time: '10:05 – 10:30', label: '25-minute meeting in the first half-hour' },
+  { time: '10:35 – 11:00', label: '25-minute meeting in the second half-hour' },
+];
+---
+
+<Layout
+  title="Start at :05 — Smarter meeting times | Gerrit Garbereder"
+  description="Start meetings five minutes after the hour. Fewer late arrivals, calmer transitions, built-in breaks. A simple meeting policy that works."
+>
+  <div class="start-at-05 min-h-screen flex flex-col">
+    <header class="sa05-hero relative overflow-hidden px-4 py-8 sm:py-12">
+      <div
+        class="sa05-hero-glow absolute inset-0 pointer-events-none"
+        aria-hidden="true"
+      ></div>
+      <div class={`${containerClass} relative z-10`}>
+        <h1 class="start-at-05-h1 font-light leading-tight tracking-tight">
+          Start at <span class="sa05-accent font-normal italic">:05</span>
+        </h1>
+        <p class="sa05-hero-lead lead text-lg mt-8 max-w-[28ch]">
+          Start meetings five minutes after the hour. Fewer late arrivals,
+          calmer transitions, built-in breaks.
+        </p>
+
+        <div
+          class="mt-8 py-8"
+          role="img"
+          aria-label="A 50-minute meeting runs from 10:05 to 10:55 inside the 10:00 to 11:00 calendar hour."
+        >
+          <ul class="timeline-vertical sm:hidden space-y-8 list-none">
+            <li class="relative flex items-center min-h-[2rem]">
+              <span
+                class="timeline-dot timeline-dot-idle absolute w-2.5 h-2.5 rounded-full"
+                aria-hidden="true"
+              ></span>
+              <span class="text-sm timeline-hour">10:00</span>
+            </li>
+            <li class="relative flex items-center min-h-[2rem]">
+              <span
+                class="timeline-dot timeline-dot-active absolute w-2.5 h-2.5 rounded-full"
+                aria-hidden="true"
+              ></span>
+              <span class="timeline-label text-sm font-medium"
+                >10:05 Start</span
+              >
+            </li>
+            <li class="relative flex items-center min-h-[2rem]">
+              <span
+                class="timeline-dot timeline-dot-mid absolute w-2.5 h-2.5 rounded-full"
+                aria-hidden="true"
+              ></span>
+              <span class="timeline-label text-sm font-medium">10:55 End</span>
+            </li>
+            <li class="relative flex items-center min-h-[2rem]">
+              <span
+                class="timeline-dot timeline-dot-idle absolute w-2.5 h-2.5 rounded-full"
+                aria-hidden="true"
+              ></span>
+              <span class="text-sm timeline-hour">11:00</span>
+            </li>
+          </ul>
+
+          <div
+            class="timeline-horizontal hidden sm:flex items-start justify-center gap-0 flex-nowrap"
+          >
+            <div class="flex flex-col items-center gap-4 shrink-0">
+              <span
+                class="w-3.5 h-3.5 rounded-full timeline-dot-idle"
+                aria-hidden="true"
+              ></span>
+              <span class="text-sm timeline-hour">10:00</span>
+            </div>
+            <div
+              class="timeline-connector timeline-connector-idle w-6 sm:w-8 shrink-0 max-w-[40px]"
+              aria-hidden="true"
+            ></div>
+            <div class="flex flex-col items-center gap-4 shrink-0">
+              <span
+                class="w-3.5 h-3.5 rounded-full timeline-dot-active"
+                aria-hidden="true"
+              ></span>
+              <span class="timeline-label text-sm font-medium"
+                >10:05 Start</span
+              >
+            </div>
+            <div
+              class="timeline-connector timeline-connector-active flex-1 min-w-[24px]"
+              aria-hidden="true"
+            ></div>
+            <div class="flex flex-col items-center gap-4 shrink-0">
+              <span
+                class="w-3.5 h-3.5 rounded-full timeline-dot-mid"
+                aria-hidden="true"
+              ></span>
+              <span class="timeline-label text-sm font-medium">10:55 End</span>
+            </div>
+            <div
+              class="timeline-connector timeline-connector-idle w-6 sm:w-8 shrink-0 max-w-[40px]"
+              aria-hidden="true"
+            ></div>
+            <div class="flex flex-col items-center gap-4 shrink-0">
+              <span
+                class="w-3.5 h-3.5 rounded-full timeline-dot-idle"
+                aria-hidden="true"
+              ></span>
+              <span class="text-sm timeline-hour">11:00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content" class="sa05-main flex-1">
+      <article aria-label="Start at :05 meeting policy">
+        <section class={sectionClass}>
+          <div class={containerClass}>
+            <h2
+              class="start-at-05-h2 mb-8 text-[1.875rem] font-light leading-snug"
+            >
+              Why not "on the hour"?
+            </h2>
+            <p class="lead text-lg mb-8">
+              Calendars commonly reserve
+              <strong class="sa05-strong">30- or 60-minute blocks</strong>. If a
+              meeting starts right on the hour, even a short delay can consume
+              the transition time people need between rooms or calls.
+            </p>
+            <div class="sa05-card card my-8 rounded-2xl p-6 text-base">
+              <h3 class="start-at-05-h3 mb-8 leading-snug">
+                Why starting on the hour still causes friction
+              </h3>
+              <ul class="list m-0 flex list-none flex-col gap-4 p-0 text-base">
+                <li
+                  class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
+                >
+                  Rooms are often booked until the full hour anyway, so you
+                  can't get in early.
+                </li>
+                <li
+                  class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
+                >
+                  People think in round hours. "Meeting at 10:00" means they may
+                  show at 10:00—and miss a 10:00 sharp start.
+                </li>
+                <li
+                  class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
+                >
+                  A meeting that starts at :00 can consume its transition buffer
+                  when it runs late.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class={sectionClass}>
+          <div class={containerClass}>
+            <h2
+              class="start-at-05-h2 mb-8 text-[1.875rem] font-light leading-snug"
+            >
+              The fix: Start at :05
+            </h2>
+            <p class="text-base mb-8">
+              Fit a <strong class="sa05-strong">50-minute meeting</strong> into
+              a 60-minute calendar block by starting at
+              <span class="sa05-accent font-semibold">:05</span> and ending at
+              :55. For 30-minute blocks, schedule a 25-minute meeting at :05 or
+              :35. The shorter meeting leaves a five-minute transition at each
+              end of its calendar block.
+            </p>
+          </div>
+          <div class={containerClass}>
+            <div
+              class="sa05-card card highlight my-8 rounded-2xl relative overflow-hidden p-6"
+            >
+              <h3 class="start-at-05-h3 mb-8 leading-snug">Why it works</h3>
+              <ul class="list m-0 flex list-none flex-col gap-4 p-0 text-base">
+                <li
+                  class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
+                >
+                  The calendar still uses familiar 30- and 60-minute blocks.
+                </li>
+                <li
+                  class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
+                >
+                  Everyone gets at least a 5‑minute break between meetings.
+                </li>
+                <li
+                  class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
+                >
+                  Invitations show the real start time, so attendees know when
+                  to join while the earlier buffer stays available for setup and
+                  transitions.
+                </li>
+                <li
+                  class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
+                >
+                  Encouraged to end on time by following meetings.
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class={containerClass}>
+            <h3 class="start-at-05-h3 mb-4 leading-snug">Examples</h3>
+            <p class="text-base mb-4">
+              In a <strong class="sa05-strong">60-minute calendar block</strong
+              >, schedule a 50-minute meeting from :05 to :55.
+            </p>
+            <div class="grid grid-cols-1 gap-8 mb-8">
+              <div class="sa05-slot slot rounded-xl p-6 text-center text-base">
+                <div class="time font-light text-2xl mb-4">
+                  {slotCards[0].time}
+                </div>
+                <div class="label text-sm">{slotCards[0].label}</div>
+              </div>
+            </div>
+
+            <p class="text-base mb-4">
+              In each
+              <strong class="sa05-strong">30-minute calendar block</strong>,
+              schedule a 25-minute meeting at :05 or :35.
+            </p>
+            <div class="grid grid-cols-1 gap-8 sm:grid-cols-2">
+              {slotCards.slice(1).map((slot) => <div
+                class="sa05-slot slot rounded-xl p-6 text-center text-base"
+              >
+                <div class="time font-light text-2xl mb-4">{slot.time}</div>
+                <div class="label text-sm">{slot.label}</div>
+              </div>)}
+            </div>
+          </div>
+        </section>
+
+        <section class={sectionClass}>
+          <div class={containerClass}>
+            <h2
+              class="start-at-05-h2 mb-4 text-[1.875rem] font-light leading-snug"
+            >
+              Share the policy with your team
+            </h2>
+            <p class="text-base mb-4">
+              Copy this short version into a team handbook, calendar
+              description, or meeting invite.
+            </p>
+            <div
+              class="sa05-copy-panel rounded-2xl p-6 sm:p-8"
+              role="group"
+              aria-label="Copyable meeting policy"
+            >
+              <div class="sa05-policy-heading mb-6 flex items-center gap-3">
+                <span class="sa05-policy-mark" aria-hidden="true"></span>
+                <h3 class="start-at-05-h3 m-0">The team standard</h3>
+              </div>
+              <div class="sa05-policy-rules grid gap-3 sm:grid-cols-2">
+                <div class="sa05-policy-rule rounded-xl p-5">
+                  <p class="sa05-policy-block mb-2 text-xs font-semibold">
+                    60-minute calendar block
+                  </p>
+                  <p class="sa05-policy-time mb-2 font-semibold">
+                    50-minute meeting
+                  </p>
+                  <p class="sa05-policy-detail m-0 text-sm">
+                    Start :05 <span aria-hidden="true">·</span> End :55
+                  </p>
+                </div>
+                <div class="sa05-policy-rule rounded-xl p-5">
+                  <p class="sa05-policy-block mb-2 text-xs font-semibold">
+                    30-minute calendar block
+                  </p>
+                  <p class="sa05-policy-time mb-2 font-semibold">
+                    25-minute meeting
+                  </p>
+                  <p class="sa05-policy-detail m-0 text-sm">
+                    Start :05 or :35 <span aria-hidden="true">·</span> End :30
+                    or :00
+                  </p>
+                </div>
+              </div>
+              <div
+                class="sa05-policy-footer mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+              >
+                <p class="sa05-policy-buffer m-0 text-sm">
+                  Keep the transition time between meetings clear.
+                </p>
+                <button
+                  id="sa05-copy-policy"
+                  type="button"
+                  class="sa05-copy-button rounded-lg px-4 py-2 font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                  aria-describedby="sa05-copy-status"
+                >
+                  Copy policy
+                </button>
+              </div>
+              <p
+                id="sa05-copy-status"
+                class="mt-3 text-sm"
+                role="status"
+                aria-live="polite"
+              ></p>
+            </div>
+          </div>
+        </section>
+
+        <section class={`${sectionClass} pb-8`}>
+          <div class={containerClass}>
+            <div
+              class="sa05-card card highlight rounded-2xl relative overflow-hidden p-6"
+            >
+              <h2 class="start-at-05-h2 text-[1.875rem] leading-snug mb-8">
+                Summary
+              </h2>
+              <p class="text-base mb-8">
+                By consistently using
+                <span class="sa05-accent font-semibold">Start at :05</span> (and
+                :35 for half-hour slots), we:
+              </p>
+              <ul class="list m-0 flex list-none flex-col gap-4 p-0 text-base">
+                <li
+                  class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
+                >
+                  Reduce lateness from "on-the-hour" mental scheduling
+                </li>
+                <li
+                  class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
+                >
+                  Make room transitions easier
+                </li>
+                <li
+                  class="sa05-list-li start-at-05-list-li flex gap-4 leading-[1.5]"
+                >
+                  Build in short but meaningful breaks between sessions
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="sa05-footer pt-8 pb-8 text-center text-xs font-normal">
+      <div class={containerClass}>
+        <p>
+          Start at <span class="sa05-accent">:05</span> — Smarter meeting times
+        </p>
+        <p class="mt-4">
+          By
+          <a
+            href="https://www.garbereder.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Gerrit Garbereder (opens in new window)"
+            class="rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sa05-accent)]"
+            >Gerrit Garbereder</a
+          >
+        </p>
+      </div>
+    </footer>
+  </div>
+</Layout>
+
+<script>
+  const copyButton =
+    document.querySelector<HTMLButtonElement>('#sa05-copy-policy');
+  const copyStatus = document.querySelector<HTMLElement>('#sa05-copy-status');
+
+  copyButton?.addEventListener('click', async () => {
+    if (!copyStatus) return;
+
+    try {
+      await navigator.clipboard.writeText(
+        [
+          'START AT :05 | TEAM MEETING STANDARD',
+          '',
+          '60-minute calendar block: 50-minute meeting, :05 to :55.',
+          '30-minute calendar block: 25-minute meeting, :05 to :30 or :35 to :00.',
+          '',
+          'Keep the transition time between meetings clear.',
+        ].join('\n')
+      );
+      copyStatus.textContent = 'Policy copied to clipboard.';
+    } catch {
+      copyStatus.textContent =
+        'Could not copy automatically. Select the policy text above and copy it.';
+    }
+  });
+</script>
