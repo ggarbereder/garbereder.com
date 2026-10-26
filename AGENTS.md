@@ -51,5 +51,5 @@ Intentional visual changes require updating the Linux baseline screenshots in `a
 - Do not commit directly to `main`; work on a branch and open a pull request.
 - Use Conventional Commit prefixes (`feat:`, `fix:`, `chore:`, `ci:`, …).
 - Bump the version before opening a pull request: `npm run version:patch` (or `version:minor`/`version:major`), and commit `package.json` and `package-lock.json` with the change. The `version-bump` workflow only bumps when the PR's version isn't higher than `main`'s, and its bot commit re-triggers CI, which then has to be approved. If `main` moves past your version before merging, bump again.
-- CI runs per app: a change under `apps/<name>/` only builds, tests and deploys that app; anything outside `apps/` runs every app. `test` is the required check.
+- CI runs per app: a change under `apps/<name>/` only builds, tests and deploys that app; anything outside `apps/` runs every app. The required checks `build` and `test` are gate jobs over the per-app matrix jobs, so don't rename them.
 - Each pull request gets a Cloudflare Preview (`preview.yml`) of every app it touches at `https://pr-<number>-<worker>.<subdomain>.workers.dev`, linked in one PR comment per app. They are deleted when the PR is merged or closed. Dependabot PRs get no preview.

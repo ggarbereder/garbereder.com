@@ -41,7 +41,8 @@ jobs:
       - run: npm run security:audit
       - run: npm run lint
 
-  build:
+  # Matrix job id differs from the required 'build' check, which is the gate below
+  build-app:
     runs-on: ubuntu-latest
     needs: [changes, audit]
     if: needs.changes.outputs.apps != '[]'
@@ -65,7 +66,7 @@ jobs:
   # The Playwright image has the browsers' system libraries; installing them with apt took 10+ minutes for WebKit.
   e2e:
     runs-on: ubuntu-latest
-    needs: [changes, build]
+    needs: [changes, build-app]
     timeout-minutes: 15
     container:
       image: mcr.microsoft.com/playwright:v1.64.1-noble
@@ -106,7 +107,7 @@ jobs:
   # Same image as update-visual-baselines.yml, so screenshots render identically to the baselines
   visual:
     runs-on: ubuntu-latest
-    needs: [changes, build]
+    needs: [changes, build-app]
     timeout-minutes: 15
     container:
       image: mcr.microsoft.com/playwright:v1.64.1-noble
@@ -134,16 +135,33 @@ jobs:
             apps/${{ matrix.app }}/test-results/
           if-no-files-found: ignore
 
-  # Required status check for main: the audit and every build, e2e and visual job passed,
-  # or no app was affected (those jobs are skipped then)
-  test:
+  # Required status check for main: every app built and passed html-validate, or no app was affected
+  build:
     runs-on: ubuntu-latest
-    needs: [changes, audit, build, e2e, visual]
+    needs: [changes, build-app]
     if: always()
     steps:
       - env:
           APPS: ${{ needs.changes.outputs.apps }}
-          RESULTS: ${{ needs.changes.result }} ${{ needs.audit.result }} ${{ needs.build.result }} ${{ needs.e2e.result }} ${{ needs.visual.result }}
+          RESULTS: ${{ needs.changes.result }} ${{ needs.build-app.result }}
+        run: |
+          echo "apps=$APPS results=$RESULTS"
+          if [ "$APPS" = '[]' ]; then
+            test "$RESULTS" = "success skipped"
+          else
+            test "$RESULTS" = "success success"
+          fi
+
+  # Required status check for main: the audit and every build, e2e and visual job passed,
+  # or no app was affected (those jobs are skipped then)
+  test:
+    runs-on: ubuntu-latest
+    needs: [changes, audit, build-app, e2e, visual]
+    if: always()
+    steps:
+      - env:
+          APPS: ${{ needs.changes.outputs.apps }}
+          RESULTS: ${{ needs.changes.result }} ${{ needs.audit.result }} ${{ needs.build-app.result }} ${{ needs.e2e.result }} ${{ needs.visual.result }}
         run: |
           echo "apps=$APPS results=$RESULTS"
           if [ "$APPS" = '[]' ]; then
@@ -154,7 +172,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [changes, test]
+    needs: [changes, build, test]
     if: github.ref == 'refs/heads/main' && needs.changes.outputs.apps != '[]'
     strategy:
       fail-fast: false

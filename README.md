@@ -83,7 +83,7 @@ Github Actions handle continuous integration and deployment:
 
 - Runs on pull requests and main branch, per app: a change under `apps/<name>/` builds, tests and deploys only that app; changes to `packages/`, root config, the lockfile or workflows run every app (`.github/actions/changed-apps`)
 - Lints the whole repo once, then builds each app once, validates its HTML and runs its Playwright suite against that build (one job per browser engine, plus visual, in the Playwright image)
-- `test` is the required check: it passes when the audit and every app's build, e2e and visual jobs passed
+- Required checks are `audit`, `build` (every app built and passed html-validate) and `test` (the audit and every app's build, e2e and visual jobs passed); `build` and `test` are gate jobs over the per-app matrix
 - Deploys each tested app on main to its own Cloudflare Worker (static assets)
 - Every pull request gets a Cloudflare Preview of each app it touches at `https://pr-<number>-<worker>.<subdomain>.workers.dev` (`preview.yml`), linked in one PR comment per app and deleted on merge or close. Each app needs `preview_urls: true` and a `previews` block in its `wrangler.jsonc`; `preview_urls` only takes effect on a production deploy (or in the dashboard). Dependabot PRs get no preview, as they can't read the Cloudflare secrets.
 
