@@ -41,11 +41,11 @@ An [npm workspaces](https://docs.npmjs.com/cli/using-npm/workspaces) monorepo: o
 │   └── start-at-05/      # start-at-05.com: Astro, its tests and wrangler.jsonc (Cloudflare Worker start-at-05)
 ├── packages/
 │   └── config/           # shared tsconfig, ESLint, Prettier, Playwright and html-validate config
-├── workers/
-│   └── start-at-05-proxy/  # retired: served start-at-05.com from garbereder.com/start-at-05/ before apps/start-at-05
 ├── scripts/              # security audit, npm env helpers
 └── package.json          # workspaces, overrides, allowScripts, lint-staged
 ```
+
+Each app is its own Cloudflare Worker with static assets and custom domains (`garbereder.com`, `www.garbereder.com`; `start-at-05.com`, `www.start-at-05.com`). The old `garbereder.com/start-at-05/` URL 301-redirects to `https://start-at-05.com/` (`apps/garbereder.com/public/_redirects`).
 
 ## Prerequisites
 

@@ -18,7 +18,6 @@ export default defineConfig([
   globalIgnores([
     '**/dist/**',
     '**/.astro/**',
-    '**/workers/**',
     '**/playwright-report/**',
     '**/test-results/**',
   ]),

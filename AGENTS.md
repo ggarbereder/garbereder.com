@@ -14,7 +14,6 @@ An npm workspaces monorepo of static Astro sites, each deployed to its own Cloud
 - `apps/<name>/` – one Astro site each, with its own `src/`, `public/`, `tests/`, `package.json` and `wrangler.jsonc`. Paths below are relative to the app.
 - `packages/config/` – shared tsconfig, ESLint, Prettier, Playwright (`defineSiteConfig`) and html-validate config. Change it once for every app.
 - Root `package.json` – `workspaces`, `overrides`, `allowScripts` and lint-staged for the whole repo. App dependencies go in the app's `package.json` (`npm install <pkg> -w apps/<name>`); there is one `package-lock.json`.
-- `workers/` – standalone Cloudflare Workers with their own `package.json` and `wrangler.toml`
 - `tests/pages.ts` lists every page the Playwright suites visit
 
 ## Commands
