@@ -1,5 +1,8 @@
 name: Update Visual Baselines
 
+# Screenshots differ between platforms, so baselines are only ever taken here, in the image the visual job compares in.
+# Add the `update-visual-baselines` label to a pull request to retake them for every app the PR affects,
+# or run it from the Actions tab for one app on a branch.
 on:
   workflow_dispatch:
     inputs:
@@ -14,18 +17,38 @@ on:
         options:
           - garbereder.com
           - start-at-05
+  pull_request:
+    types: [labeled]
 
-permissions:
-  contents: write
+concurrency:
+  group: update-visual-baselines-${{ github.head_ref || github.event.inputs.branch || github.ref }}
 
 env:
   HUSKY: 0
   NODE_ENV: development
-  APP: apps/${{ github.event.inputs.app }}
 
 jobs:
-  update-baselines:
+  # The apps the PR's visual jobs check (see .github/actions/changed-apps), or the one picked by hand
+  apps:
+    if: github.event_name == 'workflow_dispatch' || github.event.label.name == 'update-visual-baselines'
     runs-on: ubuntu-latest
+    outputs:
+      apps: ${{ github.event_name == 'workflow_dispatch' && format('["{0}"]', github.event.inputs.app) || steps.changed.outputs.apps }}
+    steps:
+      - uses: actions/checkout@v5
+        if: github.event_name == 'pull_request'
+        with:
+          fetch-depth: 0
+      - id: changed
+        if: github.event_name == 'pull_request'
+        uses: ./.github/actions/changed-apps
+
+  update-baselines:
+    needs: apps
+    if: needs.apps.outputs.apps != '[]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
     # Same image as the visual job in static.yml, so baselines match what CI renders
     container:
       image: mcr.microsoft.com/playwright:v1.64.1-noble
@@ -33,16 +56,39 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
-          ref: ${{ github.event.inputs.branch || github.ref }}
+          ref: ${{ github.head_ref || github.event.inputs.branch || github.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
       - uses: ./.github/actions/setup-node
-      - run: npm run build -w $APP
       - run: npx playwright install chromium
-      - run: npm run test:visual:update -w $APP
+      # One app after another in this job, so their commits can't race each other's push
+      - env:
+          APPS: ${{ needs.apps.outputs.apps }}
+        # The container's default shell is sh
+        shell: bash
+        # The image has no jq; an assignment (unlike a for list) stops the step if this fails
+        run: |
+          apps=$(node -p 'JSON.parse(process.env.APPS).join(" ")')
+          test -n "$apps"
+          for app in $apps; do
+            npm run build -w "apps/$app"
+            npm run test:visual:update -w "apps/$app"
+          done
       - name: Commit and push updated baselines
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add "$APP"/tests/*-snapshots/
+          git add apps/*/tests/*-snapshots/
           git diff --staged --quiet || git commit -m "chore(tests): update visual regression baselines"
           git push
+
+  # So the label can be added again for the next update
+  unlabel:
+    needs: [apps, update-baselines]
+    if: always() && github.event_name == 'pull_request' && github.event.label.name == 'update-visual-baselines'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh pr edit ${{ github.event.number }} --repo ${{ github.repository }} --remove-label update-visual-baselines
