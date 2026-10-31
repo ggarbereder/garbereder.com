@@ -7,7 +7,17 @@ import { npmEnv } from './npm-env.mjs';
  * passes the entry stops suppressing and the audit fails again, so an
  * exception has to be renewed deliberately instead of rotting in place.
  */
-const ALLOWLIST = [];
+const ALLOWLIST = [
+  // ── minimatch ────────────────────────────────────────────────────────────
+  {
+    id: 'GHSA-g3hv-75wg-m249',
+    expires: '2026-12-31',
+    reason:
+      'minimatch globparts amplification (CVE-2026-118764). Only patched in minimatch@11, ' +
+      'which drops makeRe and breaks eslint-plugin-import-x. Reaches us via the eslint toolchain ' +
+      'only — globs come from our own config, never untrusted input, not shipped.',
+  },
+];
 
 const npmExecPath = process.env.npm_execpath;
 if (!npmExecPath) {
