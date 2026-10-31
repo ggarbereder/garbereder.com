@@ -58,14 +58,30 @@ const {
     property="og:image"
     content="https://www.garbereder.com/img/portrait.jpg"
   />
+  <meta property="og:image:width" content="845" />
+  <meta property="og:image:height" content="845" />
+  <meta property="og:image:alt" content="Portrait of Gerrit Garbereder" />
+  <meta property="og:locale" content="en_US" />
   <meta property="og:description" content={description} />
   <meta property="og:site_name" content="Gerrit Garbereder" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta
+    name="twitter:image"
+    content="https://www.garbereder.com/img/portrait.jpg"
+  />
 
   {!noindex && <link rel="canonical" href={canonical} />}
   <link rel="icon" href="/favicon.ico" sizes="32x32" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
-  <StructuredData />
+  <StructuredData
+    title={title}
+    description={description}
+    canonical={canonical}
+  />
 
   <script>
     document.querySelector('html')?.classList.remove('nojs');
