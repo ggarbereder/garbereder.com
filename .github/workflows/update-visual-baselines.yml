@@ -65,8 +65,11 @@ jobs:
           APPS: ${{ needs.apps.outputs.apps }}
         # The container's default shell is sh
         shell: bash
+        # The image has no jq; an assignment (unlike a for list) stops the step if this fails
         run: |
-          for app in $(jq -r '.[]' <<< "$APPS"); do
+          apps=$(node -p 'JSON.parse(process.env.APPS).join(" ")')
+          test -n "$apps"
+          for app in $apps; do
             npm run build -w "apps/$app"
             npm run test:visual:update -w "apps/$app"
           done
