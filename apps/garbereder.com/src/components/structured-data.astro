@@ -1,16 +1,70 @@
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Gerrit Garbereder",
-    "jobTitle": "Senior Engineering Manager",
-    "url": "https://www.garbereder.com",
-    "sameAs": [
-      "https://www.linkedin.com/in/gerrit-garbereder-a74b6a96/",
-      "https://github.com/ggarbereder/garbereder.com"
-    ],
-    "description": "Senior Engineering Manager with expertise in leading cross-functional teams, project delivery, and fostering innovation.",
-    "email": "gerrit@garbereder.com",
-    "telephone": "+370 6 945 6497"
-  }
-</script>
+---
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+}
+
+const {
+  title = 'Gerrit Garbereder | Senior Engineering Manager',
+  description = 'Senior Engineering Manager with expertise in leading cross-functional teams, project delivery, and fostering innovation.',
+  canonical = 'https://www.garbereder.com/',
+} = Astro.props;
+
+const siteUrl = 'https://www.garbereder.com';
+const isHome = canonical === `${siteUrl}/` || canonical === siteUrl;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      url: `${siteUrl}/`,
+      name: 'Gerrit Garbereder',
+    },
+    {
+      '@type': isHome ? 'ProfilePage' : 'WebPage',
+      '@id': `${canonical}#webpage`,
+      url: canonical,
+      name: title,
+      description,
+      isPartOf: { '@id': `${siteUrl}/#website` },
+      ...(isHome
+        ? {
+            about: { '@id': `${siteUrl}/#person` },
+            mainEntity: { '@id': `${siteUrl}/#person` },
+          }
+        : {
+            author: { '@id': `${siteUrl}/#person` },
+          }),
+    },
+    {
+      '@type': 'Person',
+      '@id': `${siteUrl}/#person`,
+      name: 'Gerrit Garbereder',
+      jobTitle: 'Senior Engineering Manager',
+      image: `${siteUrl}/img/portrait.jpg`,
+      url: siteUrl,
+      sameAs: [
+        'https://www.linkedin.com/in/gerrit-garbereder-a74b6a96/',
+        'https://github.com/ggarbereder/garbereder.com',
+      ],
+      knowsAbout: [
+        'Engineering Management',
+        'Software Architecture',
+        'Distributed Systems',
+        'Team Leadership',
+        'Project Delivery',
+        'Continuous Integration and Delivery',
+      ],
+      description:
+        'Senior Engineering Manager with expertise in leading cross-functional teams, project delivery, and fostering innovation.',
+      email: 'gerrit@garbereder.com',
+      telephone: '+370 6 945 6497',
+    },
+  ],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

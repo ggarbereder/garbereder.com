@@ -29,13 +29,29 @@ for (const { path, canonical } of pages) {
         .locator('meta[property="og:image"]')
         .getAttribute('content'))!;
       expect((await request.get(new URL(image).pathname)).ok()).toBe(true);
+      await expect(
+        page.locator('meta[property="og:image:width"]')
+      ).toHaveAttribute('content', '845');
+      await expect(
+        page.locator('meta[property="og:image:height"]')
+      ).toHaveAttribute('content', '845');
+      await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
+        'content',
+        'summary'
+      );
 
       const json = JSON.parse(
         (await page
           .locator('script[type="application/ld+json"]')
           .textContent())!
       );
-      expect(json['@type']).toBe('Person');
+      const types = json['@graph'].map((n: { '@type': string }) => n['@type']);
+      expect(types).toEqual(expect.arrayContaining(['WebSite', 'Person']));
+      if (path === '/') {
+        expect(types).toContain('ProfilePage');
+      } else {
+        expect(types).toContain('WebPage');
+      }
     });
 
     test('no failed requests (images, fonts, styles)', async ({ page }) => {
