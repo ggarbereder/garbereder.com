@@ -37,7 +37,7 @@ The site targets WCAG 2.2 Level AA. Use semantic HTML, keep keyboard navigation 
 
 ## Visual baselines
 
-Intentional visual changes require updating the Linux baseline screenshots in `apps/<name>/tests/visual.spec.ts-snapshots/` with the `update-visual-baselines` workflow (pick the app and the branch). `npm run test:visual:update` makes local baselines for your own platform, which are gitignored. Do not update baselines to hide unintended regressions.
+Intentional visual changes require updating the Linux baseline screenshots in `apps/<name>/tests/visual.spec.ts-snapshots/` with the `update-visual-baselines` workflow: add the `update-visual-baselines` label to the pull request (it retakes the baselines of every app the PR affects, commits them to the branch and removes the label), or run it from the Actions tab and pick the app and the branch. Merge `main` into the branch first, since the PR's visual job compares against the merge with `main`. The PR checks for the bot's commit wait for approval ("Approve workflows to run"), or push again to rerun them. `npm run test:visual:update` makes local baselines for your own platform, which are gitignored. Do not update baselines to hide unintended regressions.
 
 ## Dependencies and security
 
