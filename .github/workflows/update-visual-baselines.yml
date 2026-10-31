@@ -63,6 +63,8 @@ jobs:
       # One app after another in this job, so their commits can't race each other's push
       - env:
           APPS: ${{ needs.apps.outputs.apps }}
+        # The container's default shell is sh
+        shell: bash
         run: |
           for app in $(jq -r '.[]' <<< "$APPS"); do
             npm run build -w "apps/$app"
