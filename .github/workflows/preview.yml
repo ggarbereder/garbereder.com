@@ -19,6 +19,8 @@ jobs:
   changes:
     if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     outputs:
       apps: ${{ steps.changed.outputs.apps }}
       all: ${{ steps.changed.outputs.all }}
